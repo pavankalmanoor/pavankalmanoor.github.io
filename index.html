@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pavan Kalmanoor | Portfolio</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <meta name="description" content="Portfolio of Pavan Kalmanoor – Data analytics professional, blending business insight, systems, and design." />
+
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-elevated: #0b0d14;
+      --bg-soft: #111525;
+      --accent: #52ffe0;
+      --accent-soft: rgba(82, 255, 224, 0.16);
+      --text: #f5f5f7;
+      --text-muted: #9da3b5;
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --radius-xl: 18px;
+      --radius-xxl: 24px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.6);
+      --blur: 18px;
+      --transition-fast: 0.25s ease;
+      --transition-med: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: var(--text);
+      background-color: var(--bg);
+      overflow-x: hidden;
+    }
+
+    /* Background geometry */
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03) 1px,
+          transparent 1px
+        );
+      background-size: 80px 80px;
+      mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .bg-orbit {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 10%, rgba(82, 255, 224, 0.16), transparent),
+        radial-gradient(circle at 80% 70%, rgba(86, 115, 255, 0.22), transparent);
+      opacity: 0.74;
+      filter: blur(12px);
+      pointer-events: none;
+      z-index: -3;
+    }
+
+    /* Scroll progress */
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      z-index: 40;
+      background: transparent;
+    }
+
+    .scroll-progress-bar {
+      height: 3px;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), #7b8cff);
+      border-radius: 999px;
+      transition: width 0.12s linear;
+    }
+
+    /* Header / Nav */
+
+    .site-header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1080px, 100% - 32px);
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(7, 9, 20, 0.88);
+      backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      z-index: 30;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 20% 20%, var(--accent), #5673ff);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      color: #05060a;
+      letter-spacing: 0.02em;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      font-size: 12px;
+    }
+
+    .logo-name {
+      font-weight: 600;
+    }
+
+    .logo-role {
+      color: var(--text-muted);
+      opacity: 0.9;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 13px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: color var(--transition-fast),
+        background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .nav-link.active {
+      color: #05060a;
+      background: var(--accent);
+    }
+
+    /* Layout */
+
+    main {
+      width: min(1080px, 100% - 32px);
+      margin: 0 auto;
+      padding-top: 110px;
+      padding-bottom: 72px;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section:not(:last-of-type) {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .section-header {
+      max-width: 640px;
+      margin-bottom: 32px;
+    }
+
+    .section-header h2 {
+      margin: 6px 0 10px;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: clamp(26px, 3vw, 32px);
+    }
+
+    .section-sub {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 10px;
+      color: var(--accent);
+    }
+
+    /* Hero */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: clamp(32px, 4vw, 44px);
+      line-height: 1.1;
+      margin: 10px 0 12px;
+    }
+
+    .hero-sub {
+      margin: 0;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .hero-actions {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--transition-med), box-shadow var(--transition-med),
+        background var(--transition-med), border-color var(--transition-med),
+        color var(--transition-med);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #7b8cff);
+      color: #05060a;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
+    }
+
+    .btn.ghost {
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.12);
+      color: var(--text);
+    }
+
+    .btn.ghost:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-chip {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Hero visual */
+
+    .hero-visual {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .hero-card {
+      width: 100%;
+      max-width: 320px;
+      border-radius: var(--radius-xxl);
+      background: radial-gradient(circle at 10% 0%, rgba(82, 255, 224, 0.1), transparent),
+        radial-gradient(circle at 90% 120%, rgba(123, 140, 255, 0.14), transparent),
+        rgba(7, 9, 20, 0.98);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      transform-origin: center;
+      transform: translateY(0) rotate3d(1, -1, 0, 8deg);
+      animation: heroFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+      0%,
+      100% {
+        transform: translateY(0) rotate3d(1, -1, 0, 8deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate3d(1, -1, 0, 5deg);
+      }
+    }
+
+    .hero-card-header {
+      display: flex;
+      gap: 6px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hero-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    .hero-dot:nth-child(1) {
+      background: #ff5f57;
+    }
+    .hero-dot:nth-child(2) {
+      background: #febc2e;
+    }
+    .hero-dot:nth-child(3) {
+      background: #28c840;
+    }
+
+    .hero-card-body {
+      padding: 16px 16px 18px;
+    }
+
+    .hero-card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+
+    .hero-card-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+
+    .hero-tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hero-tag {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    /* Cards & grids */
+
+    .card {
+      background: rgba(7, 10, 24, 0.96);
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 20px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(
+        circle at top left,
+        rgba(82, 255, 224, 0.12),
+        transparent 55%
+      );
+      opacity: 0;
+      transition: opacity var(--transition-med);
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h3 {
+      margin-top: 0;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 18px;
+    }
+
+    .card p {
+      margin: 6px 0 0;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .about-grid,
+    .skills-grid,
+    .projects-grid,
+    .photo-grid,
+    .contact-layout {
+      display: grid;
+      gap: 18px;
+    }
+
+    /* About */
+
+    .about-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    /* Skills */
+
+    .skill-card ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Projects */
+
+    .projects-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .project-card {
+      padding-top: 16px;
+    }
+
+    .project-pill {
+      display: inline-flex;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    .project-meta {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Photography */
+
+    .photo-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: #020617;
+      border: 1px solid var(--border-subtle);
+      height: 180px;
+      overflow: hidden;
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s var(--transition-med);
+    }
+
+    .photo-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0, 0, 0, 0.35), transparent);
+      opacity: 0;
+      transition: opacity 0.4s var(--transition-med);
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.06);
+    }
+
+    .photo-card:hover::after {
+      opacity: 1;
+    }
+
+    .photo-more {
+      display: none;
+    }
+
+    .photo-grid.expanded .photo-more {
+      display: block;
+    }
+
+    .photo-toggle-wrapper {
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Contact */
+
+    .contact-layout {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .contact-links {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .contact-links li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 0;
+    }
+
+    /* Footer */
+
+    .footer {
+      width: min(1080px, 100% - 32px);
+      margin: 0 auto 20px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Scroll reveal animations */
+
+    .section-observe {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.6s var(--transition-med),
+        transform 0.7s var(--transition-med);
+    }
+
+    .section-observe.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 14px;
+        gap: 10px;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-visual {
+        justify-content: flex-start;
+      }
+
+      main {
+        padding-top: 126px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-header {
+        width: calc(100% - 20px);
+        left: 50%;
+      }
+
+      main {
+        width: calc(100% - 20px);
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+
+      .hero-card {
+        max-width: 100%;
+      }
+
+      .footer {
+        width: calc(100% - 20px);
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress"><div class="scroll-progress-bar"></div></div>
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-mark">P</div>
+      <div class="logo-text">
+        <span class="logo-name">Pavan Kalmanoor</span>
+        <span class="logo-role">Data Analytics & BI</span>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#skills" class="nav-link">Skills</a>
+      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#photography" class="nav-link">Photography</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <div class="bg-grid"></div>
+  <div class="bg-orbit"></div>
+
+  <main>
+    <section id="home" class="section hero section-observe">
+      <div class="hero-content">
+        <p class="eyebrow">Portfolio • 2025</p>
+        <h1>
+          Designing <span class="accent">data-driven</span> experiences
+          that <span class="accent">actually work</span>.
+        </h1>
+        <p class="hero-sub">
+          I’m Pavan, a data analytics professional who loves turning messy data into clean stories, clear dashboards, and practical insights for decisions.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn primary">View Projects</a>
+          <a href="#contact" class="btn ghost">Let’s Connect</a>
+          <a href="Resume/Pavan_Kalmanoor_Resume.pdf" class="btn ghost" target="_blank">Download Resume (PDF)</a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-chip">Data Analytics</div>
+          <div class="hero-chip">Business Intelligence</div>
+          <div class="hero-chip">Photography</div>
+        </div>
+      </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+            <span class="hero-dot"></span>
+          </div>
+          <div class="hero-card-body">
+            <p class="hero-card-label">Current Focus</p>
+            <p class="hero-card-title">Advanced Analytics & Insights</p>
+            <p class="hero-card-text">
+              Exploring patterns in data, building insightful dashboards, and turning raw information into clear, actionable decisions.
+            </p>
+            <div class="hero-tag-row">
+              <span class="hero-tag">Excel & SQL</span>
+              <span class="hero-tag">Python</span>
+              <span class="hero-tag">Power BI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section section-observe">
+      <div class="section-header">
+        <p class="eyebrow">About</p>
+        <h2>Who I am and how I work</h2>
+        <p class="section-sub">
+          I blend hands-on data analytics with a solid understanding of IT systems. I enjoy digging into real-world datasets, finding the signal in the noise, and then designing dashboards and processes that match how people actually work.
+        </p>
+      </div>
+      <div class="about-grid">
+        <div class="card about-card">
+          <h3>Background</h3>
+          <p>
+            I’ve worked across analytics and IT support: building reports and trackers while also dealing with imaging, warranty workflows, and Windows 10/11 rollouts. That means I understand both the numbers in the dashboard and the systems behind them.
+          </p>
+        </div>
+        <div class="card about-card">
+          <h3>How I think</h3>
+          <p>
+            I like to keep things simple: start with a messy spreadsheet or dataset, clean it up, create a clear view with the right metrics, and then automate as much as possible so insights are always up to date.
+          </p>
+        </div>
+        <div class="card about-card">
+          <h3>What I’m looking for</h3>
+          <p>
+            Roles where I can combine <strong>data analysis</strong>, <strong>business problem-solving</strong>, and <strong>system thinking</strong> — especially as a Data Analyst or Business Analyst, with the bonus of understanding technical operations.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section section-observe">
+      <div class="section-header">
+        <p class="eyebrow">Skills</p>
+        <h2>Tools I actually use</h2>
+        <p class="section-sub">
+          A quick snapshot of what I’m comfortable shipping real work with.
+        </p>
+      </div>
+      <div class="skills-grid">
+        <div class="card skill-card">
+          <h3>Analytics Engineering & Systems</h3>
+          <ul>
+            <li>Connecting data from real-world devices and systems</li>
+            <li>Turning operational data into usable tables and reports</li>
+            <li>Windows imaging & deployment (Ghost, GPO basics)</li>
+            <li>Windows 10/11 compatibility planning</li>
+          </ul>
+        </div>
+        <div class="card skill-card">
+          <h3>Soft Skills</h3>
+          <ul>
+            <li>Explaining technical issues in simple language</li>
+            <li>Prioritizing issues that really matter</li>
+            <li>Collaborating with non-technical teams</li>
+            <li>Design sense from photography & visual work</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section section-observe">
+      <div class="section-header">
+        <p class="eyebrow">Projects</p>
+        <h2>Selected work</h2>
+        <p class="section-sub">
+          A mix of analytics, IT automation, and experiments that show how I think.
+        </p>
+      </div>
+      <div class="projects-grid">
+        <article class="card project-card">
+          <div class="project-pill">Data Analytics</div>
+          <h3>Operational Analytics Dashboard</h3>
+          <p>
+            Designed an Excel/Power BI dashboard to monitor device health,
+            usage patterns, and Windows 11 readiness across hundreds of
+            laptops, surfacing the right metrics to guide refresh and
+            warranty decisions.
+          </p>
+          <ul class="project-meta">
+            <li>Excel, Power BI</li>
+            <li>Operational & reliability analytics</li>
+          </ul>
+        </article>
+        <article class="card project-card">
+          <div class="project-pill">Machine Learning</div>
+          <h3>Vehicle Accident Hotspot Detection</h3>
+          <p>
+            Used geospatial and time-series analysis on US accident data to
+            detect high-risk locations and temporal patterns, supporting
+            safety-focused decision-making.
+          </p>
+          <ul class="project-meta">
+            <li>Python, pandas</li>
+            <li>Geo & time-series</li>
+          </ul>
+        </article>
+        <article class="card project-card">
+          <div class="project-pill">NLP</div>
+          <h3>Advanced Sentiment Analysis Lab</h3>
+          <p>
+            Experimented with TF-IDF, Random Forest, word embeddings, and BERT
+            to compare sentiment-analysis approaches on real-world text data.
+          </p>
+          <ul class="project-meta">
+            <li>Python, scikit-learn</li>
+            <li>BERT, embeddings</li>
+          </ul>
+        </article>
+        <article class="card project-card">
+          <div class="project-pill">Creative</div>
+          <h3>Photography-Driven Storytelling</h3>
+          <p>
+            Used photography and light editing to document daily life and
+            urban scenes, developing a visual style that influences how I
+            design dashboards and interfaces.
+          </p>
+          <ul class="project-meta">
+            <li>Photography</li>
+            <li>Lightroom / editing</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="photography" class="section section-observe">
+      <div class="section-header">
+        <p class="eyebrow">Photography</p>
+        <h2>Frames that influence my design</h2>
+        <p class="section-sub">
+          A selection of moments I’ve captured over the years. These photos
+          influence how I think about light, contrast, and composition in
+          dashboards and design.
+        </p>
+      </div>
+      <div class="photo-grid" id="photo-grid">
+        <!-- Always visible photos -->
+        <div class="photo-card"><img src="Photos/photo1.jpg" alt="Photo 1" /></div>
+        <div class="photo-card"><img src="Photos/photo2.jpg" alt="Photo 2" /></div>
+        <div class="photo-card"><img src="Photos/photo3.jpg" alt="Photo 3" /></div>
+        <div class="photo-card"><img src="Photos/photo4.jpg" alt="Photo 4" /></div>
+        <div class="photo-card"><img src="Photos/photo5.jpg" alt="Photo 5" /></div>
+        <div class="photo-card"><img src="Photos/photo6.jpg" alt="Photo 6" /></div>
+        <div class="photo-card"><img src="Photos/photo7.jpg" alt="Photo 7" /></div>
+        <div class="photo-card"><img src="Photos/photo8.jpg" alt="Photo 8" /></div>
+
+        <!-- Hidden until "Show more" is clicked -->
+        <div class="photo-card photo-more"><img src="Photos/photo9.jpg" alt="Photo 9" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo10.jpg" alt="Photo 10" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo11.jpg" alt="Photo 11" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo12.jpg" alt="Photo 12" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo13.jpg" alt="Photo 13" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo14.jpg" alt="Photo 14" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo15.jpg" alt="Photo 15" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo16.jpg" alt="Photo 16" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo17.jpg" alt="Photo 17" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo18.jpg" alt="Photo 18" /></div>
+        <div class="photo-card photo-more"><img src="Photos/photo19.jpg" alt="Photo 19" /></div>
+      </div>
+      <div class="photo-toggle-wrapper">
+        <button class="btn ghost" id="photo-toggle">Show more photos</button>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-observe">
+      <div class="section-header">
+        <p class="eyebrow">Contact</p>
+        <h2>Let’s talk</h2>
+        <p class="section-sub">
+          Open to roles in data, analytics, and technical operations — or just
+          interesting problems to think about.
+        </p>
+      </div>
+      <div class="contact-layout">
+        <div class="card contact-card">
+          <h3>Say hi</h3>
+          <p>
+            The best way to reach me is by email. I’m happy to send over a
+            detailed resume, talk through my projects, or chat about how I can
+            help your team.
+          </p>
+          <a href="mailto:k.naidu002@umb.edu" class="btn primary">
+            Email Me
+          </a>
+        </div>
+        <div class="card contact-card">
+          <h3>Quick links</h3>
+          <ul class="contact-links">
+            <li><span>Resume</span><span>•</span><a href="Resume/Pavan_Kalmanoor_Resume.pdf" target="_blank">Download PDF</a></li>
+            <li><span>Location</span><span>•</span><span>USA</span></li>
+            <li><span>Focus</span><span>•</span><span>Data Analytics & BI</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year"></span> Pavan Kalmanoor</span>
+    <span>Built with care & a bit of caffeine.</span>
+  </footer>
+
+  <script>
+    const progressBar = document.querySelector(".scroll-progress-bar");
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = `${progress}%`;
+    };
+    window.addEventListener("scroll", updateProgress);
+    updateProgress();
+
+    const observerOptions = { threshold: 0.2 };
+    const revealCallback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          observer.unobserve(entry.target);
+        }
+      });
+    };
+    const observer = new IntersectionObserver(revealCallback, observerOptions);
+    document.querySelectorAll(".section-observe").forEach((section) => {
+      observer.observe(section);
+    });
+
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav-link");
+    const setActiveNav = () => {
+      let currentId = "";
+      const offset = 120;
+      sections.forEach((sec) => {
+        const top = sec.offsetTop - offset;
+        if (window.scrollY >= top) {
+          currentId = sec.id;
+        }
+      });
+      navLinks.forEach((link) => {
+        if (link.getAttribute("href") === `#${currentId}`) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+    };
+    window.addEventListener("scroll", setActiveNav);
+    setActiveNav();
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const photoGrid = document.getElementById("photo-grid");
+    const photoToggle = document.getElementById("photo-toggle");
+    if (photoGrid && photoToggle) {
+      photoToggle.addEventListener("click", () => {
+        const expanded = photoGrid.classList.toggle("expanded");
+        photoToggle.textContent = expanded ? "Show fewer photos" : "Show more photos";
+      });
+    }
+  </script>
+</body>
+</html>
