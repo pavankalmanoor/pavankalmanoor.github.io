@@ -193,12 +193,12 @@
     main {
       width: min(1080px, 100% - 32px);
       margin: 0 auto;
-      padding-top: 110px;
+      padding-top: 0px; /* tightened further */
       padding-bottom: 72px;
     }
 
     .section {
-      padding: 72px 0;
+      padding: 50px 0; /* reduced overall vertical padding */
     }
 
     .section:not(:last-of-type) {
@@ -235,6 +235,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
       gap: 40px;
+      padding-top: 10px; /* NEW: reduces wasted space above hero */
       align-items: center;
     }
 
@@ -318,10 +319,39 @@
 
     .hero-visual {
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
+    }
+
+    .hero-profile-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .hero-photo {
+      margin-top: 240px; /* lowered further */ /* moved even further down */ /* moved further down */ /* significantly lower profile picture */ /* align photo with Portfolio text */ /* move photo downward */
+      align-self: flex-start;
+      width: 260px;
+      height: 320px;
+      border-radius: var(--radius-xxl);
+      margin-left: 30px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--shadow-soft);
+      background: rgba(7, 9, 20, 0.95);
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
     }
 
     .hero-card {
+      margin-top: 28px;
       width: 100%;
       max-width: 320px;
       border-radius: var(--radius-xxl);
@@ -713,6 +743,10 @@
       </div>
       </div>
       <div class="hero-visual">
+      <div class="hero-profile-stack">
+        <div class="hero-photo">
+          <img src="Photos/profile.jpg" alt="Portrait of Pavan Kalmanoor" />
+        </div>
         <div class="hero-card">
           <div class="hero-card-header">
             <span class="hero-dot"></span>
@@ -721,18 +755,19 @@
           </div>
           <div class="hero-card-body">
             <p class="hero-card-label">Current Focus</p>
-            <p class="hero-card-title">Advanced Analytics & Insights</p>
+            <p class="hero-card-title">Advanced Analytics &amp; Insights</p>
             <p class="hero-card-text">
               Exploring patterns in data, building insightful dashboards, and turning raw information into clear, actionable decisions.
             </p>
             <div class="hero-tag-row">
-              <span class="hero-tag">Excel & SQL</span>
+              <span class="hero-tag">Excel &amp; SQL</span>
               <span class="hero-tag">Python</span>
               <span class="hero-tag">Power BI</span>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </section>
 
     <section id="about" class="section section-observe">
@@ -996,3 +1031,4 @@
   </script>
 </body>
 </html>
+
