@@ -715,18 +715,34 @@
       track.appendChild(div);
     }
 
-    // drag to scroll
-    let isDown = false, startX, scrollLeft;
-    track.addEventListener('mousedown', e => {
-      isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft;
+    // edge-triggered auto-scroll
+    const EDGE = 120;    // px from edge that triggers scroll
+    const MAX_SPEED = 10; // max px per frame
+    let autoScrollRAF = null;
+    let scrollSpeed = 0;
+
+    track.addEventListener('mousemove', e => {
+      const rect = track.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const w = rect.width;
+
+      if (x < EDGE) {
+        // left zone — speed proportional to how close to edge
+        scrollSpeed = -MAX_SPEED * (1 - x / EDGE);
+      } else if (x > w - EDGE) {
+        // right zone
+        scrollSpeed = MAX_SPEED * (1 - (w - x) / EDGE);
+      } else {
+        scrollSpeed = 0;
+      }
     });
-    track.addEventListener('mouseleave', () => isDown = false);
-    track.addEventListener('mouseup',    () => isDown = false);
-    track.addEventListener('mousemove',  e => {
-      if (!isDown) return;
-      e.preventDefault();
-      track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.4;
-    });
+
+    track.addEventListener('mouseleave', () => { scrollSpeed = 0; });
+
+    (function autoScroll() {
+      if (scrollSpeed !== 0) track.scrollLeft += scrollSpeed;
+      requestAnimationFrame(autoScroll);
+    })();
   </script>
 </body>
 </html>
