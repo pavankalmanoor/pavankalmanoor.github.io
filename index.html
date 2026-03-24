@@ -3,216 +3,900 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Photography — Pavan Kalmanoor</title>
+  <title>Pavan Kalmanoor | Portfolio</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
 
+  <style>
     :root {
       --bg: #e8192c;
+      --bg-1: #d01627;
+      --bg-2: #c01222;
       --black: #0a0a0a;
       --white: #ffffff;
+      --off-white: #fff5f5;
       --grey: rgba(0,0,0,0.5);
+      --border: rgba(0,0,0,0.12);
+      --border-w: rgba(255,255,255,0.2);
+      --radius: 16px;
+      --radius-lg: 22px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.25);
       --ease: cubic-bezier(0.22,0.61,0.36,1);
     }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Barlow', system-ui, sans-serif;
       background: var(--bg);
       color: var(--black);
+      overflow-x: hidden;
       cursor: none;
     }
 
-    /* cursor */
-    #cur-o { position:fixed; width:32px; height:32px; border:1.5px solid var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition: width .25s var(--ease), height .25s var(--ease), background .25s; }
-    #cur-i { position:fixed; width:5px; height:5px; background:var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
-    body.ch #cur-o { width:48px; height:48px; background:rgba(0,0,0,0.08); }
-
-    /* header */
-    .g-header {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 40px;
-      background: rgba(232,25,44,0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,0,0,0.1);
+    /* ── CURSOR ── */
+    #cursor-outer {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid var(--black); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .25s var(--ease), height .25s var(--ease),
+                  border-color .2s, background .2s, border-radius .2s;
     }
-    .g-back {
+    #cursor-inner {
+      position: fixed; width: 6px; height: 6px;
+      background: var(--black); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: opacity .2s;
+    }
+    body.cursor-hover #cursor-outer { width: 54px; height: 54px; background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.6); }
+    body.cursor-text  #cursor-outer { width: 3px; height: 42px; border-radius: 2px; }
+    body.cursor-text  #cursor-inner { opacity: 0; }
+
+    /* ── NOISE ── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+      opacity: 0.035; pointer-events: none; z-index: 1000;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-vignette {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(0,0,0,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 85% 90%, rgba(0,0,0,0.06) 0%, transparent 55%);
+      pointer-events: none; z-index: -3;
+    }
+    .bg-grid {
+      position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(0,0,0,0.18) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,0,0,0.18) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 40%, black 0%, transparent 80%);
+      pointer-events: none; z-index: -2;
+    }
+
+    /* ── SCROLL BAR ── */
+    .scroll-bar { position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 200; }
+    .scroll-bar-fill { height: 100%; width: 0%; background: var(--black); transition: width .08s linear; }
+
+    /* ── HEADER ── */
+    .site-header {
+      position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+      width: min(1100px, calc(100% - 28px)); padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.88); backdrop-filter: blur(24px) saturate(1.2);
+      border: 1px solid rgba(0,0,0,0.15);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      z-index: 100;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; }
+    .logo-mark {
+      width: 38px; height: 38px;
+      display: grid; place-items: center;
+      position: relative; flex-shrink: 0;
+    }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; color: var(--white); }
+    .logo-role { font-size: 11px; color: rgba(255,255,255,0.5); }
+    .nav { display: flex; align-items: center; gap: 2px; }
+    .nav-link {
+      color: rgba(255,255,255,0.6); text-decoration: none; padding: 6px 13px;
+      border-radius: 999px; font-size: 13px; transition: color .2s, background .2s;
+    }
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+    .nav-link.active { color: var(--bg); background: var(--white); font-weight: 600; }
+
+    /* ── LAYOUT ── */
+    main { width: min(1100px, calc(100% - 28px)); margin: 0 auto; padding-bottom: 80px; }
+    .section { padding: 100px 0 20px; }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(0,0,0,0.12), transparent); }
+
+    .section-label {
       display: inline-flex; align-items: center; gap: 8px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 13px; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase; text-decoration: none; color: var(--white);
-      padding: 8px 18px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 999px;
-      transition: background .2s, color .2s, border-color .2s;
+      font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(0,0,0,0.55); margin-bottom: 14px;
     }
-    .g-back:hover { background: var(--black); color: #fff; border-color: var(--black); }
-
-    .g-title {
+    .section-label::before { content: ''; width: 18px; height: 1px; background: var(--black); opacity: .4; }
+    .section-header { max-width: 600px; margin-bottom: 44px; }
+    .section-header h2 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .04em;
-      color: var(--white);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800; letter-spacing: .02em; line-height: 0.98;
+      text-transform: uppercase; margin: 0 0 14px;
     }
-    .g-count { font-size: 13px; color: rgba(0,0,0,0.5); letter-spacing: .06em; }
+    .section-sub { color: var(--grey); line-height: 1.8; font-size: 15px; font-weight: 300; letter-spacing: .01em; }
 
-    /* masonry grid */
-    .g-wrap { padding: 28px 40px 60px; }
-
-    .masonry { columns: 3; column-gap: 14px; }
-    @media(max-width: 900px) { .masonry { columns: 2; } }
-    @media(max-width: 540px)  { .masonry { columns: 1; } }
-
-    .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 14px;
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding-top: 80px;
       position: relative;
-      border-radius: 12px;
       overflow: hidden;
-      cursor: none;
-      border: 1px solid rgba(255,255,255,0.15);
     }
-    .masonry-item img {
-      width: 100%; display: block;
-      transition: transform .6s var(--ease), filter .4s;
-    }
-    .masonry-item:hover img { transform: scale(1.04); filter: brightness(1.05); }
 
-    /* lightbox */
-    #lb {
-      position: fixed; inset: 0; z-index: 9000;
-      background: rgba(0,0,0,0.94);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity .35s var(--ease);
+    .hero-bg-name {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(120px, 22vw, 280px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+      color: rgba(0,0,0,0.055);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 100%;
+    }
+
+    .hero-content h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(64px, 10vw, 130px);
+      font-weight: 800; letter-spacing: .01em; line-height: 0.92;
+      text-transform: uppercase; margin: 16px 0 0;
+      max-width: 100%;
+    }
+
+    /* outlined stroke text for second line */
+    .hero-content h1 .stroke {
+      -webkit-text-stroke: 2px var(--black);
+      color: transparent;
+    }
+
+    .hero-rule {
+      width: 100%; height: 1px;
+      background: rgba(0,0,0,0.2);
+      margin: 32px 0;
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-bottom-left { flex: 1; min-width: 260px; }
+
+    .accent { color: var(--white); }
+    .hero-sub {
+      color: rgba(0,0,0,0.7); line-height: 1.75;
+      font-size: 17px; font-weight: 300;
+      max-width: 480px; letter-spacing: .01em;
+      margin: 0 0 28px;
+    }
+
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* scroll indicator */
+    .hero-scroll {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(0,0,0,0.4); flex-shrink: 0;
+    }
+    .hero-scroll-line {
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { transform: scaleY(1); opacity: .6; }
+      50% { transform: scaleY(0.5); opacity: 1; }
+    }
+
+    .hero-chips { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 5px 14px; border-radius: 999px;
+      background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.15);
+      font-size: 12px; color: rgba(0,0,0,0.65);
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 999px;
+      font-size: 14px; font-family: 'Barlow', sans-serif; font-weight: 500;
+      border: none; cursor: none; text-decoration: none;
+      transition: transform .3s var(--ease), box-shadow .3s, background .3s;
+      position: relative; overflow: hidden;
+    }
+    .btn.primary {
+      background: var(--black); color: var(--white); font-weight: 600;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+    }
+    .btn.primary:hover { box-shadow: 0 14px 40px rgba(0,0,0,0.45); }
+    .btn.ghost {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.35);
+      color: var(--white); backdrop-filter: blur(10px);
+    }
+    .btn.ghost:hover { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.55); }
+
+    .hero-chips { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 5px 14px; border-radius: 999px;
+      background: rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.15);
+      font-size: 12px; color: rgba(0,0,0,0.65);
+    }
+
+    /* ── HERO VISUAL ── */
+    .hero-visual { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding-top: 40px; }
+    .hero-photo {
+      width: 250px; height: 310px; border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.15);
+      box-shadow: var(--shadow); position: relative;
+    }
+    .hero-photo::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.3));
+    }
+    .hero-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .7s var(--ease); }
+    .hero-photo:hover img { transform: scale(1.05); }
+
+    .hero-card {
+      width:100%; max-width:300px; border-radius: var(--radius-lg);
+      background: rgba(255,240,240,0.55); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.7);
+      overflow: hidden;
+      transform: rotate3d(1,-1,0,5deg) translateY(0);
+      animation: heroFloat 9s ease-in-out infinite; position: relative;
+    }
+    .hero-card::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 20% 0%, rgba(232,25,44,0.04), transparent 55%);
+      pointer-events:none;
+    }
+    @keyframes heroFloat {
+      0%,100% { transform: rotate3d(1,-1,0,5deg) translateY(0px); }
+      50% { transform: rotate3d(1,-1,0,2deg) translateY(-10px); }
+    }
+    .card-dots { display:flex; gap:6px; padding:11px 14px; border-bottom:1px solid rgba(0,0,0,0.06); }
+    .dot { width:9px; height:9px; border-radius:50%; }
+    .dot:nth-child(1){background:#ff5f57} .dot:nth-child(2){background:#febc2e} .dot:nth-child(3){background:#28c840}
+    .card-body { padding:16px 18px 20px; }
+    .card-eyebrow { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:rgba(0,0,0,0.4); margin-bottom:6px; }
+    .card-title { font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:17px; margin-bottom:8px; color:var(--black); text-transform:uppercase; letter-spacing:.02em; }
+    .card-desc { font-size:12.5px; color:rgba(0,0,0,0.55); line-height:1.7; margin-bottom:14px; }
+    .card-tags { display:flex; flex-wrap:wrap; gap:6px; }
+    .card-tag { font-size:11px; padding:5px 10px; border-radius:999px; background:rgba(0,0,0,0.05); border:1px solid rgba(0,0,0,0.1); color:rgba(0,0,0,0.65); }
+
+    /* ── GENERIC CARD ── */
+    .card {
+      background: rgba(255,240,240,0.55);
       backdrop-filter: blur(12px);
+      border-radius: var(--radius);
+      padding: 24px 24px 26px;
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.7);
+      position: relative; overflow: hidden;
+      transition: transform .4s var(--ease), border-color .4s, box-shadow .4s;
     }
-    #lb.open { opacity: 1; pointer-events: all; }
-    #lb-img {
-      max-width: 90vw; max-height: 90vh;
-      border-radius: 10px; object-fit: contain;
-      transform: scale(0.94); transition: transform .4s var(--ease);
-      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    .card::before {
+      content: ''; position: absolute; top:0; left:0; width:100%; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+      opacity: 0; transition: opacity .4s;
     }
-    #lb.open #lb-img { transform: scale(1); }
-    #lb-close {
-      position: absolute; top: 20px; right: 24px;
-      width: 42px; height: 42px; border-radius: 50%;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-      color: #fff; font-size: 20px; line-height: 42px; text-align: center;
-      cursor: none; transition: background .2s, transform .2s;
-    }
-    #lb-close:hover { background: var(--bg); transform: scale(1.1); }
-    #lb-nav {
-      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
-      display: flex; align-items: center; gap: 16px;
-    }
-    .lb-btn {
-      width: 40px; height: 40px; border-radius: 50%;
-      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-      color: #fff; font-size: 18px; line-height: 40px; text-align: center;
-      cursor: none; transition: background .2s; user-select: none;
-    }
-    .lb-btn:hover { background: rgba(255,255,255,0.25); }
-    #lb-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: .1em; color: rgba(255,255,255,0.6); }
+    .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.75); box-shadow: 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8); }
+    .card:hover::before { opacity: 1; }
+    .card h3 { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; margin-bottom:8px; color: var(--black); }
+    .card p { color:rgba(0,0,0,0.65); font-size:14px; line-height:1.8; font-weight:300; }
 
-    /* reveal */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s var(--ease), transform .7s var(--ease); }
-    .reveal.in { opacity: 1; transform: translateY(0); }
+    /* ── ABOUT ── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .about-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 100px;
+    }
+    .about-photo {
+      width: 100%; aspect-ratio: 3/4;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.15);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+    }
+    .about-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .6s var(--ease); }
+    .about-photo:hover img { transform: scale(1.04); }
+
+    .about-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .about-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: var(--radius);
+      background: rgba(0,0,0,0.12);
+      border: 1px solid rgba(0,0,0,0.1);
+      font-size: 13px; color: var(--black);
+      text-decoration: none;
+      transition: background .2s, transform .2s;
+      word-break: break-all;
+    }
+    .about-link:not(.no-hover):hover { background: rgba(0,0,0,0.2); transform: translateX(3px); }
+    .about-link.no-hover { cursor: default; }
+    .about-link-icon { flex-shrink: 0; display: flex; align-items: center; opacity: 0.6; }
+
+    .about-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .about-card .card-number {
+      position:absolute; top:18px; right:18px;
+      font-family:'Barlow Condensed',sans-serif; font-size:44px; font-weight:800;
+      color:rgba(0,0,0,0.05); line-height:1; user-select:none;
+    }
+
+    @media(max-width:760px) {
+      .about-layout { grid-template-columns: 1fr; }
+      .about-sidebar { position: static; }
+      .about-photo { aspect-ratio: 4/3; }
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .skill-card ul { list-style:none; margin:12px 0 0; }
+    .skill-card ul li {
+      display:flex; align-items:flex-start; gap:10px;
+      padding:7px 0; color:rgba(0,0,0,0.6); font-size:14px;
+      border-bottom:1px solid rgba(0,0,0,0.06);
+    }
+    .skill-card ul li:last-child { border-bottom:none; }
+    .skill-card ul li::before {
+      content:''; flex-shrink:0; width:5px; height:5px;
+      border-radius:50%; background:var(--black); margin-top:7px; opacity:.4;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .project-pill {
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 12px; border-radius:999px;
+      background:rgba(0,0,0,0.07); color:rgba(0,0,0,0.65);
+      font-size:11px; font-weight:500; letter-spacing:.05em; margin-bottom:10px;
+    }
+    .project-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--black); opacity:.5; }
+    .project-meta { list-style:none; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:8px; }
+    .project-meta li {
+      font-size:11.5px; color:var(--white); font-weight:500;
+      padding:4px 12px; background:var(--black);
+      border:1px solid rgba(0,0,0,0.8); border-radius:999px;
+      letter-spacing: .03em;
+    }
+    .project-github {
+      display:inline-flex; align-items:center; gap:7px;
+      margin-top:16px; font-size:13px; font-weight:500;
+      color:var(--white); text-decoration:none;
+      border:1px solid rgba(0,0,0,0.8); padding:7px 14px; border-radius:999px;
+      background:var(--black);
+      transition:background .25s, border-color .25s, transform .25s;
+    }
+    .project-github:hover { background:#222; transform:translateY(-1px); }
+    .project-github svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
+
+    /* ── PHOTOGRAPHY TILE ── */
+    .photo-tile {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      min-height: 420px;
+      border-radius: 22px;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: none;
+    }
+    .photo-tile-bg {
+      position: absolute; inset: 0;
+      background: url('Photos/photo1.jpg') center/cover no-repeat;
+      transition: transform .7s cubic-bezier(.22,.61,.36,1), filter .5s;
+      filter: brightness(0.65);
+    }
+    .photo-tile:hover .photo-tile-bg {
+      transform: scale(1.04);
+      filter: brightness(0.5);
+    }
+    .photo-tile-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 55%);
+    }
+    .photo-tile-content {
+      position: absolute;
+      bottom: 36px; left: 40px; right: 40px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 20px;
+    }
+    .photo-tile-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(52px, 8vw, 100px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: #fff;
+      line-height: 0.9;
+    }
+    .photo-tile-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .photo-tile-arrow {
+      display: flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: #fff; font-size: 22px;
+      transition: background .3s, border-color .3s, transform .3s;
+      flex-shrink: 0;
+    }
+    .photo-tile:hover .photo-tile-arrow {
+      background: #fff;
+      color: #000;
+      border-color: #fff;
+      transform: rotate(45deg);
+    }
+
+    /* ── EDGE SCROLL INDICATORS ── */
+    .scroll-edge {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 52px; display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; pointer-events: none; transition: opacity .4s var(--ease); z-index: 50;
+    }
+    .scroll-edge.visible { opacity: 1; }
+    .scroll-edge-left  { left: 10px; }
+    .scroll-edge-right { right: 10px; }
+    .edge-arrow { font-size: 28px; color: var(--black); line-height: 1; }
+    .scroll-edge-left  .edge-arrow { animation: edgePulseLeft 1.4s ease-in-out infinite; }
+    .scroll-edge-right .edge-arrow { animation: edgePulseRight 1.4s ease-in-out infinite; }
+    @keyframes edgePulseLeft {
+      0%,100% { transform: translateX(0); opacity: .4; }
+      50%      { transform: translateX(-4px); opacity: 1; }
+    }
+    @keyframes edgePulseRight {
+      0%,100% { transform: translateX(0); opacity: .4; }
+      50%      { transform: translateX(4px); opacity: 1; }
+    }
+    .edge-label { font-size: 10px; color: rgba(0,0,0,0.5); text-align: center; letter-spacing: .06em; line-height: 1.5; text-transform: uppercase; }
+
+    /* ── CONTACT ── */
+    .contact-layout { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+    .contact-links { list-style:none; margin:14px 0 0; }
+    .contact-links li {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:9px 0; font-size:14px; color:rgba(0,0,0,0.55);
+      border-bottom:1px solid rgba(0,0,0,0.08);
+    }
+    .contact-links li:last-child { border-bottom:none; }
+    .contact-links a { color:var(--black); text-decoration:none; font-weight:600; transition:opacity .2s; }
+    .contact-links a:hover { opacity:.6; }
+
+    /* ── FOOTER ── */
+    .footer {
+      width:min(1100px,calc(100% - 28px)); margin:0 auto 24px;
+      padding-top:20px; border-top:1px solid rgba(0,0,0,0.12);
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      font-size:12px; color:rgba(0,0,0,0.45);
+    }
+    .footer-dot { color:var(--black); margin:0 5px; opacity:.4; }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(48px); transition:opacity .7s var(--ease), transform .8s var(--ease); }
+    .reveal.in { opacity:1; transform:translateY(0); }
+    .reveal-delay-1{transition-delay:.1s} .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s} .reveal-delay-4{transition-delay:.4s}
+
+    .hero-reveal { opacity:0; transform:translateY(28px); animation:hReveal .8s var(--ease) forwards; }
+    .hr1{animation-delay:.1s} .hr2{animation-delay:.25s} .hr3{animation-delay:.4s}
+    .hr4{animation-delay:.55s} .hr5{animation-delay:.7s}
+    .hr-photo{animation-delay:.3s} .hr-card{animation-delay:.5s}
+    @keyframes hReveal { to { opacity:1; transform:translateY(0); } }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .hero { padding-top: 140px; }
+      .about-layout { grid-template-columns: 1fr; }
+      .about-sidebar { position: static; }
+    }
+    @media(max-width:640px){
+      .site-header{flex-direction:column; align-items:flex-start; border-radius:18px; padding:12px 14px;}
+      .nav{width:100%; justify-content:space-between;}
+      .hero{padding-top:120px;}
+      .footer{flex-direction:column; align-items:flex-start;}
+      body{cursor:auto;}
+      #cursor-outer,#cursor-inner{display:none;}
+    }
   </style>
 </head>
 <body>
 
-  <div id="cur-o"></div>
-  <div id="cur-i"></div>
+  <div id="cursor-outer"></div>
+  <div id="cursor-inner"></div>
 
-  <div id="lb">
-    <div id="lb-close">✕</div>
-    <img id="lb-img" src="" alt="" />
-    <div id="lb-nav">
-      <div class="lb-btn" id="lb-prev">‹</div>
-      <div id="lb-counter">01 / 19</div>
-      <div class="lb-btn" id="lb-next">›</div>
+  <div class="scroll-bar"><div class="scroll-bar-fill" id="scroll-fill"></div></div>
+
+  <div class="bg-vignette"></div>
+  <div class="bg-grid"></div>
+
+  <header class="site-header">
+    <div class="logo">
+      <div class="logo-mark">
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- outer rotated square frame -->
+          <rect x="5" y="5" width="28" height="28" rx="2"
+                stroke="white" stroke-width="1.5" fill="none"
+                transform="rotate(45 19 19)"/>
+          <!-- inner solid square -->
+          <rect x="10" y="10" width="18" height="18" rx="1.5" fill="white" opacity="0.15"/>
+          <!-- PK letters -->
+          <text x="19" y="23" text-anchor="middle"
+                font-family="Barlow Condensed, sans-serif"
+                font-weight="800" font-size="13"
+                letter-spacing="0.5"
+                fill="white">PK</text>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-name">Pavan Kalmanoor</span>
+        <span class="logo-role">Data Analytics & BI</span>
+      </div>
     </div>
-  </div>
-
-  <header class="g-header">
-    <a href="index.html" class="g-back">← Back</a>
-    <div class="g-title">Photography</div>
-    <div class="g-count">19 photos</div>
+    <nav class="nav">
+      <a href="#home"        class="nav-link active">Home</a>
+      <a href="#about"       class="nav-link">About</a>
+      <a href="#skills"      class="nav-link">Skills</a>
+      <a href="#projects"    class="nav-link">Projects</a>
+      <a href="#photography" class="nav-link">Photography</a>
+      <a href="#contact"     class="nav-link">Contact</a>
+    </nav>
   </header>
 
-  <div class="g-wrap">
-    <div class="masonry" id="masonry"></div>
-  </div>
+  <main>
 
-  <script>
-    /* cursor */
-    const co = document.getElementById('cur-o');
-    const ci = document.getElementById('cur-i');
+    <!-- HERO -->
+    <section id="home" class="section hero">
+      <div class="hero-bg-name">Pavan</div>
+      <div class="hero-content">
+        <p class="section-label hero-reveal hr1">Portfolio · 2025</p>
+        <h1 class="hero-reveal hr2">
+          Turning<br>
+          <span class="accent">messy data</span><br>
+          <span class="stroke">into stories.</span>
+        </h1>
+        <div class="hero-rule hero-reveal hr3"></div>
+        <div class="hero-bottom hero-reveal hr4">
+          <div class="hero-bottom-left">
+            <p class="hero-sub">I'm Pavan — a data analytics professional who loves transforming raw numbers into clean dashboards, sharp insights, and better decisions.</p>
+            <div class="hero-actions">
+              <a href="#projects" class="btn primary magnetic">View Projects</a>
+              <a href="#contact"  class="btn ghost magnetic">Let's Connect</a>
+            </div>
+            <div class="hero-chips" style="margin-top:20px;">
+              <span class="chip">Data Analytics</span>
+              <span class="chip">Business Intelligence</span>
+              <span class="chip">Photography</span>
+              <span class="chip">Open to Roles</span>
+            </div>
+          </div>
+          <div class="hero-scroll hero-reveal hr5">
+            <div class="hero-scroll-line"></div>
+            <span>scroll</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">About</p>
+        <h2>Who I am and how I work</h2>
+      </div>
+
+      <div class="about-layout reveal">
+        <!-- Left: photo + contact -->
+        <div class="about-sidebar">
+          <div class="about-photo">
+            <img src="Photos/profile.jpg" alt="Portrait of Pavan Kalmanoor" />
+          </div>
+          <div class="about-links">
+            <a href="/cdn-cgi/l/email-protection#600b010c0d010e0f0f12100116010e20070d01090c4e030f0d" class="about-link">
+              <span class="about-link-icon">✉</span>
+              <span><span class="__cf_email__" data-cfemail="600b010c0d010e0f0f12100116010e20070d01090c4e030f0d">[email&#160;protected]</span></span>
+            </a>
+            <a href="https://github.com/pavankalmanoor" target="_blank" class="about-link">
+              <span class="about-link-icon">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              </span>
+              <span>github.com/pavankalmanoor</span>
+            </a>
+            <div class="about-link no-hover">
+              <span class="about-link-icon">📍</span>
+              <span>Boston, USA</span>
+            </div>
+            <div class="about-link no-hover">
+              <span class="about-link-icon">◉</span>
+              <span>Open to roles</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: bio cards -->
+        <div class="about-cards">
+          <div class="card about-card reveal-delay-1">
+            <span class="card-number">01</span>
+            <h3>Background</h3>
+            <p>I'm a data science and analytics professional with experience spanning predictive modelling, machine learning, and business intelligence. I've built end-to-end pipelines — from messy raw data through to dashboards and models that drive real decisions.</p>
+          </div>
+          <div class="card about-card reveal-delay-2">
+            <span class="card-number">02</span>
+            <h3>How I think</h3>
+            <p>I start by understanding the business question, not just the data. From there I identify the right analytical approach — whether that's a clean SQL query, a regression model, or a full ML pipeline — and build something that's reproducible, interpretable, and actually used.</p>
+          </div>
+          <div class="card about-card reveal-delay-3">
+            <span class="card-number">03</span>
+            <h3>What I'm looking for</h3>
+            <p>A role where rigorous analysis meets real impact — ideally as a Data Scientist or Senior Analyst working on problems that require both statistical thinking and a deep understanding of the business context behind the numbers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Skills</p>
+        <h2>Tools I actually ship real work with</h2>
+        <p class="section-sub">A quick snapshot of what I'm comfortable using in production environments.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="card skill-card reveal reveal-delay-1">
+          <h3>Data Science & Analytics</h3>
+          <ul>
+            <li>Python — pandas, NumPy, matplotlib, seaborn</li>
+            <li>SQL — complex queries, joins, window functions</li>
+            <li>Statistical analysis, hypothesis testing, A/B testing</li>
+            <li>Data wrangling, cleaning, and feature engineering</li>
+            <li>Dashboard & reporting — Power BI, Excel, Tableau</li>
+            <li>Exploratory data analysis and storytelling with data</li>
+          </ul>
+        </div>
+        <div class="card skill-card reveal reveal-delay-2">
+          <h3>Machine Learning & Soft Skills</h3>
+          <ul>
+            <li>Supervised learning — regression, classification</li>
+            <li>NLP — TF-IDF, embeddings, BERT fine-tuning</li>
+            <li>scikit-learn, model evaluation and validation</li>
+            <li>Translating technical findings to non-technical audiences</li>
+            <li>Stakeholder collaboration and problem scoping</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Projects</p>
+        <h2>Selected work</h2>
+        <p class="section-sub">Analytics, ML, NLP, and creative experiments that show how I think.</p>
+      </div>
+      <div class="projects-grid">
+
+        <article class="card project-card reveal reveal-delay-1">
+          <div class="project-pill">Data Analytics</div>
+          <h3>Operational Analytics Dashboard</h3>
+          <p>Designed an Excel / Power BI dashboard to monitor device health, usage patterns, and Windows 11 readiness across hundreds of laptops — surfacing the right metrics to guide refresh and warranty decisions.</p>
+          <ul class="project-meta">
+            <li>Excel, Power BI</li>
+            <li>Operational & reliability</li>
+          </ul>
+          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View on GitHub
+          </a>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-2">
+          <div class="project-pill">Machine Learning</div>
+          <h3>Vehicle Accident Hotspot Detection</h3>
+          <p>Used geospatial and time-series analysis on US accident data to detect high-risk locations and temporal patterns, supporting safety-focused decision-making.</p>
+          <ul class="project-meta">
+            <li>Python, pandas</li>
+            <li>Geo & time-series</li>
+          </ul>
+          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View on GitHub
+          </a>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-3">
+          <div class="project-pill">Data Science</div>
+          <h3>Student Mental Health & Stress Analysis</h3>
+          <p>Analysed patterns in student mental health data to identify key stressors, academic pressures, and behavioural indicators — surfacing insights to support early intervention and wellbeing decisions.</p>
+          <ul class="project-meta">
+            <li>Python, pandas</li>
+            <li>EDA & visualisation</li>
+          </ul>
+          <a class="project-github" href="https://github.com/pavankalmanoor/student-stress-analysis" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View on GitHub
+          </a>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-4">
+          <div class="project-pill">Creative</div>
+          <h3>Photography-Driven Storytelling</h3>
+          <p>Used photography and light editing to document daily life and urban scenes — a visual practice that directly shapes how I design dashboards and data interfaces.</p>
+          <ul class="project-meta">
+            <li>Photography</li>
+            <li>Lightroom / editing</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- PHOTOGRAPHY STRIP -->
+    <section id="photography" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Photography</p>
+      </div>
+      <a href="gallery.html" class="photo-tile reveal">
+        <div class="photo-tile-bg"></div>
+        <div class="photo-tile-overlay"></div>
+        <div class="photo-tile-content">
+          <div class="photo-tile-label">Frames &amp;<br>Moments</div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px;">
+            <div class="photo-tile-sub">19 photos<br>View gallery →</div>
+            <div class="photo-tile-arrow">↗</div>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Contact</p>
+        <h2>Let's talk</h2>
+        <p class="section-sub">Open to roles in data science and analytics — or just interesting problems to think through together. The best way to reach me is by email.</p>
+      </div>
+      <div class="reveal">
+        <a href="/cdn-cgi/l/email-protection#e18a808d8c808f8e8e93918097808fa1868c80888dcf828e8c" class="btn primary magnetic">Email Me</a>
+        <a href="https://github.com/pavankalmanoor" target="_blank" class="btn ghost magnetic" style="margin-left:12px;">GitHub</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year"></span> Pavan Kalmanoor</span>
+    <span>Built with a bit of caffeine<span class="footer-dot">·</span>some care<span class="footer-dot">·</span>and a lot of data.</span>
+  </footer>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    /* ── SCROLL PROGRESS ── */
+    const fill = document.getElementById('scroll-fill');
+    window.addEventListener('scroll', () => {
+      const d = document.documentElement;
+      fill.style.width = Math.min(100, (window.scrollY / (d.scrollHeight - innerHeight)) * 100) + '%';
+    }, { passive: true });
+
+    /* ── CURSOR ── */
+    const co = document.getElementById('cursor-outer');
+    const ci = document.getElementById('cursor-inner');
     document.addEventListener('mousemove', e => {
       co.style.left = e.clientX + 'px'; co.style.top = e.clientY + 'px';
       ci.style.left = e.clientX + 'px'; ci.style.top = e.clientY + 'px';
     });
-    document.querySelectorAll('a,.masonry-item,.lb-btn,#lb-close').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
+    document.querySelectorAll('a,button,.card,.strip-photo').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    document.querySelectorAll('p,h1,h2,h3,li,span').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
     });
 
-    /* build masonry */
-    const masonry = document.getElementById('masonry');
-    const N = 19;
-    const imgs = [];
+    /* ── MAGNETIC BUTTONS ── */
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.18}px, ${(e.clientY - r.top - r.height/2) * 0.22}px)`;
+      });
+      btn.addEventListener('mouseleave', () => btn.style.transform = '');
+    });
 
-    for (let i = 1; i <= N; i++) {
-      const wrap = document.createElement('div');
-      wrap.className = 'masonry-item reveal';
-
-      const img = document.createElement('img');
-      img.src     = `Photos/photo${i}.jpg`;
-      img.alt     = `Photo ${i}`;
-      img.loading = i <= 6 ? 'eager' : 'lazy';
-
-      wrap.appendChild(img);
-      masonry.appendChild(wrap);
-      imgs.push(img);
-
-      wrap.addEventListener('click', () => openLb(i - 1));
-    }
-
-    /* scroll reveal */
+    /* ── SCROLL REVEAL ── */
     const ro = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-    /* lightbox */
-    const lb     = document.getElementById('lb');
-    const lbImg  = document.getElementById('lb-img');
-    const lbCtr  = document.getElementById('lb-counter');
-    let current  = 0;
+    /* ── ACTIVE NAV ── */
+    const secs = document.querySelectorAll('section[id]');
+    const navLs = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      secs.forEach(s => { if (window.scrollY >= s.offsetTop - 140) cur = s.id; });
+      navLs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+    }, { passive: true });
 
-    const openLb = (idx) => {
-      current = idx;
-      lbImg.src = imgs[idx].src;
-      lbCtr.textContent = `${String(idx + 1).padStart(2,'0')} / ${N}`;
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    };
-    const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+    /* ── YEAR ── */
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-    document.getElementById('lb-close').addEventListener('click', closeLb);
-    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+    /* ── PARALLAX GRID ── */
+    let lastScroll = 0, gridX = 0, targetX = 0;
+    const MAX_SHIFT = 60;
+    window.addEventListener('scroll', () => {
+      const delta = window.scrollY - lastScroll;
+      lastScroll = window.scrollY;
+      targetX += delta * 0.18;
+      targetX = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, targetX));
+    }, { passive: true });
+    (function animateGrid() {
+      gridX += (targetX - gridX) * 0.06;
+      const g = document.querySelector('.bg-grid');
+      if (g) g.style.transform = `translateX(${gridX}px)`;
+      requestAnimationFrame(animateGrid);
+    })();
 
-    document.getElementById('lb-prev').addEventListener('click', () => openLb((current - 1 + N) % N));
-    document.getElementById('lb-next').addEventListener('click', () => openLb((current + 1) % N));
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape')     closeLb();
-      if (e.key === 'ArrowLeft')  openLb((current - 1 + N) % N);
-      if (e.key === 'ArrowRight') openLb((current + 1) % N);
-    });
   </script>
 </body>
 </html>
