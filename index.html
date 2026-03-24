@@ -53,7 +53,8 @@
       transform: translate(-50%,-50%);
       transition: opacity .2s;
     }
-    body.cursor-hover #cursor-outer { width: 54px; height: 54px; background: rgba(0,0,0,0.08); border-color: rgba(0,0,0,0.6); }
+    body.cursor-white #cursor-outer { border-color: var(--white); }
+    body.cursor-white #cursor-inner { background: var(--white); }
     body.cursor-text  #cursor-outer { width: 3px; height: 42px; border-radius: 2px; }
     body.cursor-text  #cursor-inner { opacity: 0; }
 
@@ -140,22 +141,6 @@
       padding-top: 80px;
       position: relative;
       overflow: hidden;
-    }
-
-    .hero-bg-name {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(120px, 22vw, 280px);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -.02em;
-      color: rgba(0,0,0,0.055);
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-      white-space: nowrap;
     }
 
     .hero-content {
@@ -599,7 +584,6 @@
 
     <!-- HERO -->
     <section id="home" class="section hero">
-      <div class="hero-bg-name">Pavan</div>
       <div class="hero-content">
         <p class="section-label hero-reveal hr1">Portfolio · 2025</p>
         <h1 class="hero-reveal hr2">
@@ -849,6 +833,12 @@
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
+
+    const photoTile = document.querySelector('.photo-tile');
+    if (photoTile) {
+      photoTile.addEventListener('mouseenter', () => document.body.classList.add('cursor-white'));
+      photoTile.addEventListener('mouseleave', () => document.body.classList.remove('cursor-white'));
+    }
     document.querySelectorAll('p,h1,h2,h3,li,span').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
