@@ -12,24 +12,25 @@
     html { scroll-behavior: smooth; }
 
     :root {
-      --bg: #e8192c;
+      --bg: #0a0a0a;
       --black: #0a0a0a;
-      --white: #ffffff;
-      --grey: rgba(0,0,0,0.5);
+      --white: #f0f0f0;
+      --red: #e8192c;
+      --grey: rgba(255,255,255,0.4);
       --ease: cubic-bezier(0.22,0.61,0.36,1);
     }
 
     body {
       font-family: 'Barlow', system-ui, sans-serif;
       background: var(--bg);
-      color: var(--black);
+      color: var(--white);
       cursor: none;
     }
 
     /* cursor */
-    #cur-o { position:fixed; width:32px; height:32px; border:1.5px solid var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition: width .25s var(--ease), height .25s var(--ease), background .25s; }
-    #cur-i { position:fixed; width:5px; height:5px; background:var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
-    body.ch #cur-o { width:48px; height:48px; background:rgba(0,0,0,0.08); }
+    #cur-o { position:fixed; width:32px; height:32px; border:1.5px solid var(--white); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition: width .25s var(--ease), height .25s var(--ease), background .25s; }
+    #cur-i { position:fixed; width:5px; height:5px; background:var(--white); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+    body.ch #cur-o { width:48px; height:48px; background:rgba(255,255,255,0.08); }
 
     /* ── NAV BAR (shrunk state) ── */
     .g-header {
@@ -41,19 +42,19 @@
       border-bottom: 1px solid transparent;
     }
     .g-header.scrolled {
-      background: rgba(232,25,44,0.88);
+      background: rgba(10,10,10,0.92);
       backdrop-filter: blur(16px);
-      border-color: rgba(0,0,0,0.1);
+      border-color: rgba(255,255,255,0.08);
     }
     .g-back {
       display: inline-flex; align-items: center; gap: 8px;
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 13px; font-weight: 700; letter-spacing: .12em;
       text-transform: uppercase; text-decoration: none; color: var(--white);
-      padding: 8px 18px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 999px;
+      padding: 8px 18px; border: 1.5px solid rgba(255,255,255,0.35); border-radius: 999px;
       transition: background .2s, color .2s, border-color .2s;
     }
-    .g-back:hover { background: var(--black); color: #fff; border-color: var(--black); }
+    .g-back:hover { background: var(--white); color: var(--black); border-color: var(--white); }
 
     /* title in nav — hidden at top, visible when scrolled */
     .g-nav-title {
@@ -66,7 +67,7 @@
     }
     .g-header.scrolled .g-nav-title { opacity: 1; transform: translateY(0); }
 
-    .g-count { font-size: 13px; color: rgba(255,255,255,0.55); letter-spacing: .06em; }
+    .g-count { font-size: 13px; color: var(--red); letter-spacing: .06em; font-weight: 600; }
 
     /* ── BIG HERO TITLE ── */
     .g-hero {
@@ -131,7 +132,7 @@
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(120px, 20vw, 260px);
       font-weight: 800;
-      color: rgba(0,0,0,0.07);
+      color: rgba(255,255,255,0.04);
       line-height: 1;
       pointer-events: none; user-select: none;
     }
@@ -166,7 +167,7 @@
       border-radius: 12px;
       overflow: hidden;
       cursor: none;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.08);
     }
     .masonry-item img {
       width: 100%; display: block;
@@ -198,7 +199,7 @@
       color: #fff; font-size: 20px; line-height: 42px; text-align: center;
       cursor: none; transition: background .2s, transform .2s;
     }
-    #lb-close:hover { background: var(--bg); transform: scale(1.1); }
+    #lb-close:hover { background: var(--red); transform: scale(1.1); }
     #lb-nav {
       position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
       display: flex; align-items: center; gap: 16px;
@@ -244,7 +245,7 @@
       <span class="line-1"></span>
       <span class="line-2"></span>
     </h1>
-    <p class="g-hero-sub">19 photographs · Pavan Kalmanoor</p>
+    <p class="g-hero-sub"><span style="color:var(--red);font-weight:600;">19 Photographs</span> &nbsp;·&nbsp; <span style="color:var(--red);font-weight:600;">Pavan Kalmanoor</span></p>
     <div class="g-scroll-hint">
       <div class="g-scroll-line"></div>
       <span>scroll</span>
