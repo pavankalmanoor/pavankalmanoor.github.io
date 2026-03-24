@@ -87,31 +87,29 @@
 
     /* ── HEADER ── */
     .site-header {
-      position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
-      width: min(1100px, calc(100% - 28px)); padding: 10px 14px;
+      position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+      width: min(1100px, calc(100% - 28px)); padding: 8px 8px 8px 20px;
       border-radius: 999px;
-      background: rgba(0,0,0,0.88); backdrop-filter: blur(24px) saturate(1.2);
-      border: 1px solid rgba(0,0,0,0.15);
-      box-shadow: 0 8px 40px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
-      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      background: rgba(5,5,5,0.92);
+      backdrop-filter: blur(28px) saturate(1.5);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
       z-index: 100;
     }
     .logo { display: flex; align-items: center; gap: 10px; }
-    .logo-mark {
-      width: 38px; height: 38px;
-      display: grid; place-items: center;
-      position: relative; flex-shrink: 0;
-    }
+    .logo-mark { width: 34px; height: 34px; display: grid; place-items: center; position: relative; flex-shrink: 0; opacity: 0.9; }
     .logo-text { display: flex; flex-direction: column; }
-    .logo-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; color: var(--white); }
-    .logo-role { font-size: 11px; color: rgba(255,255,255,0.5); }
-    .nav { display: flex; align-items: center; gap: 2px; }
+    .logo-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; color: var(--white); letter-spacing: .02em; }
+    .logo-role { font-size: 10px; color: rgba(255,255,255,0.35); letter-spacing: .04em; }
+    .nav { display: flex; align-items: center; gap: 1px; }
     .nav-link {
-      color: rgba(255,255,255,0.6); text-decoration: none; padding: 6px 13px;
-      border-radius: 999px; font-size: 13px; transition: color .2s, background .2s;
+      color: rgba(255,255,255,0.5); text-decoration: none; padding: 7px 14px;
+      border-radius: 999px; font-size: 12.5px; font-weight: 400; letter-spacing: .02em;
+      transition: color .2s, background .2s;
     }
-    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.1); }
-    .nav-link.active { color: var(--bg); background: var(--white); font-weight: 600; }
+    .nav-link:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.07); }
+    .nav-link.active { color: var(--black); background: var(--white); font-weight: 600; }
 
     /* ── LAYOUT ── */
     main { width: min(1100px, calc(100% - 28px)); margin: 0 auto; padding-bottom: 80px; }
@@ -571,23 +569,21 @@
     /* ── RECRUITER MODE ── */
     .recruiter-toggle {
       display: flex; align-items: center; gap: 7px;
-      padding: 6px 12px; border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.06);
-      cursor: none; font-size: 12px;
-      color: rgba(255,255,255,0.7);
+      padding: 8px 16px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      cursor: none; font-size: 11px;
+      color: rgba(255,255,255,0.55);
       font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
       transition: background .2s, border-color .2s, color .2s;
       user-select: none; flex-shrink: 0;
     }
-    .recruiter-toggle:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .recruiter-toggle:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.22); }
     .recruiter-toggle.on { background: var(--white); color: var(--black); border-color: var(--white); }
     .recruiter-toggle .rt-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-      transition: background .2s;
-      flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.25); transition: background .2s; flex-shrink: 0;
     }
     .recruiter-toggle.on .rt-dot { background: var(--red); }
 
@@ -768,7 +764,7 @@
     <div class="rp-fact">Student Mental Health & Stress Analysis — EDA</div>
 
     <div class="rp-cta">
-      <a href="mailto:kalmanoorpavan@gmail.com" class="rp-btn primary">✉ Email Me</a>
+      <a href="/cdn-cgi/l/email-protection#b3d8d2dfded2dddcdcc1c3d2c5d2ddf3d4ded2dadf9dd0dcde" class="rp-btn primary">✉ Email Me</a>
       <a href="https://github.com/pavankalmanoor" target="_blank" class="rp-btn secondary">GitHub Profile</a>
     </div>
   </div>
@@ -822,7 +818,7 @@
     <!-- HERO -->
     <section id="home" class="section hero">
       <div class="hero-content">
-        <p class="section-label hero-reveal hr1">Portfolio · 2026</p>
+        <p class="section-label hero-reveal hr1">Portfolio · 2025</p>
         <h1 class="hero-reveal hr2">
           Turning<br>
           <span class="accent">messy data</span><br>
@@ -1045,7 +1041,7 @@
     <span>Built with a bit of caffeine<span class="footer-dot">·</span>some care<span class="footer-dot">·</span>and a lot of data.</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ── LOADER ── */
     const loader = document.getElementById('loader');
     window.addEventListener('load', () => {
@@ -1143,11 +1139,4 @@
     }, { passive: true });
     (function animateGrid() {
       gridX += (targetX - gridX) * 0.06;
-      const g = document.querySelector('.bg-grid');
-      if (g) g.style.transform = `translateX(${gridX}px)`;
-      requestAnimationFrame(animateGrid);
-    })();
-
-  </script>
-</body>
-</html>
+      const g = document.querySelecto
