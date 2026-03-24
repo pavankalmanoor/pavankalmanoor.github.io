@@ -386,6 +386,52 @@
     .strip-hint { margin-top: 10px; font-size: 12px; color: var(--grey); letter-spacing: .08em; }
     .strip-hint span { color: var(--red); }
 
+    /* ── EDGE SCROLL INDICATORS ── */
+    .scroll-edge {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s var(--ease);
+      z-index: 50;
+    }
+    .scroll-edge.visible { opacity: 1; }
+    .scroll-edge-left  { left: 10px; }
+    .scroll-edge-right { right: 10px; }
+
+    .edge-arrow {
+      font-size: 28px;
+      color: var(--red);
+      line-height: 1;
+      animation: edgePulse 1.4s ease-in-out infinite;
+    }
+    .scroll-edge-left  .edge-arrow { animation-name: edgePulseLeft; }
+    .scroll-edge-right .edge-arrow { animation-name: edgePulseRight; }
+
+    @keyframes edgePulseLeft {
+      0%,100% { transform: translateX(0); opacity: .5; }
+      50%      { transform: translateX(-4px); opacity: 1; }
+    }
+    @keyframes edgePulseRight {
+      0%,100% { transform: translateX(0); opacity: .5; }
+      50%      { transform: translateX(4px); opacity: 1; }
+    }
+
+    .edge-label {
+      font-size: 10px;
+      color: var(--grey);
+      text-align: center;
+      letter-spacing: .06em;
+      line-height: 1.5;
+      text-transform: uppercase;
+    }
+
     /* ── CONTACT ── */
     .contact-layout { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
     .contact-links { list-style:none; margin:14px 0 0; }
@@ -652,11 +698,19 @@
       </div>
 
       <div class="strip-outer reveal">
-        <div class="strip-track" id="strip-track">
-          <!-- injected by JS -->
-        </div>
+        <div class="strip-track" id="strip-track"></div>
       </div>
       <p class="strip-hint reveal"><span>Drag</span> or scroll sideways to browse · hover to enlarge</p>
+
+      <!-- Edge scroll indicators -->
+      <div class="scroll-edge scroll-edge-left" id="edge-left">
+        <div class="edge-arrow">‹</div>
+        <div class="edge-label">Move cursor<br>here to scroll</div>
+      </div>
+      <div class="scroll-edge scroll-edge-right" id="edge-right">
+        <div class="edge-arrow">›</div>
+        <div class="edge-label">Move cursor<br>here to scroll</div>
+      </div>
     </section>
 
     <div class="divider"></div>
@@ -814,6 +868,19 @@
       });
     }
 
+    /* ── EDGE INDICATORS ── */
+    const edgeLeft  = document.getElementById('edge-left');
+    const edgeRight = document.getElementById('edge-right');
+    const photoSection = document.getElementById('photography');
+
+    const updateEdges = () => {
+      const rect = photoSection.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2;
+      edgeLeft.classList.toggle('visible', inView);
+      edgeRight.classList.toggle('visible', inView);
+    };
+    window.addEventListener('scroll', updateEdges, { passive: true });
+    updateEdges();
     const EDGE = 180;
     const MAX_SPEED = 15;
     let cursorX = -1;
