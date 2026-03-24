@@ -8,14 +8,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-      setTimeout(() => {
-        const l = document.getElementById('loader');
-        if (l) { l.style.transition = 'opacity 0.6s'; l.style.opacity = '0'; l.style.pointerEvents = 'none'; setTimeout(() => { if(l.parentNode) l.parentNode.removeChild(l); }, 700); }
-      }, 1400);
-    });
-  </script>
 
   <style>
     :root {
@@ -49,7 +41,7 @@
     #cursor-outer {
       position: fixed; width: 36px; height: 36px;
       border: 1.5px solid var(--black); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
+      pointer-events: none; z-index: 999999;
       transform: translate(-50%,-50%);
       transition: width .25s var(--ease), height .25s var(--ease),
                   border-color .2s, background .2s, border-radius .2s;
@@ -57,7 +49,7 @@
     #cursor-inner {
       position: fixed; width: 6px; height: 6px;
       background: var(--black); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
+      pointer-events: none; z-index: 999999;
       transform: translate(-50%,-50%);
       transition: opacity .2s;
     }
@@ -76,9 +68,11 @@
     /* ── BACKGROUND ── */
     .bg-vignette {
       position: fixed; inset: 0;
-      background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(0,0,0,0.08) 0%, transparent 60%),
-                  radial-gradient(ellipse 60% 40% at 85% 90%, rgba(0,0,0,0.06) 0%, transparent 55%);
-      pointer-events: none; z-index: -3;
+      background:
+        radial-gradient(ellipse 80% 80% at 50% 50%, transparent 50%, rgba(0,0,0,0.28) 100%),
+        radial-gradient(ellipse 100% 50% at 50% 0%, rgba(0,0,0,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 50% at 50% 100%, rgba(0,0,0,0.18) 0%, transparent 60%);
+      pointer-events: none; z-index: -1;
     }
     .bg-grid {
       position: fixed; inset: 0;
@@ -137,7 +131,7 @@
       font-weight: 800; letter-spacing: .02em; line-height: 0.98;
       text-transform: uppercase; margin: 0 0 14px;
     }
-    .section-sub { color: var(--grey); line-height: 1.8; font-size: 15px; font-weight: 300; letter-spacing: .01em; }
+    .section-sub { color: rgba(0,0,0,0.75); line-height: 1.75; font-size: 15px; font-weight: 400; letter-spacing: .01em; }
 
     /* ── HERO ── */
     .hero {
@@ -186,9 +180,9 @@
 
     .accent { color: var(--white); }
     .hero-sub {
-      color: rgba(0,0,0,0.6); line-height: 1.75;
-      font-size: 15px; font-weight: 300;
-      max-width: 400px; letter-spacing: .01em;
+      color: rgba(0,0,0,0.82); line-height: 1.75;
+      font-size: 16px; font-weight: 400;
+      max-width: 440px; letter-spacing: .01em;
       margin: 0 0 22px;
     }
 
@@ -305,7 +299,7 @@
     .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.75); box-shadow: 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8); }
     .card:hover::before { opacity: 1; }
     .card h3 { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; margin-bottom:8px; color: var(--black); }
-    .card p { color:rgba(0,0,0,0.65); font-size:14px; line-height:1.8; font-weight:300; }
+    .card p { color:rgba(0,0,0,0.75); font-size:14px; line-height:1.75; font-weight:400; letter-spacing:.01em; }
 
     /* ── ABOUT ── */
     .about-layout {
@@ -392,10 +386,11 @@
     .project-pill {
       display:inline-flex; align-items:center; gap:6px;
       padding:4px 12px; border-radius:999px;
-      background:rgba(0,0,0,0.07); color:rgba(0,0,0,0.65);
+      background: rgba(34,197,94,0.15); color: #16a34a;
       font-size:11px; font-weight:500; letter-spacing:.05em; margin-bottom:10px;
+      border: 1px solid rgba(34,197,94,0.3);
     }
-    .project-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--black); opacity:.5; }
+    .project-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:#16a34a; }
     .project-meta { list-style:none; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:8px; }
     .project-meta li {
       font-size:11.5px; color:var(--white); font-weight:500;
@@ -522,57 +517,13 @@
     .footer-dot { color:var(--black); margin:0 5px; opacity:.4; }
 
     /* ── LOADING SCREEN ── */
-    #loader {
-      position: fixed; inset: 0; z-index: 99999;
-      background: var(--black);
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 28px;
-      transition: opacity .6s var(--ease), transform .6s var(--ease);
-    }
-    #loader.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .loader-monogram {
-      position: relative; width: 80px; height: 80px;
-    }
-    .loader-monogram svg {
-      width: 80px; height: 80px;
-    }
     /* draw-on animation for the diamond frame */
-    .loader-frame {
-      stroke-dasharray: 160;
-      stroke-dashoffset: 160;
-      animation: drawFrame .9s var(--ease) .2s forwards;
-    }
     @keyframes drawFrame { to { stroke-dashoffset: 0; } }
 
-    .loader-pk {
-      opacity: 0;
-      animation: fadeInPK .4s ease .9s forwards;
-    }
     @keyframes fadeInPK { to { opacity: 1; } }
 
-    .loader-bar-wrap {
-      width: 160px; height: 2px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 999px; overflow: hidden;
-    }
-    .loader-bar {
-      height: 100%; width: 0%;
-      background: var(--red);
-      border-radius: 999px;
-      animation: loadBar 1.4s var(--ease) .3s forwards;
-    }
     @keyframes loadBar { to { width: 100%; } }
 
-    .loader-label {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      animation: fadeInPK .4s ease .5s both;
-    }
 
     /* ── RECRUITER MODE ── */
     .recruiter-toggle {
@@ -716,21 +667,6 @@
 <body>
 
   <!-- Loading screen -->
-  <div id="loader">
-    <div class="loader-monogram">
-      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect class="loader-frame" x="10" y="10" width="60" height="60" rx="4"
-              stroke="#e8192c" stroke-width="2" fill="none"
-              transform="rotate(45 40 40)"/>
-        <rect x="22" y="22" width="36" height="36" rx="3" fill="white" opacity="0.08"/>
-        <text class="loader-pk" x="40" y="47" text-anchor="middle"
-              font-family="Barlow Condensed, sans-serif"
-              font-weight="800" font-size="22" letter-spacing="1"
-              fill="white">PK</text>
-      </svg>
-    </div>
-    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
-    <div class="loader-label">Loading portfolio</div>
   </div>
 
   <!-- Recruiter panel -->
@@ -772,7 +708,7 @@
     <div class="rp-fact">Student Mental Health & Stress Analysis — EDA</div>
 
     <div class="rp-cta">
-      <a href="/cdn-cgi/l/email-protection#b3d8d2dfded2dddcdcc1c3d2c5d2ddf3d4ded2dadf9dd0dcde" class="rp-btn primary">✉ Email Me</a>
+      <a href="mailto:kalmanoorpavan@gmail.com" class="rp-btn primary">✉ Email Me</a>
       <a href="https://github.com/pavankalmanoor" target="_blank" class="rp-btn secondary">GitHub Profile</a>
     </div>
   </div>
@@ -826,7 +762,7 @@
     <!-- HERO -->
     <section id="home" class="section hero">
       <div class="hero-content">
-        <p class="section-label hero-reveal hr1">Portfolio · 2025</p>
+        <p class="section-label hero-reveal hr1">Portfolio · 2026</p>
         <h1 class="hero-reveal hr2">
           Turning<br>
           <span class="accent">messy data</span><br>
@@ -865,9 +801,9 @@
             <img src="Photos/profile.jpg" alt="Portrait of Pavan Kalmanoor" />
           </div>
           <div class="about-links">
-            <a href="/cdn-cgi/l/email-protection#600b010c0d010e0f0f12100116010e20070d01090c4e030f0d" class="about-link">
+            <a href="mailto:kalmanoorpavan@gmail.com" class="about-link">
               <span class="about-link-icon">✉</span>
-              <span><span class="__cf_email__" data-cfemail="600b010c0d010e0f0f12100116010e20070d01090c4e030f0d">[email&#160;protected]</span></span>
+              <span>kalmanoorpavan@gmail.com</span>
             </a>
             <a href="https://github.com/pavankalmanoor" target="_blank" class="about-link">
               <span class="about-link-icon">
@@ -1037,7 +973,7 @@
         <p class="section-sub">Open to roles in data science and analytics — or just interesting problems to think through together. The best way to reach me is by email.</p>
       </div>
       <div class="reveal">
-        <a href="/cdn-cgi/l/email-protection#e18a808d8c808f8e8e93918097808fa1868c80888dcf828e8c" class="btn primary magnetic">Email Me</a>
+        <a href="mailto:kalmanoorpavan@gmail.com" class="btn primary magnetic">Email Me</a>
         <a href="https://github.com/pavankalmanoor" target="_blank" class="btn ghost magnetic" style="margin-left:12px;">GitHub</a>
       </div>
     </section>
@@ -1049,18 +985,7 @@
     <span>Built with a bit of caffeine<span class="footer-dot">·</span>some care<span class="footer-dot">·</span>and a lot of data.</span>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    /* ── LOADER ── */
-    const loader = document.getElementById('loader');
-    const hideLoader = () => {
-      if (!loader) return;
-      loader.style.opacity = '0';
-      loader.style.pointerEvents = 'none';
-      setTimeout(() => { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 700);
-    };
-    setTimeout(hideLoader, 1600);
-    document.addEventListener('DOMContentLoaded', () => setTimeout(hideLoader, 1200));
-
+  <script>
     /* ── RECRUITER MODE ── */
     const recruiterToggle = document.getElementById('recruiter-toggle');
     const recruiterPanel  = document.getElementById('recruiter-panel');
@@ -1074,7 +999,6 @@
       recruiterPanel.classList.remove('open');
       recruiterToggle.classList.remove('on');
     });
-    // close on outside click
     document.addEventListener('click', e => {
       if (!recruiterPanel.contains(e.target) && e.target !== recruiterToggle) {
         recruiterPanel.classList.remove('open');
@@ -1147,4 +1071,11 @@
     }, { passive: true });
     (function animateGrid() {
       gridX += (targetX - gridX) * 0.06;
-      const g = document.querySelecto
+      const g = document.querySelector('.bg-grid');
+      if (g) g.style.transform = `translateX(${gridX}px)`;
+      requestAnimationFrame(animateGrid);
+    })();
+
+  </script>
+</body>
+</html>
