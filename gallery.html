@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photography — Pavan Kalmanoor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #e8192c;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --grey: rgba(0,0,0,0.5);
+      --ease: cubic-bezier(0.22,0.61,0.36,1);
+    }
+
+    body {
+      font-family: 'Barlow', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--black);
+      cursor: none;
+    }
+
+    /* cursor */
+    #cur-o { position:fixed; width:32px; height:32px; border:1.5px solid var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition: width .25s var(--ease), height .25s var(--ease), background .25s; }
+    #cur-i { position:fixed; width:5px; height:5px; background:var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
+    body.ch #cur-o { width:48px; height:48px; background:rgba(0,0,0,0.08); }
+
+    /* header */
+    .g-header {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+      background: rgba(232,25,44,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    .g-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 13px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; text-decoration: none; color: var(--white);
+      padding: 8px 18px; border: 1.5px solid rgba(255,255,255,0.5); border-radius: 999px;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .g-back:hover { background: var(--black); color: #fff; border-color: var(--black); }
+
+    .g-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .04em;
+      color: var(--white);
+    }
+    .g-count { font-size: 13px; color: rgba(0,0,0,0.5); letter-spacing: .06em; }
+
+    /* masonry grid */
+    .g-wrap { padding: 28px 40px 60px; }
+
+    .masonry { columns: 3; column-gap: 14px; }
+    @media(max-width: 900px) { .masonry { columns: 2; } }
+    @media(max-width: 540px)  { .masonry { columns: 1; } }
+
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: none;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .masonry-item img {
+      width: 100%; display: block;
+      transition: transform .6s var(--ease), filter .4s;
+    }
+    .masonry-item:hover img { transform: scale(1.04); filter: brightness(1.05); }
+
+    /* lightbox */
+    #lb {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.94);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s var(--ease);
+      backdrop-filter: blur(12px);
+    }
+    #lb.open { opacity: 1; pointer-events: all; }
+    #lb-img {
+      max-width: 90vw; max-height: 90vh;
+      border-radius: 10px; object-fit: contain;
+      transform: scale(0.94); transition: transform .4s var(--ease);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+    }
+    #lb.open #lb-img { transform: scale(1); }
+    #lb-close {
+      position: absolute; top: 20px; right: 24px;
+      width: 42px; height: 42px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 20px; line-height: 42px; text-align: center;
+      cursor: none; transition: background .2s, transform .2s;
+    }
+    #lb-close:hover { background: var(--bg); transform: scale(1.1); }
+    #lb-nav {
+      position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; align-items: center; gap: 16px;
+    }
+    .lb-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 18px; line-height: 40px; text-align: center;
+      cursor: none; transition: background .2s; user-select: none;
+    }
+    .lb-btn:hover { background: rgba(255,255,255,0.25); }
+    #lb-counter { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; letter-spacing: .1em; color: rgba(255,255,255,0.6); }
+
+    /* reveal */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s var(--ease), transform .7s var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <div id="cur-o"></div>
+  <div id="cur-i"></div>
+
+  <div id="lb">
+    <div id="lb-close">✕</div>
+    <img id="lb-img" src="" alt="" />
+    <div id="lb-nav">
+      <div class="lb-btn" id="lb-prev">‹</div>
+      <div id="lb-counter">01 / 19</div>
+      <div class="lb-btn" id="lb-next">›</div>
+    </div>
+  </div>
+
+  <header class="g-header">
+    <a href="index.html" class="g-back">← Back</a>
+    <div class="g-title">Photography</div>
+    <div class="g-count">19 photos</div>
+  </header>
+
+  <div class="g-wrap">
+    <div class="masonry" id="masonry"></div>
+  </div>
+
+  <script>
+    /* cursor */
+    const co = document.getElementById('cur-o');
+    const ci = document.getElementById('cur-i');
+    document.addEventListener('mousemove', e => {
+      co.style.left = e.clientX + 'px'; co.style.top = e.clientY + 'px';
+      ci.style.left = e.clientX + 'px'; ci.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a,.masonry-item,.lb-btn,#lb-close').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('ch'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('ch'));
+    });
+
+    /* build masonry */
+    const masonry = document.getElementById('masonry');
+    const N = 19;
+    const imgs = [];
+
+    for (let i = 1; i <= N; i++) {
+      const wrap = document.createElement('div');
+      wrap.className = 'masonry-item reveal';
+
+      const img = document.createElement('img');
+      img.src     = `Photos/photo${i}.jpg`;
+      img.alt     = `Photo ${i}`;
+      img.loading = i <= 6 ? 'eager' : 'lazy';
+
+      wrap.appendChild(img);
+      masonry.appendChild(wrap);
+      imgs.push(img);
+
+      wrap.addEventListener('click', () => openLb(i - 1));
+    }
+
+    /* scroll reveal */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
+
+    /* lightbox */
+    const lb     = document.getElementById('lb');
+    const lbImg  = document.getElementById('lb-img');
+    const lbCtr  = document.getElementById('lb-counter');
+    let current  = 0;
+
+    const openLb = (idx) => {
+      current = idx;
+      lbImg.src = imgs[idx].src;
+      lbCtr.textContent = `${String(idx + 1).padStart(2,'0')} / ${N}`;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    const closeLb = () => { lb.classList.remove('open'); document.body.style.overflow = ''; };
+
+    document.getElementById('lb-close').addEventListener('click', closeLb);
+    lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+
+    document.getElementById('lb-prev').addEventListener('click', () => openLb((current - 1 + N) % N));
+    document.getElementById('lb-next').addEventListener('click', () => openLb((current + 1) % N));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape')     closeLb();
+      if (e.key === 'ArrowLeft')  openLb((current - 1 + N) % N);
+      if (e.key === 'ArrowRight') openLb((current + 1) % N);
+    });
+  </script>
+</body>
+</html>
