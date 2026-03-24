@@ -73,10 +73,11 @@
     .g-hero {
       position: sticky;
       top: 0;
-      height: 100vh;
+      height: auto;
+      min-height: 0;
       display: flex; flex-direction: column;
       justify-content: flex-start;
-      padding: 120px 40px 40px;
+      padding: 100px 40px 40px;
       overflow: hidden;
       z-index: 1;
       pointer-events: none;
@@ -92,13 +93,13 @@
       color: var(--white);
       position: relative; z-index: 2;
       will-change: transform, opacity;
+      transform-origin: left top;
     }
     .g-hero-title .line-1 { display: block; }
     .g-hero-title .line-2 {
       display: block;
       -webkit-text-stroke: 2px var(--white);
       color: transparent;
-      will-change: transform;
     }
     .g-hero-title .letter {
       display: inline-block;
@@ -106,25 +107,7 @@
       transform: translateY(60px) rotate(4deg);
       animation: letterIn .7s var(--ease) forwards;
     }
-    @keyframes letterIn {
-      to { opacity: 1; transform: translateY(0) rotate(0deg); }
-    }
-
-    /* "PHOTOGRAPHY" replacement text */
-    .g-hero-photography {
-      position: absolute;
-      top: 120px; left: 40px;
-      font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(72px, 14vw, 180px);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: -.01em;
-      line-height: 0.88;
-      color: var(--white);
-      opacity: 0;
-      z-index: 2;
-      pointer-events: none;
-    }
+    @keyframes letterIn { to { opacity: 1; transform: translateY(0) rotate(0deg); } }
 
     .g-hero-sub {
       font-size: 14px; font-weight: 300;
@@ -133,7 +116,6 @@
       opacity: 0;
       animation: fadeUp .6s var(--ease) .8s forwards;
       position: relative; z-index: 2;
-      will-change: opacity;
     }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
@@ -147,13 +129,13 @@
     }
 
     .g-scroll-hint {
-      position: absolute; bottom: 44px; right: 40px;
+      position: absolute; bottom: 20px; right: 40px;
       display: flex; flex-direction: column; align-items: center; gap: 6px;
       font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
       color: rgba(255,255,255,0.3);
     }
     .g-scroll-line {
-      width: 1px; height: 48px;
+      width: 1px; height: 40px;
       background: linear-gradient(to bottom, rgba(255,255,255,0.35), transparent);
       animation: scrollPulse 2s ease-in-out infinite;
     }
@@ -162,11 +144,9 @@
       50% { transform: scaleY(.5); opacity:1; }
     }
 
-    /* spacer so sticky hero has room to animate while masonry scrolls in after */
-    .g-hero-spacer { height: 120vh; }
+    .g-hero-spacer { height: 0; }
 
-    /* masonry grid */
-    .g-wrap { position: relative; z-index: 2; padding: 28px 40px 60px; background: var(--bg); }
+    .g-wrap { position: relative; z-index: 2; padding: 0 40px 60px; background: var(--bg); }
     .masonry { columns: 3; column-gap: 14px; }
     @media(max-width: 900px) { .masonry { columns: 2; } }
     @media(max-width: 540px)  { .masonry { columns: 1; } }
@@ -252,7 +232,6 @@
 
   <div class="g-hero" id="g-hero">
     <div class="g-hero-num">19</div>
-    <div class="g-hero-photography" id="g-photography-text">Photography</div>
     <h1 class="g-hero-title" id="g-hero-title">
       <span class="line-1" id="line-1"></span>
       <span class="line-2" id="line-2"></span>
@@ -285,46 +264,18 @@
       line2.appendChild(s);
     });
 
-    /* scroll-driven morph */
-    const gHeader     = document.getElementById('g-header');
-    const heroEl      = document.getElementById('g-hero');
-    const photoText   = document.getElementById('g-photography-text');
-    const heroSpacer  = document.querySelector('.g-hero-spacer');
-
-    const lerp = (a, b, t) => a + (b - a) * t;
-    const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-    const ease  = t => t < 0.5 ? 2*t*t : -1+(4-2*t)*t; // ease in-out quad
+    /* scroll-driven fade */
+    const gHeader    = document.getElementById('g-header');
+    const heroSpacer = document.querySelector('.g-hero-spacer');
 
     window.addEventListener('scroll', () => {
       const scrollY   = window.scrollY;
-      const maxScroll = heroSpacer.offsetTop; // total scroll range for this effect
+      const maxScroll = heroSpacer.offsetTop;
+      const t         = Math.min(1, scrollY / (maxScroll * 0.8));
 
-      // 0 → 1 over the spacer height
-      const raw = clamp(scrollY / maxScroll, 0, 1);
-      const t   = ease(raw);
-
-      // nav becomes visible after 10% scroll
-      gHeader.classList.toggle('scrolled', scrollY > 80);
-
-      // ── Phase 1 (t 0→0.5): scale down + line-2 slides right to sit next to line-1 ──
-      const phase1 = clamp(raw / 0.5, 0, 1);
-      const scale  = lerp(1, 0.38, phase1);
-      const line2X = lerp(0, 100, phase1); // % of line-1 width approx
-
-      titleEl.style.transform       = `scale(${scale})`;
-      titleEl.style.transformOrigin = 'left bottom';
-      line2.style.display           = 'inline';
-      line2.style.marginLeft        = phase1 > 0.01 ? `${lerp(0, 12, phase1)}px` : '';
-
-      // ── Phase 2 (t 0.5→0.8): whole title fades out ──
-      const fadeOut = clamp((raw - 0.5) / 0.3, 0, 1);
-      titleEl.style.opacity = lerp(1, 0, fadeOut);
-
-      // ── Phase 3 (t 0.75→1): "Photography" fades in ──
-      const fadeIn = clamp((raw - 0.72) / 0.28, 0, 1);
-      photoText.style.opacity = lerp(0, 1, fadeIn);
-      photoText.style.transform = `translateY(${lerp(20, 0, fadeIn)}px)`;
-
+      gHeader.classList.toggle('scrolled', scrollY > 60);
+      titleEl.style.opacity   = 1 - t;
+      titleEl.style.transform = `translateY(${-t * 30}px) scale(${1 - t * 0.08})`;
     }, { passive: true });
 
     /* cursor */
