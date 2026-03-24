@@ -31,14 +31,19 @@
     #cur-i { position:fixed; width:5px; height:5px; background:var(--black); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); }
     body.ch #cur-o { width:48px; height:48px; background:rgba(0,0,0,0.08); }
 
-    /* header */
+    /* ── NAV BAR (shrunk state) ── */
     .g-header {
-      position: sticky; top: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 14px 40px;
-      background: rgba(232,25,44,0.85);
+      background: transparent;
+      transition: background .4s var(--ease), border-color .4s, padding .4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .g-header.scrolled {
+      background: rgba(232,25,44,0.88);
       backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,0,0,0.1);
+      border-color: rgba(0,0,0,0.1);
     }
     .g-back {
       display: inline-flex; align-items: center; gap: 8px;
@@ -50,17 +55,106 @@
     }
     .g-back:hover { background: var(--black); color: #fff; border-color: var(--black); }
 
-    .g-title {
+    /* title in nav — hidden at top, visible when scrolled */
+    .g-nav-title {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: 22px; font-weight: 800;
-      text-transform: uppercase; letter-spacing: .04em;
+      font-size: 18px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .06em;
       color: var(--white);
+      opacity: 0; transform: translateY(6px);
+      transition: opacity .35s var(--ease), transform .35s var(--ease);
     }
-    .g-count { font-size: 13px; color: rgba(0,0,0,0.5); letter-spacing: .06em; }
+    .g-header.scrolled .g-nav-title { opacity: 1; transform: translateY(0); }
+
+    .g-count { font-size: 13px; color: rgba(255,255,255,0.55); letter-spacing: .06em; }
+
+    /* ── BIG HERO TITLE ── */
+    .g-hero {
+      min-height: 62vh;
+      display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 40px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* animated letter entrance */
+    .g-hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(72px, 14vw, 180px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -.01em;
+      line-height: 0.88;
+      color: var(--white);
+      position: relative; z-index: 2;
+    }
+
+    /* each word on its own line, second line is outlined */
+    .g-hero-title .line-1 { display: block; }
+    .g-hero-title .line-2 {
+      display: block;
+      -webkit-text-stroke: 2px var(--white);
+      color: transparent;
+    }
+
+    /* split letter animation */
+    .g-hero-title .letter {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(60px) rotate(4deg);
+      animation: letterIn .7s var(--ease) forwards;
+    }
+    @keyframes letterIn {
+      to { opacity: 1; transform: translateY(0) rotate(0deg); }
+    }
+
+    .g-hero-sub {
+      font-size: 14px; font-weight: 300;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: .12em; text-transform: uppercase;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeUp .6s var(--ease) .8s forwards;
+      position: relative; z-index: 2;
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .g-hero-sub { transform: translateY(12px); }
+
+    /* decorative big number */
+    .g-hero-num {
+      position: absolute;
+      top: 50%; right: 32px;
+      transform: translateY(-50%);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(120px, 20vw, 260px);
+      font-weight: 800;
+      color: rgba(0,0,0,0.07);
+      line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+
+    /* scroll indicator */
+    .g-scroll-hint {
+      position: absolute; bottom: 44px; right: 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .g-scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { transform: scaleY(1); opacity:.5; }
+      50% { transform: scaleY(.5); opacity:1; }
+    }
 
     /* masonry grid */
     .g-wrap { padding: 28px 40px 60px; }
-
     .masonry { columns: 3; column-gap: 14px; }
     @media(max-width: 900px) { .masonry { columns: 2; } }
     @media(max-width: 540px)  { .masonry { columns: 1; } }
@@ -138,17 +232,51 @@
     </div>
   </div>
 
-  <header class="g-header">
+  <header class="g-header" id="g-header">
     <a href="index.html" class="g-back">← Back</a>
-    <div class="g-title">Photography</div>
+    <div class="g-nav-title">Photography</div>
     <div class="g-count">19 photos</div>
   </header>
+
+  <div class="g-hero">
+    <div class="g-hero-num">19</div>
+    <h1 class="g-hero-title" id="g-hero-title">
+      <span class="line-1"></span>
+      <span class="line-2"></span>
+    </h1>
+    <p class="g-hero-sub">19 photographs · Pavan Kalmanoor</p>
+    <div class="g-scroll-hint">
+      <div class="g-scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </div>
 
   <div class="g-wrap">
     <div class="masonry" id="masonry"></div>
   </div>
 
   <script>
+    /* animated title letters */
+    const titleEl = document.getElementById('g-hero-title');
+    const line1 = titleEl.querySelector('.line-1');
+    const line2 = titleEl.querySelector('.line-2');
+    'Frames'.split('').forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'letter'; s.style.animationDelay = `${i * 0.055}s`; s.textContent = ch;
+      line1.appendChild(s);
+    });
+    'Moments'.split('').forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'letter'; s.style.animationDelay = `${0.18 + i * 0.055}s`; s.textContent = ch;
+      line2.appendChild(s);
+    });
+
+    /* shrink nav on scroll */
+    const gHeader = document.getElementById('g-header');
+    window.addEventListener('scroll', () => {
+      gHeader.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
     /* cursor */
     const co = document.getElementById('cur-o');
     const ci = document.getElementById('cur-i');
