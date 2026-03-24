@@ -515,7 +515,173 @@
     }
     .footer-dot { color:var(--black); margin:0 5px; opacity:.4; }
 
-    /* ── REVEAL ── */
+    /* ── LOADING SCREEN ── */
+    #loader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: var(--black);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 28px;
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+    }
+    #loader.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader-monogram {
+      position: relative; width: 80px; height: 80px;
+    }
+    .loader-monogram svg {
+      width: 80px; height: 80px;
+    }
+    /* draw-on animation for the diamond frame */
+    .loader-frame {
+      stroke-dasharray: 160;
+      stroke-dashoffset: 160;
+      animation: drawFrame .9s var(--ease) .2s forwards;
+    }
+    @keyframes drawFrame { to { stroke-dashoffset: 0; } }
+
+    .loader-pk {
+      opacity: 0;
+      animation: fadeInPK .4s ease .9s forwards;
+    }
+    @keyframes fadeInPK { to { opacity: 1; } }
+
+    .loader-bar-wrap {
+      width: 160px; height: 2px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; width: 0%;
+      background: var(--red);
+      border-radius: 999px;
+      animation: loadBar 1.4s var(--ease) .3s forwards;
+    }
+    @keyframes loadBar { to { width: 100%; } }
+
+    .loader-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      animation: fadeInPK .4s ease .5s both;
+    }
+
+    /* ── RECRUITER MODE ── */
+    .recruiter-toggle {
+      display: flex; align-items: center; gap: 7px;
+      padding: 6px 12px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.06);
+      cursor: none; font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+      transition: background .2s, border-color .2s, color .2s;
+      user-select: none; flex-shrink: 0;
+    }
+    .recruiter-toggle:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .recruiter-toggle.on { background: var(--white); color: var(--black); border-color: var(--white); }
+    .recruiter-toggle .rt-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .recruiter-toggle.on .rt-dot { background: var(--red); }
+
+    /* Recruiter mode overlay — slides in from right */
+    #recruiter-panel {
+      position: fixed; top: 0; right: 0;
+      width: min(400px, 100vw); height: 100vh;
+      background: var(--white);
+      z-index: 500;
+      transform: translateX(110%);
+      transition: transform .55s var(--ease);
+      overflow-y: auto;
+      padding: 32px 28px 40px;
+      box-shadow: -20px 0 60px rgba(0,0,0,0.3);
+    }
+    #recruiter-panel.open { transform: translateX(0); }
+
+    .rp-close {
+      position: absolute; top: 20px; right: 20px;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(0,0,0,0.06); border: none;
+      font-size: 18px; cursor: none;
+      display: grid; place-items: center;
+      transition: background .2s;
+    }
+    .rp-close:hover { background: rgba(0,0,0,0.12); }
+
+    .rp-tag {
+      display: inline-block; padding: 3px 10px;
+      background: var(--red); color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      text-transform: uppercase; border-radius: 999px;
+      margin-bottom: 16px;
+    }
+    .rp-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px; font-weight: 800;
+      text-transform: uppercase; letter-spacing: -.01em;
+      line-height: 1; color: var(--black); margin-bottom: 4px;
+    }
+    .rp-role {
+      font-size: 14px; color: rgba(0,0,0,0.5);
+      margin-bottom: 24px; font-weight: 300;
+    }
+    .rp-divider {
+      height: 1px; background: rgba(0,0,0,0.08);
+      margin: 20px 0;
+    }
+    .rp-section-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(0,0,0,0.4);
+      margin-bottom: 10px;
+    }
+    .rp-fact {
+      font-size: 14px; color: var(--black);
+      line-height: 1.6; margin-bottom: 8px;
+      padding-left: 14px; position: relative;
+    }
+    .rp-fact::before {
+      content: ''; position: absolute; left: 0; top: 8px;
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--red);
+    }
+    .rp-skills {
+      display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px;
+    }
+    .rp-skill {
+      padding: 5px 12px; border-radius: 999px;
+      background: rgba(0,0,0,0.06);
+      font-size: 12px; color: var(--black); font-weight: 500;
+    }
+    .rp-cta {
+      display: flex; flex-direction: column; gap: 10px; margin-top: 24px;
+    }
+    .rp-btn {
+      display: flex; align-items: center; justify-content: center;
+      padding: 13px 20px; border-radius: 999px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 15px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .rp-btn.primary {
+      background: var(--black); color: #fff;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+    .rp-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+    .rp-btn.secondary {
+      background: rgba(0,0,0,0.06); color: var(--black);
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+    .rp-btn.secondary:hover { background: rgba(0,0,0,0.1); }
     .reveal { opacity:0; transform:translateY(48px); transition:opacity .7s var(--ease), transform .8s var(--ease); }
     .reveal.in { opacity:1; transform:translateY(0); }
     .reveal-delay-1{transition-delay:.1s} .reveal-delay-2{transition-delay:.2s}
@@ -544,6 +710,68 @@
   </style>
 </head>
 <body>
+
+  <!-- Loading screen -->
+  <div id="loader">
+    <div class="loader-monogram">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect class="loader-frame" x="10" y="10" width="60" height="60" rx="4"
+              stroke="#e8192c" stroke-width="2" fill="none"
+              transform="rotate(45 40 40)"/>
+        <rect x="22" y="22" width="36" height="36" rx="3" fill="white" opacity="0.08"/>
+        <text class="loader-pk" x="40" y="47" text-anchor="middle"
+              font-family="Barlow Condensed, sans-serif"
+              font-weight="800" font-size="22" letter-spacing="1"
+              fill="white">PK</text>
+      </svg>
+    </div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <div class="loader-label">Loading portfolio</div>
+  </div>
+
+  <!-- Recruiter panel -->
+  <div id="recruiter-panel">
+    <button class="rp-close" id="rp-close">✕</button>
+    <div class="rp-tag">⚡ Recruiter View</div>
+    <div class="rp-name">Pavan<br>Kalmanoor</div>
+    <div class="rp-role">Data Scientist · Analytics · Boston, USA</div>
+
+    <div class="rp-divider"></div>
+
+    <div class="rp-section-title">The 30-second pitch</div>
+    <div class="rp-fact">Data science & analytics professional with ML and BI experience</div>
+    <div class="rp-fact">Built end-to-end pipelines from raw data to dashboards and models</div>
+    <div class="rp-fact">Strong Python, SQL, Power BI, scikit-learn, NLP stack</div>
+    <div class="rp-fact">Photographer — brings a design eye to data visualisation</div>
+    <div class="rp-fact">Open to Data Scientist / Senior Analyst roles</div>
+
+    <div class="rp-divider"></div>
+
+    <div class="rp-section-title">Core skills</div>
+    <div class="rp-skills">
+      <span class="rp-skill">Python</span>
+      <span class="rp-skill">SQL</span>
+      <span class="rp-skill">pandas</span>
+      <span class="rp-skill">scikit-learn</span>
+      <span class="rp-skill">Power BI</span>
+      <span class="rp-skill">NLP / BERT</span>
+      <span class="rp-skill">A/B Testing</span>
+      <span class="rp-skill">Excel</span>
+      <span class="rp-skill">Tableau</span>
+    </div>
+
+    <div class="rp-divider"></div>
+
+    <div class="rp-section-title">Featured projects</div>
+    <div class="rp-fact">Operational Analytics Dashboard — Excel / Power BI</div>
+    <div class="rp-fact">Vehicle Accident Hotspot Detection — geospatial ML</div>
+    <div class="rp-fact">Student Mental Health & Stress Analysis — EDA</div>
+
+    <div class="rp-cta">
+      <a href="mailto:kalmanoorpavan@gmail.com" class="rp-btn primary">✉ Email Me</a>
+      <a href="https://github.com/pavankalmanoor" target="_blank" class="rp-btn secondary">GitHub Profile</a>
+    </div>
+  </div>
 
   <div id="cursor-outer"></div>
   <div id="cursor-inner"></div>
@@ -583,6 +811,9 @@
       <a href="#projects"    class="nav-link">Projects</a>
       <a href="#photography" class="nav-link">Photography</a>
       <a href="#contact"     class="nav-link">Contact</a>
+      <button class="recruiter-toggle" id="recruiter-toggle">
+        <span class="rt-dot"></span> Recruiter View
+      </button>
     </nav>
   </header>
 
@@ -815,7 +1046,37 @@
   </footer>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    /* ── SCROLL PROGRESS ── */
+    /* ── LOADER ── */
+    const loader = document.getElementById('loader');
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loader.classList.add('hide');
+        setTimeout(() => loader.remove(), 700);
+      }, 1800);
+    });
+    // fallback in case load fires late
+    setTimeout(() => loader && loader.classList.add('hide'), 3000);
+
+    /* ── RECRUITER MODE ── */
+    const recruiterToggle = document.getElementById('recruiter-toggle');
+    const recruiterPanel  = document.getElementById('recruiter-panel');
+    const rpClose         = document.getElementById('rp-close');
+
+    recruiterToggle.addEventListener('click', () => {
+      const isOpen = recruiterPanel.classList.toggle('open');
+      recruiterToggle.classList.toggle('on', isOpen);
+    });
+    rpClose.addEventListener('click', () => {
+      recruiterPanel.classList.remove('open');
+      recruiterToggle.classList.remove('on');
+    });
+    // close on outside click
+    document.addEventListener('click', e => {
+      if (!recruiterPanel.contains(e.target) && e.target !== recruiterToggle) {
+        recruiterPanel.classList.remove('open');
+        recruiterToggle.classList.remove('on');
+      }
+    });
     const fill = document.getElementById('scroll-fill');
     window.addEventListener('scroll', () => {
       const d = document.documentElement;
