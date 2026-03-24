@@ -641,7 +641,7 @@
       ci.style.left = mx + 'px'; ci.style.top = my + 'px';
     });
     (function loop() {
-      ox += (mx - ox) * 0.12; oy += (my - oy) * 0.12;
+      ox += (mx - ox) * 0.25; oy += (my - oy) * 0.25;
       co.style.left = ox + 'px'; co.style.top = oy + 'px';
       requestAnimationFrame(loop);
     })();
