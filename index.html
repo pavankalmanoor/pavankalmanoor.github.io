@@ -5,699 +5,378 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pavan Kalmanoor | Portfolio</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet"
-  />
-
-  <meta name="description" content="Portfolio of Pavan Kalmanoor – Data analytics professional, blending business insight, systems, and design." />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg: #05060a;
-      --bg-elevated: #0b0d14;
-      --bg-soft: #111525;
-      --accent: #52ffe0;
-      --accent-soft: rgba(82, 255, 224, 0.16);
-      --text: #f5f5f7;
-      --text-muted: #9da3b5;
-      --border-subtle: rgba(255, 255, 255, 0.06);
-      --radius-xl: 18px;
-      --radius-xxl: 24px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.6);
-      --blur: 18px;
-      --transition-fast: 0.25s ease;
-      --transition-med: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+      --bg: #080808;
+      --bg-1: #0f0f0f;
+      --bg-2: #161616;
+      --red: #e8192c;
+      --red-dim: rgba(232,25,44,0.14);
+      --red-glow: rgba(232,25,44,0.28);
+      --white: #f2f2f2;
+      --grey: #5a5a5a;
+      --border: rgba(255,255,255,0.07);
+      --border-red: rgba(232,25,44,0.25);
+      --radius: 16px;
+      --radius-lg: 22px;
+      --shadow: 0 20px 60px rgba(0,0,0,0.8);
+      --ease: cubic-bezier(0.22,0.61,0.36,1);
     }
 
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      color: var(--text);
-      background-color: var(--bg);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--white);
       overflow-x: hidden;
+      cursor: none;
     }
 
-    /* Background geometry */
+    /* ── CURSOR ── */
+    #cursor-outer {
+      position: fixed; width: 36px; height: 36px;
+      border: 1.5px solid var(--red); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .35s var(--ease), height .35s var(--ease),
+                  border-color .3s, background .3s, border-radius .3s;
+    }
+    #cursor-inner {
+      position: fixed; width: 6px; height: 6px;
+      background: var(--red); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: opacity .2s;
+    }
+    body.cursor-hover #cursor-outer { width: 54px; height: 54px; background: rgba(232,25,44,0.07); border-color: rgba(232,25,44,0.55); }
+    body.cursor-text  #cursor-outer { width: 3px; height: 42px; border-radius: 2px; }
+    body.cursor-text  #cursor-inner { opacity: 0; }
 
+    /* ── NOISE ── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+      opacity: 0.035; pointer-events: none; z-index: 1000;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-vignette {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse 100% 80% at 50% 0%, rgba(232,25,44,0.055) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 85% 90%, rgba(232,25,44,0.035) 0%, transparent 55%);
+      pointer-events: none; z-index: -3;
+    }
     .bg-grid {
-      position: fixed;
-      inset: 0;
-      background-image: linear-gradient(
-          rgba(255, 255, 255, 0.03) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255, 255, 255, 0.03) 1px,
-          transparent 1px
-        );
-      background-size: 80px 80px;
-      mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
-      opacity: 0.35;
-      pointer-events: none;
-      z-index: -2;
+      position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 40%, black 0%, transparent 80%);
+      pointer-events: none; z-index: -2;
     }
 
-    .bg-orbit {
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(circle at 10% 10%, rgba(82, 255, 224, 0.16), transparent),
-        radial-gradient(circle at 80% 70%, rgba(86, 115, 255, 0.22), transparent);
-      opacity: 0.74;
-      filter: blur(12px);
-      pointer-events: none;
-      z-index: -3;
-    }
+    /* ── SCROLL BAR ── */
+    .scroll-bar { position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 200; }
+    .scroll-bar-fill { height: 100%; width: 0%; background: var(--red); transition: width .08s linear; }
 
-    /* Scroll progress */
-
-    .scroll-progress {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      z-index: 40;
-      background: transparent;
-    }
-
-    .scroll-progress-bar {
-      height: 3px;
-      width: 0;
-      background: linear-gradient(90deg, var(--accent), #7b8cff);
-      border-radius: 999px;
-      transition: width 0.12s linear;
-    }
-
-    /* Header / Nav */
-
+    /* ── HEADER ── */
     .site-header {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(1080px, 100% - 32px);
-      padding: 10px 16px;
+      position: fixed; top: 14px; left: 50%; transform: translateX(-50%);
+      width: min(1100px, calc(100% - 28px)); padding: 10px 14px;
       border-radius: 999px;
-      background: rgba(7, 9, 20, 0.88);
-      backdrop-filter: blur(var(--blur));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      z-index: 30;
+      background: rgba(8,8,8,0.84); backdrop-filter: blur(24px) saturate(1.2);
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.04);
+      display: flex; align-items: center; justify-content: space-between; gap: 14px;
+      z-index: 100;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
+    .logo { display: flex; align-items: center; gap: 10px; }
     .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 12px;
-      background: radial-gradient(circle at 20% 20%, var(--accent), #5673ff);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      color: #05060a;
-      letter-spacing: 0.02em;
+      width: 34px; height: 34px; border-radius: 10px; background: var(--red);
+      display: grid; place-items: center;
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 15px; color: #fff;
+      position: relative; overflow: hidden;
     }
-
-    .logo-text {
-      display: flex;
-      flex-direction: column;
-      font-size: 12px;
-    }
-
-    .logo-name {
-      font-weight: 600;
-    }
-
-    .logo-role {
-      color: var(--text-muted);
-      opacity: 0.9;
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 13px;
-    }
-
+    .logo-mark::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg,rgba(255,255,255,0.22),transparent); }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; }
+    .logo-role { font-size: 11px; color: var(--grey); }
+    .nav { display: flex; align-items: center; gap: 2px; }
     .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      padding: 6px 10px;
-      border-radius: 999px;
-      transition: color var(--transition-fast),
-        background var(--transition-fast), transform var(--transition-fast);
+      color: var(--grey); text-decoration: none; padding: 6px 13px;
+      border-radius: 999px; font-size: 13px; transition: color .2s, background .2s;
     }
+    .nav-link:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .nav-link.active { color: #fff; background: var(--red); }
 
-    .nav-link:hover {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateY(-1px);
+    /* ── LAYOUT ── */
+    main { width: min(1100px, calc(100% - 28px)); margin: 0 auto; padding-bottom: 80px; }
+    .section { padding: 100px 0 20px; }
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 10.5px; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 14px;
     }
-
-    .nav-link.active {
-      color: #05060a;
-      background: var(--accent);
-    }
-
-    /* Layout */
-
-    main {
-      width: min(1080px, 100% - 32px);
-      margin: 0 auto;
-      padding-top: 0px; /* tightened further */
-      padding-bottom: 72px;
-    }
-
-    .section {
-      padding: 50px 0; /* reduced overall vertical padding */
-    }
-
-    .section:not(:last-of-type) {
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-    }
-
-    .section-header {
-      max-width: 640px;
-      margin-bottom: 32px;
-    }
-
+    .section-label::before { content: ''; width: 18px; height: 1px; background: var(--red); opacity: .7; }
+    .section-header { max-width: 600px; margin-bottom: 44px; }
     .section-header h2 {
-      margin: 6px 0 10px;
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(26px, 3vw, 32px);
+      font-family: 'Syne', sans-serif; font-size: clamp(28px,3.5vw,40px);
+      font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin: 0 0 12px;
     }
+    .section-sub { color: var(--grey); line-height: 1.7; font-size: 15px; }
 
-    .section-sub {
-      margin: 0;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .eyebrow {
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 10px;
-      color: var(--accent);
-    }
-
-    /* Hero */
-
+    /* ── HERO ── */
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 40px;
-      padding-top: 10px; /* NEW: reduces wasted space above hero */
-      align-items: center;
+      min-height: 100vh; display: grid; grid-template-columns: 1.3fr 1fr;
+      gap: 60px; align-items: center; padding-top: 80px;
     }
-
     .hero-content h1 {
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: clamp(32px, 4vw, 44px);
-      line-height: 1.1;
-      margin: 10px 0 12px;
+      font-family: 'Syne', sans-serif; font-size: clamp(38px,5vw,62px);
+      font-weight: 800; letter-spacing: -.035em; line-height: 1.03; margin: 14px 0 18px;
     }
+    .accent { color: var(--red); }
+    .hero-sub { color: var(--grey); line-height: 1.7; font-size: 16px; max-width: 460px; }
+    .hero-actions { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
 
-    .hero-sub {
-      margin: 0;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .accent {
-      color: var(--accent);
-    }
-
-    .hero-actions {
-      margin-top: 24px;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
+    /* ── BUTTONS ── */
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 14px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform var(--transition-med), box-shadow var(--transition-med),
-        background var(--transition-med), border-color var(--transition-med),
-        color var(--transition-med);
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; border-radius: 999px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500;
+      border: none; cursor: none; text-decoration: none;
+      transition: transform .3s var(--ease), box-shadow .3s, background .3s;
+      position: relative; overflow: hidden;
     }
-
     .btn.primary {
-      background: linear-gradient(135deg, var(--accent), #7b8cff);
-      color: #05060a;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+      background: var(--red); color: #fff; font-weight: 600;
+      box-shadow: 0 8px 28px rgba(232,25,44,0.35), 0 2px 8px rgba(0,0,0,0.5);
     }
-
-    .btn.primary:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.85);
-    }
-
+    .btn.primary:hover { box-shadow: 0 14px 40px rgba(232,25,44,0.5), 0 4px 14px rgba(0,0,0,0.6); }
     .btn.ghost {
-      background: rgba(255, 255, 255, 0.02);
-      border-color: rgba(255, 255, 255, 0.12);
-      color: var(--text);
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--white); backdrop-filter: blur(10px);
+    }
+    .btn.ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); }
+
+    .hero-chips { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      padding: 5px 14px; border-radius: 999px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px; color: var(--grey);
     }
 
-    .btn.ghost:hover {
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .hero-meta {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .hero-chip {
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* Hero visual */
-
-    .hero-visual {
-      display: flex;
-      justify-content: flex-start;
-    }
-
-    .hero-profile-stack {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 20px;
-    }
-
+    /* ── HERO VISUAL ── */
+    .hero-visual { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; padding-top: 40px; }
     .hero-photo {
-      margin-top: 240px; /* lowered further */ /* moved even further down */ /* moved further down */ /* significantly lower profile picture */ /* align photo with Portfolio text */ /* move photo downward */
-      align-self: flex-start;
-      width: 260px;
-      height: 320px;
-      border-radius: var(--radius-xxl);
-      margin-left: 30px;
-      overflow: hidden;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      box-shadow: var(--shadow-soft);
-      background: rgba(7, 9, 20, 0.95);
+      width: 250px; height: 310px; border-radius: var(--radius-lg); overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(232,25,44,0.1); position: relative;
     }
-
-    .hero-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transform: scale(1.02);
+    .hero-photo::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 55%, rgba(8,8,8,0.55));
     }
+    .hero-photo img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .7s var(--ease); }
+    .hero-photo:hover img { transform: scale(1.05); }
 
     .hero-card {
-      margin-top: 28px;
-      width: 100%;
-      max-width: 320px;
-      border-radius: var(--radius-xxl);
-      background: radial-gradient(circle at 10% 0%, rgba(82, 255, 224, 0.1), transparent),
-        radial-gradient(circle at 90% 120%, rgba(123, 140, 255, 0.14), transparent),
-        rgba(7, 9, 20, 0.98);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: var(--shadow-soft);
-      overflow: hidden;
-      transform-origin: center;
-      transform: translateY(0) rotate3d(1, -1, 0, 8deg);
-      animation: heroFloat 8s ease-in-out infinite;
+      width:100%; max-width:300px; border-radius: var(--radius-lg);
+      background: var(--bg-1); border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow); overflow: hidden;
+      transform: rotate3d(1,-1,0,5deg) translateY(0);
+      animation: heroFloat 9s ease-in-out infinite; position: relative;
     }
-
+    .hero-card::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 20% 0%, rgba(232,25,44,0.07), transparent 55%);
+      pointer-events:none;
+    }
     @keyframes heroFloat {
-      0%,
-      100% {
-        transform: translateY(0) rotate3d(1, -1, 0, 8deg);
-      }
-      50% {
-        transform: translateY(-8px) rotate3d(1, -1, 0, 5deg);
-      }
+      0%,100% { transform: rotate3d(1,-1,0,5deg) translateY(0px); }
+      50% { transform: rotate3d(1,-1,0,2deg) translateY(-10px); }
     }
+    .card-dots { display:flex; gap:6px; padding:11px 14px; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .dot { width:9px; height:9px; border-radius:50%; }
+    .dot:nth-child(1){background:#ff5f57} .dot:nth-child(2){background:#febc2e} .dot:nth-child(3){background:#28c840}
+    .card-body { padding:16px 18px 20px; }
+    .card-eyebrow { font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--grey); margin-bottom:6px; }
+    .card-title { font-family:'Syne',sans-serif; font-weight:700; font-size:17px; margin-bottom:8px; }
+    .card-desc { font-size:12.5px; color:var(--grey); line-height:1.65; margin-bottom:14px; }
+    .card-tags { display:flex; flex-wrap:wrap; gap:6px; }
+    .card-tag { font-size:11px; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); }
 
-    .hero-card-header {
-      display: flex;
-      gap: 6px;
-      padding: 10px 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .hero-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.22);
-    }
-
-    .hero-dot:nth-child(1) {
-      background: #ff5f57;
-    }
-    .hero-dot:nth-child(2) {
-      background: #febc2e;
-    }
-    .hero-dot:nth-child(3) {
-      background: #28c840;
-    }
-
-    .hero-card-body {
-      padding: 16px 16px 18px;
-    }
-
-    .hero-card-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-      margin-bottom: 6px;
-    }
-
-    .hero-card-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin: 0 0 8px;
-    }
-
-    .hero-card-text {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0 0 16px;
-    }
-
-    .hero-tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .hero-tag {
-      font-size: 11px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
-
-    /* Cards & grids */
-
+    /* ── GENERIC CARD ── */
     .card {
-      background: rgba(7, 10, 24, 0.96);
-      border-radius: var(--radius-xl);
-      padding: 18px 18px 20px;
-      border: 1px solid var(--border-subtle);
-      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.7);
-      position: relative;
-      overflow: hidden;
+      background: var(--bg-1); border-radius: var(--radius);
+      padding: 24px 24px 26px; border: 1px solid var(--border);
+      box-shadow: 0 10px 36px rgba(0,0,0,0.55);
+      position: relative; overflow: hidden;
+      transition: transform .4s var(--ease), border-color .4s, box-shadow .4s;
     }
-
     .card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(
-        circle at top left,
-        rgba(82, 255, 224, 0.12),
-        transparent 55%
-      );
-      opacity: 0;
-      transition: opacity var(--transition-med);
-      pointer-events: none;
+      content: ''; position: absolute; top:0; left:0; width:100%; height:1px;
+      background: linear-gradient(90deg, transparent, rgba(232,25,44,0.5), transparent);
+      opacity: 0; transition: opacity .4s;
+    }
+    .card:hover { transform: translateY(-4px); border-color: rgba(232,25,44,0.15); box-shadow: 0 24px 60px rgba(0,0,0,0.7); }
+    .card:hover::before { opacity: 1; }
+    .card h3 { font-family:'Syne',sans-serif; font-size:18px; font-weight:700; letter-spacing:-.01em; margin-bottom:8px; }
+    .card p { color:var(--grey); font-size:14px; line-height:1.7; }
+
+    /* ── ABOUT ── */
+    .about-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .about-card .card-number {
+      position:absolute; top:18px; right:18px;
+      font-family:'Syne',sans-serif; font-size:44px; font-weight:800;
+      color:rgba(255,255,255,0.028); line-height:1; user-select:none;
     }
 
-    .card:hover::before {
-      opacity: 1;
+    /* ── SKILLS ── */
+    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .skill-card ul { list-style:none; margin:12px 0 0; }
+    .skill-card ul li {
+      display:flex; align-items:flex-start; gap:10px;
+      padding:7px 0; color:var(--grey); font-size:14px;
+      border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .skill-card ul li:last-child { border-bottom:none; }
+    .skill-card ul li::before {
+      content:''; flex-shrink:0; width:5px; height:5px;
+      border-radius:50%; background:var(--red); margin-top:7px; opacity:.8;
     }
 
-    .card h3 {
-      margin-top: 0;
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      font-size: 18px;
-    }
-
-    .card p {
-      margin: 6px 0 0;
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .about-grid,
-    .skills-grid,
-    .projects-grid,
-    .photo-grid,
-    .contact-layout {
-      display: grid;
-      gap: 18px;
-    }
-
-    /* About */
-
-    .about-grid {
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    }
-
-    /* Skills */
-
-    .skill-card ul {
-      margin: 8px 0 0;
-      padding-left: 18px;
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    /* Projects */
-
-    .projects-grid {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    }
-
-    .project-card {
-      padding-top: 16px;
-    }
-
+    /* ── PROJECTS ── */
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
     .project-pill {
-      display: inline-flex;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 11px;
-      margin-bottom: 6px;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:4px 12px; border-radius:999px;
+      background:var(--red-dim); color:var(--red);
+      font-size:11px; font-weight:500; letter-spacing:.05em; margin-bottom:10px;
     }
-
-    .project-meta {
-      list-style: none;
-      padding: 0;
-      margin: 10px 0 0;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 12px;
-      color: var(--text-muted);
+    .project-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--red); }
+    .project-meta { list-style:none; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:8px; }
+    .project-meta li {
+      font-size:11.5px; color:var(--grey); padding:4px 10px;
+      background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:999px;
     }
-
-    /* Photography */
-
-    .photo-grid {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    .project-github {
+      display:inline-flex; align-items:center; gap:7px;
+      margin-top:16px; font-size:13px; font-weight:500;
+      color:var(--red); text-decoration:none;
+      border:1px solid var(--border-red); padding:7px 14px; border-radius:999px;
+      background:var(--red-dim);
+      transition:background .25s, border-color .25s, transform .25s;
     }
+    .project-github:hover { background:rgba(232,25,44,0.22); border-color:rgba(232,25,44,0.5); transform:translateY(-1px); }
+    .project-github svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
 
-    .photo-card {
-      position: relative;
-      border-radius: var(--radius-xl);
-      background: #020617;
-      border: 1px solid var(--border-subtle);
-      height: 180px;
-      overflow: hidden;
+    /* ── SPHERE ── */
+    .sphere-wrapper {
+      position: relative; width: 100%; height: 580px;
+      perspective: 900px;
+      display: flex; align-items: center; justify-content: center;
     }
-
-    .photo-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s var(--transition-med);
+    .sphere-scene {
+      position: relative; width: 340px; height: 340px;
+      transform-style: preserve-3d;
+      animation: sphereSpin 32s linear infinite;
     }
-
-    .photo-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top, rgba(0, 0, 0, 0.35), transparent);
-      opacity: 0;
-      transition: opacity 0.4s var(--transition-med);
+    .sphere-scene:hover { animation-play-state: paused; }
+    @keyframes sphereSpin {
+      from { transform: rotateY(0deg) rotateX(14deg); }
+      to   { transform: rotateY(360deg) rotateX(14deg); }
     }
-
-    .photo-card:hover img {
-      transform: scale(1.06);
+    .sphere-photo {
+      position: absolute; top:50%; left:50%;
+      width: 110px; height: 80px;
+      border-radius: 10px; overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.7);
+      transition: width .45s var(--ease), height .45s var(--ease),
+                  margin .45s var(--ease), border-color .3s, box-shadow .3s;
+      backface-visibility: hidden;
+      cursor: none;
     }
-
-    .photo-card:hover::after {
-      opacity: 1;
+    .sphere-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+    .sphere-photo:hover {
+      border-color: var(--red);
+      box-shadow: 0 0 0 2px var(--red), 0 14px 44px rgba(232,25,44,0.4);
+      z-index: 100;
     }
-
-    .photo-more {
-      display: none;
+    .sphere-fade {
+      position:absolute; inset:0;
+      background: radial-gradient(ellipse 62% 62% at 50% 50%, transparent 52%, var(--bg) 88%);
+      pointer-events:none; z-index:2;
     }
+    .sphere-hint { text-align:center; margin-top:14px; font-size:12px; color:var(--grey); letter-spacing:.08em; }
+    .sphere-hint span { color:var(--red); }
 
-    .photo-grid.expanded .photo-more {
-      display: block;
-    }
-
-    .photo-toggle-wrapper {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-    }
-
-    /* Contact */
-
-    .contact-layout {
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
-
-    .contact-links {
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
+    /* ── CONTACT ── */
+    .contact-layout { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+    .contact-links { list-style:none; margin:14px 0 0; }
     .contact-links li {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 6px 0;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:9px 0; font-size:14px; color:var(--grey);
+      border-bottom:1px solid rgba(255,255,255,0.04);
     }
+    .contact-links li:last-child { border-bottom:none; }
+    .contact-links a { color:var(--red); text-decoration:none; font-weight:500; transition:opacity .2s; }
+    .contact-links a:hover { opacity:.75; }
 
-    /* Footer */
-
+    /* ── FOOTER ── */
     .footer {
-      width: min(1080px, 100% - 32px);
-      margin: 0 auto 20px;
-      padding-top: 16px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 12px;
-      color: var(--text-muted);
+      width:min(1100px,calc(100% - 28px)); margin:0 auto 24px;
+      padding-top:20px; border-top:1px solid rgba(255,255,255,0.05);
+      display:flex; justify-content:space-between; align-items:center; gap:12px;
+      font-size:12px; color:var(--grey);
     }
+    .footer-dot { color:var(--red); margin:0 5px; }
 
-    /* Scroll reveal animations */
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(48px); transition:opacity .7s var(--ease), transform .8s var(--ease); }
+    .reveal.in { opacity:1; transform:translateY(0); }
+    .reveal-delay-1{transition-delay:.1s} .reveal-delay-2{transition-delay:.2s}
+    .reveal-delay-3{transition-delay:.3s} .reveal-delay-4{transition-delay:.4s}
 
-    .section-observe {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.6s var(--transition-med),
-        transform 0.7s var(--transition-med);
+    .hero-reveal { opacity:0; transform:translateY(28px); animation:hReveal .8s var(--ease) forwards; }
+    .hr1{animation-delay:.1s} .hr2{animation-delay:.25s} .hr3{animation-delay:.4s}
+    .hr4{animation-delay:.55s} .hr5{animation-delay:.7s}
+    .hr-photo{animation-delay:.3s} .hr-card{animation-delay:.5s}
+    @keyframes hReveal { to { opacity:1; transform:translateY(0); } }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr; min-height:auto; padding-top:140px;}
+      .hero-visual{flex-direction:row; flex-wrap:wrap;}
     }
-
-    .section-observe.in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Responsive */
-
-    @media (max-width: 900px) {
-      .site-header {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px 14px;
-        gap: 10px;
-      }
-
-      .nav {
-        width: 100%;
-        justify-content: space-between;
-        flex-wrap: wrap;
-      }
-
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .hero-visual {
-        justify-content: flex-start;
-      }
-
-      main {
-        padding-top: 126px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .site-header {
-        width: calc(100% - 20px);
-        left: 50%;
-      }
-
-      main {
-        width: calc(100% - 20px);
-      }
-
-      .section {
-        padding: 56px 0;
-      }
-
-      .hero-card {
-        max-width: 100%;
-      }
-
-      .footer {
-        width: calc(100% - 20px);
-        flex-direction: column;
-        align-items: flex-start;
-      }
+    @media(max-width:640px){
+      .site-header{flex-direction:column; align-items:flex-start; border-radius:18px; padding:12px 14px;}
+      .nav{width:100%; justify-content:space-between;}
+      .hero{padding-top:120px;}
+      .footer{flex-direction:column; align-items:flex-start;}
+      body{cursor:auto;}
+      #cursor-outer,#cursor-inner{display:none;}
     }
   </style>
 </head>
 <body>
-  <div class="scroll-progress"><div class="scroll-progress-bar"></div></div>
+
+  <div id="cursor-outer"></div>
+  <div id="cursor-inner"></div>
+
+  <div class="scroll-bar"><div class="scroll-bar-fill" id="scroll-fill"></div></div>
+
+  <div class="bg-vignette"></div>
+  <div class="bg-grid"></div>
+
   <header class="site-header">
     <div class="logo">
       <div class="logo-mark">P</div>
@@ -707,328 +386,349 @@
       </div>
     </div>
     <nav class="nav">
-      <a href="#home" class="nav-link active">Home</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#projects" class="nav-link">Projects</a>
+      <a href="#home"        class="nav-link active">Home</a>
+      <a href="#about"       class="nav-link">About</a>
+      <a href="#skills"      class="nav-link">Skills</a>
+      <a href="#projects"    class="nav-link">Projects</a>
       <a href="#photography" class="nav-link">Photography</a>
-      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#contact"     class="nav-link">Contact</a>
     </nav>
   </header>
 
-  <div class="bg-grid"></div>
-  <div class="bg-orbit"></div>
-
   <main>
-    <section id="home" class="section hero section-observe">
+
+    <!-- HERO -->
+    <section id="home" class="section hero">
       <div class="hero-content">
-        <p class="eyebrow">Portfolio • 2025</p>
-        <h1>
-          Designing <span class="accent">data-driven</span> experiences
-          that <span class="accent">actually work</span>.
+        <p class="section-label hero-reveal hr1">Portfolio · 2025</p>
+        <h1 class="hero-reveal hr2">
+          Turning <span class="accent">messy data</span> into stories that actually matter.
         </h1>
-        <p class="hero-sub">
-          I’m Pavan, a data analytics professional who loves turning messy data into clean stories, clear dashboards, and practical insights for decisions.
+        <p class="hero-sub hero-reveal hr3">
+          I'm Pavan — a data analytics professional who loves transforming raw numbers into clean dashboards, sharp insights, and better decisions.
         </p>
-        <div class="hero-actions">
-          <a href="#projects" class="btn primary">View Projects</a>
-          <a href="#contact" class="btn ghost">Let’s Connect</a>
-          <a href="Resume/Pavan_Kalmanoor_Resume.pdf" class="btn ghost" target="_blank">Download Resume (PDF)</a>
+        <div class="hero-actions hero-reveal hr4">
+          <a href="#projects" class="btn primary magnetic">View Projects</a>
+          <a href="#contact"  class="btn ghost magnetic">Let's Connect</a>
         </div>
-        <div class="hero-meta">
-          <div class="hero-chip">Data Analytics</div>
-          <div class="hero-chip">Business Intelligence</div>
-          <div class="hero-chip">Photography</div>
+        <div class="hero-chips hero-reveal hr5">
+          <span class="chip">Data Analytics</span>
+          <span class="chip">Business Intelligence</span>
+          <span class="chip">Photography</span>
+          <span class="chip">Open to Roles</span>
         </div>
       </div>
-      </div>
+
       <div class="hero-visual">
-      <div class="hero-profile-stack">
-        <div class="hero-photo">
+        <div class="hero-photo hero-reveal hr-photo">
           <img src="Photos/profile.jpg" alt="Portrait of Pavan Kalmanoor" />
         </div>
-        <div class="hero-card">
-          <div class="hero-card-header">
-            <span class="hero-dot"></span>
-            <span class="hero-dot"></span>
-            <span class="hero-dot"></span>
+        <div class="hero-card hero-reveal hr-card">
+          <div class="card-dots">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
           </div>
-          <div class="hero-card-body">
-            <p class="hero-card-label">Current Focus</p>
-            <p class="hero-card-title">Advanced Analytics &amp; Insights</p>
-            <p class="hero-card-text">
-              Exploring patterns in data, building insightful dashboards, and turning raw information into clear, actionable decisions.
-            </p>
-            <div class="hero-tag-row">
-              <span class="hero-tag">Excel &amp; SQL</span>
-              <span class="hero-tag">Python</span>
-              <span class="hero-tag">Power BI</span>
+          <div class="card-body">
+            <p class="card-eyebrow">Current Focus</p>
+            <p class="card-title">Advanced Analytics & Insights</p>
+            <p class="card-desc">Building insightful dashboards, exploring data patterns, and turning raw information into clear, actionable decisions.</p>
+            <div class="card-tags">
+              <span class="card-tag">Excel & SQL</span>
+              <span class="card-tag">Python</span>
+              <span class="card-tag">Power BI</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </section>
 
-    <section id="about" class="section section-observe">
-      <div class="section-header">
-        <p class="eyebrow">About</p>
+    <div class="divider"></div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">About</p>
         <h2>Who I am and how I work</h2>
-        <p class="section-sub">
-          I blend hands-on data analytics with a solid understanding of IT systems. I enjoy digging into real-world datasets, finding the signal in the noise, and then designing dashboards and processes that match how people actually work.
-        </p>
+        <p class="section-sub">I blend hands-on data analytics with a solid understanding of IT systems — finding signal in the noise, then building dashboards that match how people actually work.</p>
       </div>
       <div class="about-grid">
-        <div class="card about-card">
+        <div class="card about-card reveal reveal-delay-1">
+          <span class="card-number">01</span>
           <h3>Background</h3>
-          <p>
-            I’ve worked across analytics and IT support: building reports and trackers while also dealing with imaging, warranty workflows, and Windows 10/11 rollouts. That means I understand both the numbers in the dashboard and the systems behind them.
-          </p>
+          <p>I'm a data science and analytics professional with experience spanning predictive modelling, machine learning, and business intelligence. I've built end-to-end pipelines — from messy raw data through to dashboards and models that drive real decisions.</p>
         </div>
-        <div class="card about-card">
+        <div class="card about-card reveal reveal-delay-2">
+          <span class="card-number">02</span>
           <h3>How I think</h3>
-          <p>
-            I like to keep things simple: start with a messy spreadsheet or dataset, clean it up, create a clear view with the right metrics, and then automate as much as possible so insights are always up to date.
-          </p>
+          <p>I start by understanding the business question, not just the data. From there I identify the right analytical approach — whether that's a clean SQL query, a regression model, or a full ML pipeline — and build something that's reproducible, interpretable, and actually used.</p>
         </div>
-        <div class="card about-card">
-          <h3>What I’m looking for</h3>
-          <p>
-            Roles where I can combine <strong>data analysis</strong>, <strong>business problem-solving</strong>, and <strong>system thinking</strong> — especially as a Data Analyst or Business Analyst, with the bonus of understanding technical operations.
-          </p>
+        <div class="card about-card reveal reveal-delay-3">
+          <span class="card-number">03</span>
+          <h3>What I'm looking for</h3>
+          <p>A role where rigorous analysis meets real impact — ideally as a Data Scientist or Senior Analyst working on problems that require both statistical thinking and a deep understanding of the business context behind the numbers.</p>
         </div>
       </div>
     </section>
 
-    <section id="skills" class="section section-observe">
-      <div class="section-header">
-        <p class="eyebrow">Skills</p>
-        <h2>Tools I actually use</h2>
-        <p class="section-sub">
-          A quick snapshot of what I’m comfortable shipping real work with.
-        </p>
+    <div class="divider"></div>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Skills</p>
+        <h2>Tools I actually ship real work with</h2>
+        <p class="section-sub">A quick snapshot of what I'm comfortable using in production environments.</p>
       </div>
       <div class="skills-grid">
-        <div class="card skill-card">
-          <h3>Analytics Engineering & Systems</h3>
+        <div class="card skill-card reveal reveal-delay-1">
+          <h3>Data Science & Analytics</h3>
           <ul>
-            <li>Connecting data from real-world devices and systems</li>
-            <li>Turning operational data into usable tables and reports</li>
-            <li>Windows imaging & deployment (Ghost, GPO basics)</li>
-            <li>Windows 10/11 compatibility planning</li>
+            <li>Python — pandas, NumPy, matplotlib, seaborn</li>
+            <li>SQL — complex queries, joins, window functions</li>
+            <li>Statistical analysis, hypothesis testing, A/B testing</li>
+            <li>Data wrangling, cleaning, and feature engineering</li>
+            <li>Dashboard & reporting — Power BI, Excel, Tableau</li>
+            <li>Exploratory data analysis and storytelling with data</li>
           </ul>
         </div>
-        <div class="card skill-card">
-          <h3>Soft Skills</h3>
+        <div class="card skill-card reveal reveal-delay-2">
+          <h3>Machine Learning & Soft Skills</h3>
           <ul>
-            <li>Explaining technical issues in simple language</li>
-            <li>Prioritizing issues that really matter</li>
-            <li>Collaborating with non-technical teams</li>
-            <li>Design sense from photography & visual work</li>
+            <li>Supervised learning — regression, classification</li>
+            <li>NLP — TF-IDF, embeddings, BERT fine-tuning</li>
+            <li>scikit-learn, model evaluation and validation</li>
+            <li>Translating technical findings to non-technical audiences</li>
+            <li>Stakeholder collaboration and problem scoping</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="projects" class="section section-observe">
-      <div class="section-header">
-        <p class="eyebrow">Projects</p>
+    <div class="divider"></div>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Projects</p>
         <h2>Selected work</h2>
-        <p class="section-sub">
-          A mix of analytics, IT automation, and experiments that show how I think.
-        </p>
+        <p class="section-sub">Analytics, ML, NLP, and creative experiments that show how I think.</p>
       </div>
       <div class="projects-grid">
-        <article class="card project-card">
+
+        <article class="card project-card reveal reveal-delay-1">
           <div class="project-pill">Data Analytics</div>
           <h3>Operational Analytics Dashboard</h3>
-          <p>
-            Designed an Excel/Power BI dashboard to monitor device health,
-            usage patterns, and Windows 11 readiness across hundreds of
-            laptops, surfacing the right metrics to guide refresh and
-            warranty decisions.
-          </p>
+          <p>Designed an Excel / Power BI dashboard to monitor device health, usage patterns, and Windows 11 readiness across hundreds of laptops — surfacing the right metrics to guide refresh and warranty decisions.</p>
           <ul class="project-meta">
             <li>Excel, Power BI</li>
-            <li>Operational & reliability analytics</li>
+            <li>Operational & reliability</li>
           </ul>
+          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View on GitHub
+          </a>
         </article>
-        <article class="card project-card">
+
+        <article class="card project-card reveal reveal-delay-2">
           <div class="project-pill">Machine Learning</div>
           <h3>Vehicle Accident Hotspot Detection</h3>
-          <p>
-            Used geospatial and time-series analysis on US accident data to
-            detect high-risk locations and temporal patterns, supporting
-            safety-focused decision-making.
-          </p>
+          <p>Used geospatial and time-series analysis on US accident data to detect high-risk locations and temporal patterns, supporting safety-focused decision-making.</p>
           <ul class="project-meta">
             <li>Python, pandas</li>
             <li>Geo & time-series</li>
           </ul>
+          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View on GitHub
+          </a>
         </article>
-        <article class="card project-card">
+
+        <article class="card project-card reveal reveal-delay-3">
           <div class="project-pill">NLP</div>
           <h3>Advanced Sentiment Analysis Lab</h3>
-          <p>
-            Experimented with TF-IDF, Random Forest, word embeddings, and BERT
-            to compare sentiment-analysis approaches on real-world text data.
-          </p>
+          <p>Compared TF-IDF, Random Forest, word embeddings, and BERT to evaluate sentiment-analysis approaches on real-world text corpora.</p>
           <ul class="project-meta">
             <li>Python, scikit-learn</li>
             <li>BERT, embeddings</li>
           </ul>
+          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            View on GitHub
+          </a>
         </article>
-        <article class="card project-card">
+
+        <article class="card project-card reveal reveal-delay-4">
           <div class="project-pill">Creative</div>
           <h3>Photography-Driven Storytelling</h3>
-          <p>
-            Used photography and light editing to document daily life and
-            urban scenes, developing a visual style that influences how I
-            design dashboards and interfaces.
-          </p>
+          <p>Used photography and light editing to document daily life and urban scenes — a visual practice that directly shapes how I design dashboards and data interfaces.</p>
           <ul class="project-meta">
             <li>Photography</li>
             <li>Lightroom / editing</li>
           </ul>
         </article>
+
       </div>
     </section>
 
-    <section id="photography" class="section section-observe">
-      <div class="section-header">
-        <p class="eyebrow">Photography</p>
+    <div class="divider"></div>
+
+    <!-- PHOTOGRAPHY SPHERE -->
+    <section id="photography" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Photography</p>
         <h2>Frames that influence my design</h2>
-        <p class="section-sub">
-          A selection of moments I’ve captured over the years. These photos
-          influence how I think about light, contrast, and composition in
-          dashboards and design.
-        </p>
+        <p class="section-sub">Moments I've captured that shape how I think about light, contrast, and composition in data visualisation. Hover to pause and zoom.</p>
       </div>
-      <div class="photo-grid" id="photo-grid">
-        <!-- Always visible photos -->
-        <div class="photo-card"><img src="Photos/photo1.jpg" alt="Photo 1" /></div>
-        <div class="photo-card"><img src="Photos/photo2.jpg" alt="Photo 2" /></div>
-        <div class="photo-card"><img src="Photos/photo3.jpg" alt="Photo 3" /></div>
-        <div class="photo-card"><img src="Photos/photo4.jpg" alt="Photo 4" /></div>
-        <div class="photo-card"><img src="Photos/photo5.jpg" alt="Photo 5" /></div>
-        <div class="photo-card"><img src="Photos/photo6.jpg" alt="Photo 6" /></div>
-        <div class="photo-card"><img src="Photos/photo7.jpg" alt="Photo 7" /></div>
-        <div class="photo-card"><img src="Photos/photo8.jpg" alt="Photo 8" /></div>
 
-        <!-- Hidden until "Show more" is clicked -->
-        <div class="photo-card photo-more"><img src="Photos/photo9.jpg" alt="Photo 9" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo10.jpg" alt="Photo 10" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo11.jpg" alt="Photo 11" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo12.jpg" alt="Photo 12" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo13.jpg" alt="Photo 13" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo14.jpg" alt="Photo 14" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo15.jpg" alt="Photo 15" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo16.jpg" alt="Photo 16" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo17.jpg" alt="Photo 17" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo18.jpg" alt="Photo 18" /></div>
-        <div class="photo-card photo-more"><img src="Photos/photo19.jpg" alt="Photo 19" /></div>
+      <div class="sphere-wrapper reveal">
+        <div class="sphere-scene" id="sphere-scene"></div>
+        <div class="sphere-fade"></div>
       </div>
-      <div class="photo-toggle-wrapper">
-        <button class="btn ghost" id="photo-toggle">Show more photos</button>
-      </div>
+      <p class="sphere-hint reveal">
+        <span>Hover</span> any photo to zoom &nbsp;·&nbsp; Sphere pauses on hover
+      </p>
     </section>
 
-    <section id="contact" class="section section-observe">
-      <div class="section-header">
-        <p class="eyebrow">Contact</p>
-        <h2>Let’s talk</h2>
-        <p class="section-sub">
-          Open to roles in data, analytics, and technical operations — or just
-          interesting problems to think about.
-        </p>
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Contact</p>
+        <h2>Let's talk</h2>
+        <p class="section-sub">Open to roles in data, analytics, and technical operations — or just interesting problems to think through together.</p>
       </div>
       <div class="contact-layout">
-        <div class="card contact-card">
+        <div class="card reveal reveal-delay-1">
           <h3>Say hi</h3>
-          <p>
-            The best way to reach me is by email. I’m happy to send over a
-            detailed resume, talk through my projects, or chat about how I can
-            help your team.
-          </p>
-          <a href="mailto:k.naidu002@umb.edu" class="btn primary">
-            Email Me
-          </a>
+          <p>The best way to reach me is by email. Happy to talk through my work, discuss a role, or just explore an interesting problem together.</p>
+          <div style="margin-top:20px;">
+            <a href="mailto:kalmanoorpavan@gmail.com" class="btn primary magnetic">Email Me</a>
+          </div>
         </div>
-        <div class="card contact-card">
+        <div class="card reveal reveal-delay-2">
           <h3>Quick links</h3>
           <ul class="contact-links">
-            <li><span>Resume</span><span>•</span><a href="Resume/Pavan_Kalmanoor_Resume.pdf" target="_blank">Download PDF</a></li>
-            <li><span>Location</span><span>•</span><span>USA</span></li>
-            <li><span>Focus</span><span>•</span><span>Data Analytics & BI</span></li>
+            <li><span>GitHub</span><a href="https://github.com/pavankalmanoor" target="_blank">pavankalmanoor</a></li>
+            <li><span>Email</span><a href="mailto:kalmanoorpavan@gmail.com">kalmanoorpavan@gmail.com</a></li>
+            <li><span>Location</span><span>USA</span></li>
+            <li><span>Focus</span><span>Data Science & Analytics</span></li>
           </ul>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer class="footer">
     <span>© <span id="year"></span> Pavan Kalmanoor</span>
-    <span>Built with care & a bit of caffeine.</span>
+    <span>Built with a bit of caffeine<span class="footer-dot">·</span>some care<span class="footer-dot">·</span>and a lot of data.</span>
   </footer>
 
   <script>
-    const progressBar = document.querySelector(".scroll-progress-bar");
-    const updateProgress = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      progressBar.style.width = `${progress}%`;
-    };
-    window.addEventListener("scroll", updateProgress);
-    updateProgress();
+    /* ── SCROLL PROGRESS ── */
+    const fill = document.getElementById('scroll-fill');
+    window.addEventListener('scroll', () => {
+      const d = document.documentElement;
+      fill.style.width = Math.min(100, (window.scrollY / (d.scrollHeight - innerHeight)) * 100) + '%';
+    }, { passive: true });
 
-    const observerOptions = { threshold: 0.2 };
-    const revealCallback = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("in-view");
-          observer.unobserve(entry.target);
-        }
-      });
-    };
-    const observer = new IntersectionObserver(revealCallback, observerOptions);
-    document.querySelectorAll(".section-observe").forEach((section) => {
-      observer.observe(section);
+    /* ── CURSOR ── */
+    const co = document.getElementById('cursor-outer');
+    const ci = document.getElementById('cursor-inner');
+    let mx = 0, my = 0, ox = 0, oy = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      ci.style.left = mx + 'px'; ci.style.top = my + 'px';
+    });
+    (function loop() {
+      ox += (mx - ox) * 0.12; oy += (my - oy) * 0.12;
+      co.style.left = ox + 'px'; co.style.top = oy + 'px';
+      requestAnimationFrame(loop);
+    })();
+    document.querySelectorAll('a,button,.card,.sphere-photo').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+    document.querySelectorAll('p,h1,h2,h3,li,span').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
     });
 
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".nav-link");
-    const setActiveNav = () => {
-      let currentId = "";
-      const offset = 120;
-      sections.forEach((sec) => {
-        const top = sec.offsetTop - offset;
-        if (window.scrollY >= top) {
-          currentId = sec.id;
-        }
+    /* ── MAGNETIC BUTTONS ── */
+    document.querySelectorAll('.magnetic').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r = btn.getBoundingClientRect();
+        btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.18}px, ${(e.clientY - r.top - r.height/2) * 0.22}px)`;
       });
-      navLinks.forEach((link) => {
-        if (link.getAttribute("href") === `#${currentId}`) {
-          link.classList.add("active");
-        } else {
-          link.classList.remove("active");
-        }
-      });
-    };
-    window.addEventListener("scroll", setActiveNav);
-    setActiveNav();
+      btn.addEventListener('mouseleave', () => btn.style.transform = '');
+    });
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    /* ── SCROLL REVEAL ── */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-    const photoGrid = document.getElementById("photo-grid");
-    const photoToggle = document.getElementById("photo-toggle");
-    if (photoGrid && photoToggle) {
-      photoToggle.addEventListener("click", () => {
-        const expanded = photoGrid.classList.toggle("expanded");
-        photoToggle.textContent = expanded ? "Show fewer photos" : "Show more photos";
+    /* ── ACTIVE NAV ── */
+    const secs = document.querySelectorAll('section[id]');
+    const navLs = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      secs.forEach(s => { if (window.scrollY >= s.offsetTop - 140) cur = s.id; });
+      navLs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+    }, { passive: true });
+
+    /* ── YEAR ── */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ── PARALLAX GRID ── */
+    window.addEventListener('scroll', () => {
+      const g = document.querySelector('.bg-grid');
+      if (g) g.style.transform = `translateY(${window.scrollY * 0.12}px)`;
+    }, { passive: true });
+
+    /* ── SPHERE ── */
+    const scene = document.getElementById('sphere-scene');
+    const N = 19;
+    const R = 158;
+
+    for (let i = 0; i < N; i++) {
+      // Fibonacci sphere for even distribution
+      const phi   = Math.acos(1 - 2 * (i + 0.5) / N);
+      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+      const x = R * Math.sin(phi) * Math.cos(theta);
+      const y = R * Math.sin(phi) * Math.sin(theta);
+      const z = R * Math.cos(phi);
+
+      const el = document.createElement('div');
+      el.className = 'sphere-photo';
+      el.style.marginLeft = '-55px';
+      el.style.marginTop  = '-40px';
+      el.style.transform  = `translate3d(${x}px,${y}px,${z}px)`;
+
+      el.addEventListener('mouseenter', () => {
+        el.style.width      = '190px';
+        el.style.height     = '136px';
+        el.style.marginLeft = '-95px';
+        el.style.marginTop  = '-68px';
+        el.style.zIndex     = '99';
       });
+      el.addEventListener('mouseleave', () => {
+        el.style.width      = '110px';
+        el.style.height     = '80px';
+        el.style.marginLeft = '-55px';
+        el.style.marginTop  = '-40px';
+        el.style.zIndex     = '';
+      });
+
+      const img = document.createElement('img');
+      img.src     = `Photos/photo${i + 1}.jpg`;
+      img.alt     = `Photo ${i + 1}`;
+      img.loading = 'lazy';
+
+      el.appendChild(img);
+      scene.appendChild(el);
     }
   </script>
 </body>
 </html>
-
