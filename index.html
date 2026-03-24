@@ -278,46 +278,62 @@
     .project-github:hover { background:rgba(232,25,44,0.22); border-color:rgba(232,25,44,0.5); transform:translateY(-1px); }
     .project-github svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
 
-    /* ── SPHERE ── */
-    .sphere-wrapper {
-      position: relative; width: 100%; height: 580px;
-      perspective: 900px;
-      display: flex; align-items: center; justify-content: center;
+    /* ── PHOTO STRIP ── */
+    .strip-outer {
+      position: relative; width: 100%;
     }
-    .sphere-scene {
-      position: relative; width: 340px; height: 340px;
-      transform-style: preserve-3d;
-      animation: sphereSpin 32s linear infinite;
+    .strip-track {
+      display: flex; gap: 14px;
+      overflow-x: auto; overflow-y: visible;
+      padding: 16px 0 24px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
     }
-    .sphere-scene:hover { animation-play-state: paused; }
-    @keyframes sphereSpin {
-      from { transform: rotateY(0deg) rotateX(14deg); }
-      to   { transform: rotateY(360deg) rotateX(14deg); }
+    .strip-track:active { cursor: grabbing; }
+    .strip-track::-webkit-scrollbar { height: 3px; }
+    .strip-track::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 999px; }
+    .strip-track::-webkit-scrollbar-thumb { background: var(--red); border-radius: 999px; }
+
+    .strip-photo {
+      flex-shrink: 0;
+      width: 260px; height: 190px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      scroll-snap-align: start;
+      position: relative;
+      transition: transform .4s var(--ease), border-color .35s, box-shadow .35s;
     }
-    .sphere-photo {
-      position: absolute; top:50%; left:50%;
-      width: 110px; height: 80px;
-      border-radius: 10px; overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.1);
-      box-shadow: 0 8px 28px rgba(0,0,0,0.7);
-      transition: width .45s var(--ease), height .45s var(--ease),
-                  margin .45s var(--ease), border-color .3s, box-shadow .3s;
-      backface-visibility: hidden;
-      cursor: none;
+    .strip-photo img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .6s var(--ease), filter .4s;
+      filter: saturate(0.85) brightness(0.9);
     }
-    .sphere-photo img { width:100%; height:100%; object-fit:cover; display:block; }
-    .sphere-photo:hover {
+    .strip-photo::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.45));
+      opacity: 0; transition: opacity .35s;
+    }
+    .strip-photo:hover {
+      transform: translateY(-6px) scale(1.02);
       border-color: var(--red);
-      box-shadow: 0 0 0 2px var(--red), 0 14px 44px rgba(232,25,44,0.4);
-      z-index: 100;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(232,25,44,0.35);
     }
-    .sphere-fade {
-      position:absolute; inset:0;
-      background: radial-gradient(ellipse 62% 62% at 50% 50%, transparent 52%, var(--bg) 88%);
-      pointer-events:none; z-index:2;
+    .strip-photo:hover img { transform: scale(1.07); filter: saturate(1.1) brightness(1); }
+    .strip-photo:hover::after { opacity: 1; }
+
+    /* fade edges */
+    .strip-outer::before,
+    .strip-outer::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 80px;
+      z-index: 2; pointer-events: none;
     }
-    .sphere-hint { text-align:center; margin-top:14px; font-size:12px; color:var(--grey); letter-spacing:.08em; }
-    .sphere-hint span { color:var(--red); }
+    .strip-outer::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .strip-outer::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+
+    .strip-hint { margin-top: 10px; font-size: 12px; color: var(--grey); letter-spacing: .08em; }
+    .strip-hint span { color: var(--red); }
 
     /* ── CONTACT ── */
     .contact-layout { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
@@ -571,21 +587,20 @@
 
     <div class="divider"></div>
 
-    <!-- PHOTOGRAPHY SPHERE -->
+    <!-- PHOTOGRAPHY STRIP -->
     <section id="photography" class="section">
       <div class="section-header reveal">
         <p class="section-label">Photography</p>
         <h2>Frames that influence my design</h2>
-        <p class="section-sub">Moments I've captured that shape how I think about light, contrast, and composition in data visualisation. Hover to pause and zoom.</p>
+        <p class="section-sub">Moments I've captured that shape how I think about light, contrast, and composition in data visualisation.</p>
       </div>
 
-      <div class="sphere-wrapper reveal">
-        <div class="sphere-scene" id="sphere-scene"></div>
-        <div class="sphere-fade"></div>
+      <div class="strip-outer reveal">
+        <div class="strip-track" id="strip-track">
+          <!-- injected by JS -->
+        </div>
       </div>
-      <p class="sphere-hint reveal">
-        <span>Hover</span> any photo to zoom &nbsp;·&nbsp; Sphere pauses on hover
-      </p>
+      <p class="strip-hint reveal"><span>Drag</span> or scroll sideways to browse · hover to enlarge</p>
     </section>
 
     <div class="divider"></div>
@@ -602,14 +617,14 @@
           <h3>Say hi</h3>
           <p>The best way to reach me is by email. Happy to talk through my work, discuss a role, or just explore an interesting problem together.</p>
           <div style="margin-top:20px;">
-            <a href="mailto:kalmanoorpavan@gmail.com" class="btn primary magnetic">Email Me</a>
+            <a href="/cdn-cgi/l/email-protection#402b212c2d212e2f2f32302136212e00272d21292c6e232f2d" class="btn primary magnetic">Email Me</a>
           </div>
         </div>
         <div class="card reveal reveal-delay-2">
           <h3>Quick links</h3>
           <ul class="contact-links">
             <li><span>GitHub</span><a href="https://github.com/pavankalmanoor" target="_blank">pavankalmanoor</a></li>
-            <li><span>Email</span><a href="mailto:kalmanoorpavan@gmail.com">kalmanoorpavan@gmail.com</a></li>
+            <li><span>Email</span><a href="/cdn-cgi/l/email-protection#4d262c21202c2322223f3d2c3b2c230d2a202c2421632e2220"><span class="__cf_email__" data-cfemail="157e747978747b7a7a67657463747b557278747c793b767a78">[email&#160;protected]</span></a></li>
             <li><span>Location</span><span>USA</span></li>
             <li><span>Focus</span><span>Data Science & Analytics</span></li>
           </ul>
@@ -624,7 +639,7 @@
     <span>Built with a bit of caffeine<span class="footer-dot">·</span>some care<span class="footer-dot">·</span>and a lot of data.</span>
   </footer>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     /* ── SCROLL PROGRESS ── */
     const fill = document.getElementById('scroll-fill');
     window.addEventListener('scroll', () => {
@@ -641,11 +656,11 @@
       ci.style.left = mx + 'px'; ci.style.top = my + 'px';
     });
     (function loop() {
-      ox += (mx - ox) * 0.25; oy += (my - oy) * 0.25;
+      ox += (mx - ox) * 0.12; oy += (my - oy) * 0.12;
       co.style.left = ox + 'px'; co.style.top = oy + 'px';
       requestAnimationFrame(loop);
     })();
-    document.querySelectorAll('a,button,.card,.sphere-photo').forEach(el => {
+    document.querySelectorAll('a,button,.card,.strip-photo').forEach(el => {
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
@@ -687,48 +702,31 @@
       if (g) g.style.transform = `translateY(${window.scrollY * 0.12}px)`;
     }, { passive: true });
 
-    /* ── SPHERE ── */
-    const scene = document.getElementById('sphere-scene');
-    const N = 19;
-    const R = 158;
-
-    for (let i = 0; i < N; i++) {
-      // Fibonacci sphere for even distribution
-      const phi   = Math.acos(1 - 2 * (i + 0.5) / N);
-      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
-      const x = R * Math.sin(phi) * Math.cos(theta);
-      const y = R * Math.sin(phi) * Math.sin(theta);
-      const z = R * Math.cos(phi);
-
-      const el = document.createElement('div');
-      el.className = 'sphere-photo';
-      el.style.marginLeft = '-55px';
-      el.style.marginTop  = '-40px';
-      el.style.transform  = `translate3d(${x}px,${y}px,${z}px)`;
-
-      el.addEventListener('mouseenter', () => {
-        el.style.width      = '190px';
-        el.style.height     = '136px';
-        el.style.marginLeft = '-95px';
-        el.style.marginTop  = '-68px';
-        el.style.zIndex     = '99';
-      });
-      el.addEventListener('mouseleave', () => {
-        el.style.width      = '110px';
-        el.style.height     = '80px';
-        el.style.marginLeft = '-55px';
-        el.style.marginTop  = '-40px';
-        el.style.zIndex     = '';
-      });
-
+    /* ── PHOTO STRIP ── */
+    const track = document.getElementById('strip-track');
+    for (let i = 1; i <= 19; i++) {
+      const div = document.createElement('div');
+      div.className = 'strip-photo';
       const img = document.createElement('img');
-      img.src     = `Photos/photo${i + 1}.jpg`;
-      img.alt     = `Photo ${i + 1}`;
+      img.src = `Photos/photo${i}.jpg`;
+      img.alt = `Photo ${i}`;
       img.loading = 'lazy';
-
-      el.appendChild(img);
-      scene.appendChild(el);
+      div.appendChild(img);
+      track.appendChild(div);
     }
+
+    // drag to scroll
+    let isDown = false, startX, scrollLeft;
+    track.addEventListener('mousedown', e => {
+      isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft;
+    });
+    track.addEventListener('mouseleave', () => isDown = false);
+    track.addEventListener('mouseup',    () => isDown = false);
+    track.addEventListener('mousemove',  e => {
+      if (!isDown) return;
+      e.preventDefault();
+      track.scrollLeft = scrollLeft - (e.pageX - track.offsetLeft - startX) * 1.4;
+    });
   </script>
 </body>
 </html>
