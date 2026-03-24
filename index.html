@@ -1173,8 +1173,15 @@
     const secs  = document.querySelectorAll('section[id]');
     const navLs = document.querySelectorAll('.nav-link');
     window.addEventListener('scroll', () => {
+      const scrollY      = window.scrollY;
+      const nearBottom   = scrollY + window.innerHeight >= document.documentElement.scrollHeight - 60;
+      const lastSection  = secs[secs.length - 1];
       let cur = '';
-      secs.forEach(s => { if (window.scrollY >= s.offsetTop - 140) cur = s.id; });
+      if (nearBottom) {
+        cur = lastSection.id;
+      } else {
+        secs.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
+      }
       navLs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
     }, { passive: true });
 
