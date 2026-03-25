@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@600;700;800&family=Didact+Gothic&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -29,6 +29,7 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    html, body, *, *::before, *::after { cursor: none !important; }
 
     body {
       font-family: 'Barlow', system-ui, sans-serif;
@@ -93,12 +94,31 @@
       width: 100%;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.1;
+      opacity: 0.045;
     }
     .bg-skyline svg {
       width: 100%;
       height: auto;
       display: block;
+    }
+
+    /* ── DIDACT GOTHIC — body text ── */
+    .hero-sub,
+    .section-sub,
+    .about-card-text,
+    .card p,
+    .skill-card ul li,
+    .nav-link,
+    .logo-role,
+    .hero-scroll,
+    .chip,
+    .about-link,
+    .contact-links li,
+    .footer,
+    .rp-fact,
+    .rp-role,
+    p {
+      font-family: 'Didact Gothic', sans-serif;
     }
 
     /* ── SCROLL BAR ── */
@@ -197,7 +217,7 @@
     .accent { color: var(--white); }
     .hero-sub {
       color: rgba(0,0,0,0.82); line-height: 1.75;
-      font-size: 16px; font-weight: 400;
+      font-size: 17.5px; font-weight: 400;
       max-width: 440px; letter-spacing: .01em;
       margin: 0 0 22px;
     }
@@ -292,12 +312,12 @@
 
     /* ── GENERIC CARD ── */
     .card {
-      background: rgba(255,240,240,0.55);
+      background: rgba(255,240,240,0.38);
       backdrop-filter: blur(12px);
       border-radius: var(--radius);
       padding: 24px 24px 26px;
-      border: 1px solid rgba(255,255,255,0.5);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.35);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.5);
       position: relative; overflow: hidden;
       transition: transform .4s var(--ease), border-color .4s, box-shadow .4s;
     }
@@ -306,10 +326,19 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
       opacity: 0; transition: opacity .4s;
     }
-    .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.75); box-shadow: 0 16px 48px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8); }
+    .card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.55); box-shadow: 0 16px 48px rgba(0,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.6); }
     .card:hover::before { opacity: 1; }
     .card h3 { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; margin-bottom:8px; color: var(--black); }
     .card p { color:rgba(0,0,0,0.75); font-size:14px; line-height:1.75; font-weight:400; letter-spacing:.01em; }
+
+    /* project cards — flex so button always pins to bottom */
+    .project-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card p { flex: 1; }
+    .project-card .project-meta { margin-top: auto; padding-top: 16px; }
+    .project-card .project-github { margin-top: 12px; align-self: flex-start; }
 
     /* ── ABOUT ── */
     .about-layout {
@@ -357,45 +386,251 @@
     .about-link.no-hover { cursor: default; }
     .about-link-icon { flex-shrink: 0; display: flex; align-items: center; opacity: 0.6; }
 
+    /* ── ABOUT CARDS — new editorial style ── */
     .about-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .about-card {
+      position: relative;
+      padding: 36px 40px 36px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
       display: grid;
-      grid-template-rows: repeat(3, auto);
-      gap: 14px;
+      grid-template-columns: 100px 1fr;
+      gap: 0 32px;
+      align-items: start;
+      transition: background .6s cubic-bezier(0.16,1,0.3,1);
+      cursor: default;
     }
-    .about-card .card-number {
-      position:absolute; top:18px; right:18px;
-      font-family:'Barlow Condensed',sans-serif; font-size:44px; font-weight:800;
-      color:rgba(0,0,0,0.05); line-height:1; user-select:none;
+    .about-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0,0,0,0.18) 15%,
+        rgba(0,0,0,0.22) 50%,
+        rgba(0,0,0,0.18) 85%,
+        transparent 100%
+      );
+      opacity: 0;
+      transition: opacity .7s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+      z-index: 0;
     }
+    .about-card:hover::after { opacity: 1; }
+    .about-card-num,
+    .about-card-body { position: relative; z-index: 1; }
+    .about-card:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+    .about-card:hover { background: rgba(0,0,0,0.03); }
+
+    /* big number column */
+    .about-card-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 88px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.02em;
+      color: rgba(0,0,0,0.06);
+      transition: color .6s cubic-bezier(0.16,1,0.3,1);
+      padding-top: 6px;
+      user-select: none;
+    }
+    .about-card:hover .about-card-num {
+      color: rgba(0,0,0,0.14);
+    }
+
+    /* text column */
+    .about-card-body {
+      padding-top: 8px;
+    }
+    .about-card-label {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color .6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .about-card-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--black);
+      opacity: .3;
+      transition: background .6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .about-card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 14px;
+      line-height: 1;
+      transition: color .5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .about-card-text {
+      color: rgba(0,0,0,0.68);
+      font-size: 17.5px;
+      line-height: 1.8;
+      font-weight: 400;
+      letter-spacing: .01em;
+      max-width: 520px;
+      transition: color .7s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* left accent bar on hover */
 
     @media(max-width:760px) {
       .about-layout { grid-template-columns: 1fr; }
       .about-sidebar { position: static; }
       .about-photo { aspect-ratio: 4/3; }
+      .about-card { grid-template-columns: 70px 1fr; gap: 0 20px; padding: 28px 0; }
+      .about-card-num { font-size: 64px; }
     }
 
+    /* ── ABOUT + SKILLS shared hover — gradient blend via ::after pseudo ── */
+    .about-card:hover .about-card-num  { color: rgba(255,255,255,0.18); }
+    .about-card:hover .about-card-label { color: rgba(255,255,255,0.5); }
+    .about-card:hover .about-card-label::before { background: white; opacity: .25; }
+    .about-card:hover .about-card-title { color: var(--white); }
+    .about-card:hover .about-card-text  { color: rgba(255,255,255,0.78); }
+
     /* ── SKILLS ── */
-    .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
-    .skill-card ul { list-style:none; margin:12px 0 0; }
-    .skill-card ul li {
-      display:flex; align-items:flex-start; gap:10px;
-      padding:7px 0; color:rgba(0,0,0,0.6); font-size:14px;
-      border-bottom:1px solid rgba(0,0,0,0.06);
+    .skills-rows { display: flex; flex-direction: column; gap: 0; }
+
+    .skill-row {
+      position: relative;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 0 32px;
+      align-items: start;
+      padding: 36px 40px 36px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      cursor: default;
     }
-    .skill-card ul li:last-child { border-bottom:none; }
-    .skill-card ul li::before {
-      content:''; flex-shrink:0; width:5px; height:5px;
-      border-radius:50%; background:var(--black); margin-top:7px; opacity:.4;
+    .skill-row:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+    .skill-row::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(0,0,0,0.18) 15%,
+        rgba(0,0,0,0.22) 50%,
+        rgba(0,0,0,0.18) 85%,
+        transparent 100%
+      );
+      opacity: 0;
+      transition: opacity .7s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .skill-row:hover::after { opacity: 1; }
+    .skill-row-num,
+    .skill-row-body { position: relative; z-index: 1; }
+
+    /* accent bar */
+
+    .skill-row-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 88px;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.02em;
+      color: rgba(0,0,0,0.06);
+      transition: color .6s cubic-bezier(0.16,1,0.3,1);
+      padding-top: 6px;
+      user-select: none;
+    }
+    .skill-row:hover .skill-row-num { color: rgba(255,255,255,0.18); }
+
+    .skill-row-body { padding-top: 8px; }
+
+    .skill-row-label {
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color .6s cubic-bezier(0.16,1,0.3,1);
+    }
+    .skill-row-label::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--black);
+      opacity: .3;
+      transition: background .6s cubic-bezier(0.16,1,0.3,1), opacity .6s;
+    }
+    .skill-row:hover .skill-row-label { color: rgba(255,255,255,0.5); }
+    .skill-row:hover .skill-row-label::before { opacity: .25; background: white; }
+
+    .skill-row-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin-bottom: 16px;
+      line-height: 1;
+      transition: color .5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .skill-row:hover .skill-row-title { color: var(--white); }
+
+    .skill-row-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .skill-row-list li {
+      font-family: 'Didact Gothic', sans-serif;
+      font-size: 17.5px;
+      color: rgba(0,0,0,0.65);
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: color .7s cubic-bezier(0.16,1,0.3,1), border-color .6s;
+    }
+    .skill-row-list li:last-child { border-bottom: none; }
+    .skill-row-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--black);
+      opacity: .35;
+      transition: background .6s cubic-bezier(0.16,1,0.3,1), opacity .6s;
+    }
+    .skill-row:hover .skill-row-list li { color: rgba(255,255,255,0.78); border-color: rgba(255,255,255,0.1); }
+    .skill-row:hover .skill-row-list li::before { background: white; opacity: .4; }
+
+    @media(max-width:640px) {
+      .skill-row { grid-template-columns: 70px 1fr; gap: 0 20px; padding: 28px 0; }
+      .skill-row-num { font-size: 64px; }
     }
 
     /* ── PROJECTS ── */
-    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; align-items: stretch; }
     .project-pill {
       display:inline-flex; align-items:center; gap:6px;
       padding:4px 12px; border-radius:999px;
       background: rgba(34,197,94,0.15); color: #16a34a;
       font-size:11px; font-weight:500; letter-spacing:.05em; margin-bottom:10px;
       border: 1px solid rgba(34,197,94,0.3);
+      width: fit-content;
     }
     .project-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:#16a34a; }
     .project-meta { list-style:none; margin:12px 0 0; display:flex; flex-wrap:wrap; gap:8px; }
@@ -658,7 +893,6 @@
   <div class="bg-vignette"></div>
   <div class="bg-grid"></div>
 
-  <!-- ── NYC SKYLINE SILHOUETTE ── -->
   <div class="bg-skyline" aria-hidden="true">
     <svg viewBox="0 0 1200 620" xmlns="http://www.w3.org/2000/svg">
     <g fill="#0a0a0a">
@@ -936,20 +1170,29 @@
         </div>
 
         <div class="about-cards">
-          <div class="card about-card reveal-delay-1">
-            <span class="card-number">01</span>
-            <h3>Background</h3>
-            <p>I'm a data science and analytics professional with experience spanning predictive modelling, machine learning, and business intelligence. I've built end-to-end pipelines — from messy raw data through to dashboards and models that drive real decisions.</p>
+          <div class="about-card reveal-delay-1">
+            <div class="about-card-num">01</div>
+            <div class="about-card-body">
+              <div class="about-card-label">Background</div>
+              <div class="about-card-title">Who I am</div>
+              <p class="about-card-text">I'm a data science and analytics professional with experience spanning predictive modelling, machine learning, and business intelligence. I've built end-to-end pipelines — from messy raw data through to dashboards and models that drive real decisions.</p>
+            </div>
           </div>
-          <div class="card about-card reveal-delay-2">
-            <span class="card-number">02</span>
-            <h3>How I think</h3>
-            <p>I start by understanding the business question, not just the data. From there I identify the right analytical approach — whether that's a clean SQL query, a regression model, or a full ML pipeline — and build something that's reproducible, interpretable, and actually used.</p>
+          <div class="about-card reveal-delay-2">
+            <div class="about-card-num">02</div>
+            <div class="about-card-body">
+              <div class="about-card-label">Approach</div>
+              <div class="about-card-title">How I think</div>
+              <p class="about-card-text">I start by understanding the business question, not just the data. From there I identify the right analytical approach — whether that's a clean SQL query, a regression model, or a full ML pipeline — and build something that's reproducible, interpretable, and actually used.</p>
+            </div>
           </div>
-          <div class="card about-card reveal-delay-3">
-            <span class="card-number">03</span>
-            <h3>What I'm looking for</h3>
-            <p>A role where rigorous analysis meets real impact — ideally as a Data Scientist or Senior Analyst working on problems that require both statistical thinking and a deep understanding of the business context behind the numbers.</p>
+          <div class="about-card reveal-delay-3">
+            <div class="about-card-num">03</div>
+            <div class="about-card-body">
+              <div class="about-card-label">Goals</div>
+              <div class="about-card-title">What I'm after</div>
+              <p class="about-card-text">A role where rigorous analysis meets real impact — ideally as a Data Scientist or Senior Analyst working on problems that require both statistical thinking and a deep understanding of the business context behind the numbers.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -964,27 +1207,35 @@
         <h2>Tools I actually ship real work with</h2>
         <p class="section-sub">A quick snapshot of what I'm comfortable using in production environments.</p>
       </div>
-      <div class="skills-grid">
-        <div class="card skill-card reveal reveal-delay-1">
-          <h3>Data Science & Analytics</h3>
-          <ul>
-            <li>Python — pandas, NumPy, matplotlib, seaborn</li>
-            <li>SQL — complex queries, joins, window functions</li>
-            <li>Statistical analysis, hypothesis testing, A/B testing</li>
-            <li>Data wrangling, cleaning, and feature engineering</li>
-            <li>Dashboard & reporting — Power BI, Excel, Tableau</li>
-            <li>Exploratory data analysis and storytelling with data</li>
-          </ul>
+      <div class="skills-rows">
+        <div class="skill-row reveal reveal-delay-1">
+          <div class="skill-row-num">01</div>
+          <div class="skill-row-body">
+            <div class="skill-row-label">Analytics</div>
+            <div class="skill-row-title">Data Science & Analytics</div>
+            <ul class="skill-row-list">
+              <li>Python — pandas, NumPy, matplotlib, seaborn</li>
+              <li>SQL — complex queries, joins, window functions</li>
+              <li>Statistical analysis, hypothesis testing, A/B testing</li>
+              <li>Data wrangling, cleaning, and feature engineering</li>
+              <li>Dashboard & reporting — Power BI, Excel, Tableau</li>
+              <li>Exploratory data analysis and storytelling with data</li>
+            </ul>
+          </div>
         </div>
-        <div class="card skill-card reveal reveal-delay-2">
-          <h3>Machine Learning & Soft Skills</h3>
-          <ul>
-            <li>Supervised learning — regression, classification</li>
-            <li>NLP — TF-IDF, embeddings, BERT fine-tuning</li>
-            <li>scikit-learn, model evaluation and validation</li>
-            <li>Translating technical findings to non-technical audiences</li>
-            <li>Stakeholder collaboration and problem scoping</li>
-          </ul>
+        <div class="skill-row reveal reveal-delay-2">
+          <div class="skill-row-num">02</div>
+          <div class="skill-row-body">
+            <div class="skill-row-label">ML & People</div>
+            <div class="skill-row-title">Machine Learning & Soft Skills</div>
+            <ul class="skill-row-list">
+              <li>Supervised learning — regression, classification</li>
+              <li>NLP — TF-IDF, embeddings, BERT fine-tuning</li>
+              <li>scikit-learn, model evaluation and validation</li>
+              <li>Translating technical findings to non-technical audiences</li>
+              <li>Stakeholder collaboration and problem scoping</li>
+            </ul>
+          </div>
         </div>
       </div>
     </section>
