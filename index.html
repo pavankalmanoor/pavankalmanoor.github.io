@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@600;700;800&family=Didact+Gothic&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500&family=Barlow+Condensed:wght@700;800&family=Didact+Gothic&display=swap" rel="stylesheet" />
 
   <style>
     :root {
@@ -66,6 +66,14 @@
       content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
       opacity: 0.035; pointer-events: none; z-index: 1000;
+    }
+    @media(max-width:768px) {
+      body::before { display: none; }
+      .bg-grid { display: none; }
+      .bg-skyline { display: none; }
+      .card { backdrop-filter: none; }
+      .site-header { backdrop-filter: blur(12px); }
+      .btn.ghost { backdrop-filter: none; }
     }
 
     /* ── BACKGROUND ── */
@@ -1079,7 +1087,7 @@
       </div>
       <div class="logo-text">
         <span class="logo-name">Pavan Kalmanoor</span>
-        <span class="logo-role">Data Analytics & BI</span>
+        <span class="logo-role">ML Engineer & Data Analyst</span>
       </div>
     </div>
     <nav class="nav">
@@ -1110,7 +1118,7 @@
         <div class="hero-rule hero-reveal hr3"></div>
         <div class="hero-bottom hero-reveal hr4">
           <div class="hero-bottom-left">
-            <p class="hero-sub">I'm Pavan — a data analytics professional who loves transforming raw numbers into clean dashboards, sharp insights, and better decisions.</p>
+            <p class="hero-sub">I'm Pavan — an ML Engineer & Data Analyst at UMass Boston, building predictive models, LLM-powered workflows, and data pipelines that drive real decisions.</p>
             <div class="hero-actions">
               <a href="#projects" class="btn primary magnetic">View Projects</a>
               <a href="#contact"  class="btn ghost magnetic">Let's Connect</a>
@@ -1118,9 +1126,11 @@
             <div class="hero-chips">
               <span class="chip">Python</span>
               <span class="chip">SQL</span>
-              <span class="chip">Power BI</span>
               <span class="chip">scikit-learn</span>
-              <span class="chip">NLP</span>
+              <span class="chip">PyTorch</span>
+              <span class="chip">DSPy</span>
+              <span class="chip">Docker</span>
+              <span class="chip">Power BI</span>
             </div>
           </div>
           <div class="hero-scroll hero-reveal hr5">
@@ -1175,7 +1185,7 @@
             <div class="about-card-body">
               <div class="about-card-label">Background</div>
               <div class="about-card-title">Who I am</div>
-              <p class="about-card-text">I'm a data science and analytics professional with experience spanning predictive modelling, machine learning, and business intelligence. I've built end-to-end pipelines — from messy raw data through to dashboards and models that drive real decisions.</p>
+              <p class="about-card-text">I'm an ML Engineer & Data Analyst at the University of Massachusetts Boston, where I build predictive models, LLM-powered automation workflows, and scalable data pipelines — processing 8,000+ asset records weekly and cutting manual triage time by ~60%. Before that I worked as a data analyst at the National Informatics Center in India, building real-time dashboards for the Government of India's national distribution system.</p>
             </div>
           </div>
           <div class="about-card reveal-delay-2">
@@ -1183,7 +1193,7 @@
             <div class="about-card-body">
               <div class="about-card-label">Approach</div>
               <div class="about-card-title">How I think</div>
-              <p class="about-card-text">I start by understanding the business question, not just the data. From there I identify the right analytical approach — whether that's a clean SQL query, a regression model, or a full ML pipeline — and build something that's reproducible, interpretable, and actually used.</p>
+              <p class="about-card-text">I start with the business question, not the data. From there I find the right tool — a SQL query, a scikit-learn classifier, a DSPy-orchestrated LLM pipeline, or a Docker-containerised deployment — and build something reproducible, interpretable, and actually used by the people who need it.</p>
             </div>
           </div>
           <div class="about-card reveal-delay-3">
@@ -1191,7 +1201,7 @@
             <div class="about-card-body">
               <div class="about-card-label">Goals</div>
               <div class="about-card-title">What I'm after</div>
-              <p class="about-card-text">A role where rigorous analysis meets real impact — ideally as a Data Scientist or Senior Analyst working on problems that require both statistical thinking and a deep understanding of the business context behind the numbers.</p>
+              <p class="about-card-text">A role where ML and analytics meet real impact — as a Data Scientist, ML Engineer, or Senior Analyst working on problems that need both statistical rigour and a deep understanding of the business context behind the numbers. Open to roles in Boston or remote.</p>
             </div>
           </div>
         </div>
@@ -1211,29 +1221,30 @@
         <div class="skill-row reveal reveal-delay-1">
           <div class="skill-row-num">01</div>
           <div class="skill-row-body">
-            <div class="skill-row-label">Analytics</div>
+            <div class="skill-row-label">Data & Analytics</div>
             <div class="skill-row-title">Data Science & Analytics</div>
             <ul class="skill-row-list">
               <li>Python — pandas, NumPy, matplotlib, seaborn</li>
-              <li>SQL — complex queries, joins, window functions</li>
+              <li>SQL — complex queries, joins, window functions, pipelines</li>
               <li>Statistical analysis, hypothesis testing, A/B testing</li>
-              <li>Data wrangling, cleaning, and feature engineering</li>
-              <li>Dashboard & reporting — Power BI, Excel, Tableau</li>
-              <li>Exploratory data analysis and storytelling with data</li>
+              <li>EDA, data validation, feature engineering</li>
+              <li>Dashboard & reporting — Power BI, Tableau, Excel</li>
+              <li>R — regression analysis, hypothesis testing, ggplot2</li>
             </ul>
           </div>
         </div>
         <div class="skill-row reveal reveal-delay-2">
           <div class="skill-row-num">02</div>
           <div class="skill-row-body">
-            <div class="skill-row-label">ML & People</div>
-            <div class="skill-row-title">Machine Learning & Soft Skills</div>
+            <div class="skill-row-label">Machine Learning & AI</div>
+            <div class="skill-row-title">ML, AI & Deployment</div>
             <ul class="skill-row-list">
-              <li>Supervised learning — regression, classification</li>
+              <li>scikit-learn, XGBoost — classification, regression, model evaluation</li>
+              <li>PyTorch — deep learning, model training</li>
               <li>NLP — TF-IDF, embeddings, BERT fine-tuning</li>
-              <li>scikit-learn, model evaluation and validation</li>
-              <li>Translating technical findings to non-technical audiences</li>
-              <li>Stakeholder collaboration and problem scoping</li>
+              <li>DSPy — LLM-based system design and orchestration</li>
+              <li>Docker — containerised ML apps for reproducible deployment</li>
+              <li>Flask, Git — API serving and version control</li>
             </ul>
           </div>
         </div>
@@ -1252,12 +1263,13 @@
       <div class="projects-grid">
 
         <article class="card project-card reveal reveal-delay-1">
-          <div class="project-pill">Data Analytics</div>
-          <h3>Operational Analytics Dashboard</h3>
-          <p>Designed an Excel / Power BI dashboard to monitor device health, usage patterns, and Windows 11 readiness across hundreds of laptops — surfacing the right metrics to guide refresh and warranty decisions.</p>
+          <div class="project-pill">ML Engineering</div>
+          <h3>LLM Ticket Automation — UMass Boston</h3>
+          <p>Designed DSPy-powered ticket classification workflows achieving 88% accuracy, reducing manual IT triage time by ~60% across the university's asset management system.</p>
           <ul class="project-meta">
-            <li>Excel, Power BI</li>
-            <li>Operational & reliability</li>
+            <li>Python, DSPy</li>
+            <li>LLM systems</li>
+            <li>Docker</li>
           </ul>
           <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
             <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
@@ -1267,11 +1279,11 @@
 
         <article class="card project-card reveal reveal-delay-2">
           <div class="project-pill">Machine Learning</div>
-          <h3>Vehicle Accident Hotspot Detection</h3>
-          <p>Used geospatial and time-series analysis on US accident data to detect high-risk locations and temporal patterns, supporting safety-focused decision-making.</p>
+          <h3>Traffic Accident Hotspot Detection</h3>
+          <p>Built an XGBoost severity classifier on 1M+ U.S. accident records with ROC-AUC of 0.824 and 81% recall on high-severity crashes. Engineered 14 spatiotemporal features and generated interactive heatmaps with Folium.</p>
           <ul class="project-meta">
-            <li>Python, pandas</li>
-            <li>Geo & time-series</li>
+            <li>Python, XGBoost</li>
+            <li>scikit-learn, Folium</li>
           </ul>
           <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
             <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
@@ -1281,11 +1293,11 @@
 
         <article class="card project-card reveal reveal-delay-3">
           <div class="project-pill">Data Science</div>
-          <h3>Student Mental Health & Stress Analysis</h3>
-          <p>Analysed patterns in student mental health data to identify key stressors, academic pressures, and behavioural indicators — surfacing insights to support early intervention and wellbeing decisions.</p>
+          <h3>Student Mental Health Analysis</h3>
+          <p>Applied multivariate regression and hypothesis testing on 1,100+ student responses across 4 psychological factors, achieving R² of 0.71. Identified sleep quality and social support as key stress moderators (p &lt; 0.001).</p>
           <ul class="project-meta">
-            <li>Python, pandas</li>
-            <li>EDA & visualisation</li>
+            <li>R, ggplot2</li>
+            <li>Regression & stats</li>
           </ul>
           <a class="project-github" href="https://github.com/pavankalmanoor/student-stress-analysis" target="_blank">
             <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
@@ -1373,46 +1385,47 @@
       }
     });
 
+    document.getElementById('year').textContent = new Date().getFullYear();
+
     /* ── SCROLL BAR ── */
     const fill = document.getElementById('scroll-fill');
-    window.addEventListener('scroll', () => {
-      const d = document.documentElement;
-      fill.style.width = Math.min(100, (window.scrollY / (d.scrollHeight - innerHeight)) * 100) + '%';
-    }, { passive: true });
 
-    /* ── CURSOR ── */
-    const co = document.getElementById('cursor-outer');
-    const ci = document.getElementById('cursor-inner');
-    document.addEventListener('mousemove', e => {
-      co.style.left = e.clientX + 'px'; co.style.top = e.clientY + 'px';
-      ci.style.left = e.clientX + 'px'; ci.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, button, .card, .masonry-item').forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-    const photoTile = document.querySelector('.photo-tile');
-    if (photoTile) {
-      photoTile.addEventListener('mouseenter', () => document.body.classList.add('cursor-white'));
-      photoTile.addEventListener('mouseleave', () => document.body.classList.remove('cursor-white'));
+    /* ── CURSOR — desktop only ── */
+    const isMobile = window.matchMedia('(max-width:768px)').matches || ('ontouchstart' in window);
+    if (!isMobile) {
+      const co = document.getElementById('cursor-outer');
+      const ci = document.getElementById('cursor-inner');
+      document.addEventListener('mousemove', e => {
+        co.style.left = e.clientX + 'px'; co.style.top = e.clientY + 'px';
+        ci.style.left = e.clientX + 'px'; ci.style.top = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button, .card, .masonry-item').forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+      });
+      const photoTile = document.querySelector('.photo-tile');
+      if (photoTile) {
+        photoTile.addEventListener('mouseenter', () => document.body.classList.add('cursor-white'));
+        photoTile.addEventListener('mouseleave', () => document.body.classList.remove('cursor-white'));
+      }
+      document.querySelectorAll('p, h1, h2, h3, li, span').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (!document.body.classList.contains('cursor-hover')) document.body.classList.add('cursor-text');
+        });
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
+      });
     }
-    document.querySelectorAll('p, h1, h2, h3, li, span').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        if (!document.body.classList.contains('cursor-hover')) {
-          document.body.classList.add('cursor-text');
-        }
-      });
-      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
-    });
 
-    /* ── MAGNETIC BUTTONS ── */
-    document.querySelectorAll('.magnetic').forEach(btn => {
-      btn.addEventListener('mousemove', e => {
-        const r = btn.getBoundingClientRect();
-        btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.18}px, ${(e.clientY - r.top - r.height/2) * 0.22}px)`;
+    /* ── MAGNETIC BUTTONS — desktop only ── */
+    if (!isMobile) {
+      document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+          const r = btn.getBoundingClientRect();
+          btn.style.transform = `translate(${(e.clientX - r.left - r.width/2) * 0.18}px, ${(e.clientY - r.top - r.height/2) * 0.22}px)`;
+        });
+        btn.addEventListener('mouseleave', () => btn.style.transform = '');
       });
-      btn.addEventListener('mouseleave', () => btn.style.transform = '');
-    });
+    }
 
     /* ── SCROLL REVEAL ── */
     const ro = new IntersectionObserver(entries => {
@@ -1420,47 +1433,48 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-    /* ── ACTIVE NAV ── */
+    /* ── ALL SCROLL LOGIC IN ONE LISTENER ── */
     const secs  = document.querySelectorAll('section[id]');
     const navLs = document.querySelectorAll('.nav-link');
+    const skyline = document.querySelector('.bg-skyline');
+    const bgGrid  = document.querySelector('.bg-grid');
+    let lastScroll = 0, gridX = 0, targetX = 0;
+    const MAX_SHIFT = 60;
+
     window.addEventListener('scroll', () => {
-      const scrollY      = window.scrollY;
-      const nearBottom   = scrollY + window.innerHeight >= document.documentElement.scrollHeight - 60;
-      const lastSection  = secs[secs.length - 1];
+      const scrollY = window.scrollY;
+      const d = document.documentElement;
+
+      /* scroll bar */
+      fill.style.width = Math.min(100, (scrollY / (d.scrollHeight - innerHeight)) * 100) + '%';
+
+      /* active nav */
+      const nearBottom = scrollY + window.innerHeight >= d.scrollHeight - 60;
       let cur = '';
       if (nearBottom) {
-        cur = lastSection.id;
+        cur = secs[secs.length - 1].id;
       } else {
         secs.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
       }
       navLs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
+
+      /* parallax — desktop only */
+      if (!isMobile) {
+        const delta = scrollY - lastScroll;
+        targetX += delta * 0.18;
+        targetX = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, targetX));
+        if (skyline) skyline.style.transform = `translateY(${scrollY * 0.06}px)`;
+      }
+      lastScroll = scrollY;
     }, { passive: true });
 
-    /* ── YEAR ── */
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    /* ── PARALLAX GRID ── */
-    let lastScroll = 0, gridX = 0, targetX = 0;
-    const MAX_SHIFT = 60;
-    window.addEventListener('scroll', () => {
-      const delta = window.scrollY - lastScroll;
-      lastScroll = window.scrollY;
-      targetX += delta * 0.18;
-      targetX = Math.max(-MAX_SHIFT, Math.min(MAX_SHIFT, targetX));
-    }, { passive: true });
-    (function animateGrid() {
-      gridX += (targetX - gridX) * 0.06;
-      const g = document.querySelector('.bg-grid');
-      if (g) g.style.transform = `translateX(${gridX}px)`;
-      requestAnimationFrame(animateGrid);
-    })();
-
-    /* ── SKYLINE SUBTLE PARALLAX ── */
-    const skyline = document.querySelector('.bg-skyline');
-    if (skyline) {
-      window.addEventListener('scroll', () => {
-        skyline.style.transform = `translateY(${window.scrollY * 0.06}px)`;
-      }, { passive: true });
+    /* grid parallax rAF — desktop only */
+    if (!isMobile) {
+      (function animateGrid() {
+        gridX += (targetX - gridX) * 0.06;
+        if (bgGrid) bgGrid.style.transform = `translateX(${gridX}px)`;
+        requestAnimationFrame(animateGrid);
+      })();
     }
   </script>
 </body>
