@@ -65,12 +65,15 @@
     .footer,
     .rp-fact,
     .rp-role,
+    .exp-role,
+    .exp-meta,
+    .exp-bullets li,
     p {
       font-family: 'Didact Gothic', sans-serif;
     }
 
     /* ── PERFORMANCE ── */
-    #about, #skills, #projects, #photography, #contact {
+    #about, #experience, #skills, #projects, #photography, #contact {
       content-visibility: auto;
       contain-intrinsic-size: 0 600px;
     }
@@ -172,7 +175,7 @@
     .hero-sub {
       color: rgba(255,255,255,0.82); line-height: 1.75;
       font-size: 17.5px; font-weight: 400;
-      max-width: 440px; letter-spacing: .01em;
+      max-width: 460px; letter-spacing: .01em;
       margin: 0 0 22px;
     }
 
@@ -276,7 +279,7 @@
     .about-link.no-hover { cursor: default; }
     .about-link-icon { flex-shrink: 0; display: flex; align-items: center; opacity: 0.6; }
 
-    /* ── ABOUT CARDS — new editorial style ── */
+    /* ── ABOUT CARDS ── */
     .about-cards {
       display: flex;
       flex-direction: column;
@@ -316,7 +319,6 @@
     .about-card:first-child { border-top: 1px solid rgba(255,255,255,0.08); }
     .about-card:hover { background: rgba(0,0,0,0.03); }
 
-    /* big number column */
     .about-card-num {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 88px;
@@ -332,7 +334,6 @@
       color: rgba(255,255,255,0.14);
     }
 
-    /* text column */
     .about-card-body {
       padding-top: 8px;
     }
@@ -375,8 +376,6 @@
       transition: color .7s cubic-bezier(0.16,1,0.3,1);
     }
 
-    /* left accent bar on hover */
-
     @media(max-width:760px) {
       .about-layout { grid-template-columns: 1fr; }
       .about-sidebar { position: static; }
@@ -385,12 +384,87 @@
       .about-card-num { font-size: 64px; }
     }
 
-    /* ── ABOUT + SKILLS shared hover — gradient blend via ::after pseudo ── */
     .about-card:hover .about-card-num  { color: rgba(255,255,255,0.18); }
     .about-card:hover .about-card-label { color: rgba(255,255,255,0.5); }
     .about-card:hover .about-card-label::before { background: white; opacity: .25; }
     .about-card:hover .about-card-title { color: var(--white); }
     .about-card:hover .about-card-text  { color: rgba(255,255,255,0.78); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 0 36px;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .exp-item:first-child { border-top: 1px solid rgba(255,255,255,0.08); }
+    .exp-period {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      padding-top: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+    }
+    .exp-period .exp-period-loc {
+      display: block;
+      margin-top: 6px;
+      color: rgba(255,255,255,0.3);
+      font-size: 10.5px;
+      letter-spacing: .14em;
+      font-weight: 400;
+    }
+    .exp-body { display: flex; flex-direction: column; }
+    .exp-company {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 4px;
+      line-height: 1.05;
+    }
+    .exp-role {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+      letter-spacing: .01em;
+    }
+    .exp-role .exp-promo {
+      color: rgba(255,255,255,0.4);
+      font-size: 12px;
+      margin-left: 8px;
+    }
+    .exp-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .exp-bullets li {
+      font-size: 15.5px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      padding: 8px 0 8px 20px;
+      position: relative;
+      letter-spacing: .005em;
+    }
+    .exp-bullets li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 17px;
+      width: 8px; height: 1px;
+      background: rgba(255,255,255,0.3);
+    }
+    @media(max-width:720px) {
+      .exp-item { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
+      .exp-period { padding-top: 0; }
+    }
 
     /* ── SKILLS ── */
     .skills-rows { display: flex; flex-direction: column; gap: 0; }
@@ -425,8 +499,6 @@
     .skill-row:hover::after { opacity: 1; }
     .skill-row-num,
     .skill-row-body { position: relative; z-index: 1; }
-
-    /* accent bar */
 
     .skill-row-num {
       font-family: 'Barlow Condensed', sans-serif;
@@ -513,7 +585,7 @@
     }
 
     /* ── PROJECTS ── */
-    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; align-items: stretch; }
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; align-items: stretch; }
     .project-pill {
       display:inline-flex; align-items:center; gap:6px;
       padding:4px 12px; border-radius:999px;
@@ -530,16 +602,27 @@
       border:1px solid rgba(255,255,255,0.2); border-radius:999px;
       letter-spacing: .03em;
     }
-    .project-github {
+    .project-link-row {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .project-github, .project-live {
       display:inline-flex; align-items:center; gap:7px;
-      margin-top:16px; font-size:13px; font-weight:500;
+      font-size:13px; font-weight:500;
       color:var(--black); text-decoration:none;
       border:1px solid rgba(255,255,255,0.9); padding:7px 14px; border-radius:999px;
       background:var(--white);
       transition:background .25s, border-color .25s, transform .25s;
     }
-    .project-github:hover { background:rgba(255,255,255,0.85); transform:translateY(-1px); }
-    .project-github svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
+    .project-github:hover, .project-live:hover { background:rgba(255,255,255,0.85); transform:translateY(-1px); }
+    .project-github svg, .project-live svg { width:14px; height:14px; fill:currentColor; flex-shrink:0; }
+    .project-live {
+      background: transparent;
+      color: var(--white);
+      border-color: rgba(255,255,255,0.3);
+    }
+    .project-live:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.6); }
+    .project-live svg { fill: none; stroke: currentColor; stroke-width: 2; }
 
     /* ── PHOTOGRAPHY TILE ── */
     .photo-tile {
@@ -551,7 +634,6 @@
       border-radius: 22px;
       overflow: hidden;
       text-decoration: none;
-     
       background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
     }
     .photo-tile-bg {
@@ -761,12 +843,13 @@
       </div>
       <div class="logo-text">
         <span class="logo-name">Pavan Kalmanoor</span>
-        <span class="logo-role">ML Engineer & Data Analyst</span>
+        <span class="logo-role">Data Scientist · ML & LLM Systems</span>
       </div>
     </div>
     <nav class="nav">
       <a href="#home"        class="nav-link active">Home</a>
       <a href="#about"       class="nav-link">About</a>
+      <a href="#experience"  class="nav-link">Experience</a>
       <a href="#skills"      class="nav-link">Skills</a>
       <a href="#projects"    class="nav-link">Projects</a>
       <a href="#photography" class="nav-link">Photography</a>
@@ -781,7 +864,6 @@
 
     <!-- ── HERO ── -->
     <section id="home" class="section hero">
-      <!-- Left: text content -->
       <div class="hero-content">
         <p class="section-label hero-reveal hr1">Portfolio · 2026</p>
         <h1 class="hero-reveal hr2">
@@ -792,7 +874,7 @@
         <div class="hero-rule hero-reveal hr3"></div>
         <div class="hero-bottom hero-reveal hr4">
           <div class="hero-bottom-left">
-            <p class="hero-sub">Data Scientist with 2+ years building production ML systems across healthcare, SaaS, NLP, and transit domains — turning complex datasets into deployed models and actionable insights.</p>
+            <p class="hero-sub">Data Scientist, 2+ years shipping ML and LLM stuff to production. Started out doing analytics, ended up building a DistilBERT model that routes ServiceNow tickets, a RAG assistant our analyst team actually uses, and the pipelines that keep all of it running.</p>
             <div class="hero-actions">
               <a href="#projects" class="btn primary magnetic">View Projects</a>
               <a href="#contact"  class="btn ghost magnetic">Let's Connect</a>
@@ -800,11 +882,13 @@
             <div class="hero-chips">
               <span class="chip">Python</span>
               <span class="chip">SQL</span>
-              <span class="chip">XGBoost</span>
-              <span class="chip">HuggingFace</span>
+              <span class="chip">PyTorch</span>
+              <span class="chip">Claude · HuggingFace</span>
+              <span class="chip">LangChain · pgvector</span>
               <span class="chip">FastAPI</span>
-              <span class="chip">Streamlit</span>
-              <span class="chip">SHAP</span>
+              <span class="chip">Airflow · dbt</span>
+              <span class="chip">Snowflake</span>
+              <span class="chip">MLflow</span>
             </div>
           </div>
           <div class="hero-scroll hero-reveal hr5">
@@ -813,8 +897,6 @@
           </div>
         </div>
       </div>
-
-
     </section>
 
     <div class="divider"></div>
@@ -844,7 +926,7 @@
             </a>
             <div class="about-link no-hover">
               <span class="about-link-icon">📍</span>
-              <span>Boston, USA</span>
+              <span>Boston, MA</span>
             </div>
             <div class="about-link no-hover">
               <span class="about-link-icon">◉</span>
@@ -859,7 +941,7 @@
             <div class="about-card-body">
               <div class="about-card-label">Background</div>
               <div class="about-card-title">Who I am</div>
-              <p class="about-card-text">I'm a Data Scientist with 2+ years of experience building production ML systems across healthcare, SaaS, NLP, and transit. At UMass Boston I've built LLM-powered pipelines, predictive models, and data infrastructure — processing 8,000+ records weekly and cutting triage time by ~60%. Before that, I built real-time dashboards for the Government of India's national distribution system at the National Informatics Center.</p>
+              <p class="about-card-text">I'm a Data Scientist at UMass Boston. Started part-time during my MSBA, got brought on full-time after I graduated. Most of what I do day to day is some mix of: a DistilBERT classifier I built that replaced manual ticket routing, a RAG assistant I prototyped that two analyst queues now use, and the Airflow + dbt pipelines that keep all the data flowing. Before this I was at the National Informatics Centre in India, building real-time dashboards for the Government of India's e-PDS system, which tracks ration distribution to about 2M people.</p>
             </div>
           </div>
           <div class="about-card reveal-delay-2">
@@ -867,7 +949,7 @@
             <div class="about-card-body">
               <div class="about-card-label">Approach</div>
               <div class="about-card-title">How I think</div>
-              <p class="about-card-text">I start with the business question, not the data. From there I find the right tool — a SQL query, a scikit-learn classifier, a DSPy-orchestrated LLM pipeline, or a Docker-containerised deployment — and build something reproducible, interpretable, and actually used by the people who need it.</p>
+              <p class="about-card-text">I try to start with the actual question someone's asking, not the model. I'm pretty skeptical of LLMs grading their own work, so I tend to lean on deterministic checks where I can. Whether it's a fine-tuned transformer, a calibrated LightGBM, or some multi-layer agent thing, I want it to be reproducible, easy to debug, and honest about what it doesn't know. That last part matters more than people give it credit for.</p>
             </div>
           </div>
           <div class="about-card reveal-delay-3">
@@ -875,10 +957,58 @@
             <div class="about-card-body">
               <div class="about-card-label">Goals</div>
               <div class="about-card-title">What I'm after</div>
-              <p class="about-card-text">A role where ML and analytics meet real impact — as a Data Scientist, ML Engineer, or Senior Analyst working on problems that need both statistical rigour and a deep understanding of the business context behind the numbers. Open to roles in Boston or remote.</p>
+              <p class="about-card-text">Looking for Data Scientist, ML Engineer, or applied LLM roles. Stuff where the modeling actually matters but you also have to understand the business well enough to know when the answer is wrong. Boston or remote both work for me.</p>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── EXPERIENCE ── -->
+    <section id="experience" class="section">
+      <div class="section-header reveal">
+        <p class="section-label">Experience</p>
+        <h2>Where I've shipped real work</h2>
+      </div>
+      <div class="exp-list">
+
+        <div class="exp-item reveal reveal-delay-1">
+          <div class="exp-period">
+            May 2024 — Present
+            <span class="exp-period-loc">Boston, MA</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-company">University of Massachusetts Boston</div>
+            <div class="exp-role">Data Scientist <span class="exp-promo">· Promoted from part-time to full-time, May 2025</span></div>
+            <ul class="exp-bullets">
+              <li>Fine-tuned a DistilBERT classifier on 18 months of helpdesk tickets. Got 86% top-1 accuracy on the held-out test set. It's deployed behind FastAPI and ServiceNow calls it whenever a ticket gets created, which replaced a manual Tier-1 routing step.</li>
+              <li>Prototyped a RAG suggestion layer over about 1,200 KB articles using LangChain and pgvector. It drafts replies for password and access requests. Two analyst queues are using it now, and we log accept/edit/reject feedback for future fine-tuning.</li>
+              <li>Worked on a student attrition model with two other people. I owned the feature engineering on SIS and LMS data plus the isotonic calibration (got Brier from 0.21 down to 0.16). Final LightGBM model hit ROC-AUC 0.81. Advising is piloting it this term.</li>
+              <li>Own the Airflow + dbt ingestion for ServiceNow, Canvas, and M365 logs into Snowflake. Roughly 1.5M records a day. Replaced a bunch of brittle scheduled scripts and a weekly manual CSV reconciliation that nobody enjoyed.</li>
+              <li>Set up Evidently drift monitoring on two models with Grafana alerts. Caught a feature pipeline that was silently writing nulls for a week, which felt good.</li>
+              <li>Wrote up the team's RAG and vector-store setup and ran a couple of lunch-and-learns on it. The docs ended up being what a new hire and a returning intern used to get up to speed.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="exp-item reveal reveal-delay-2">
+          <div class="exp-period">
+            Jan 2023 — Jun 2023
+            <span class="exp-period-loc">Hyderabad, India</span>
+          </div>
+          <div class="exp-body">
+            <div class="exp-company">National Informatics Centre, Govt. of India</div>
+            <div class="exp-role">Data Analyst Intern</div>
+            <ul class="exp-bullets">
+              <li>Built 20+ real-time BI dashboards for India's e-PDS system, tracking distribution across 500+ ration shops. State-level admins finally had one view of supply-chain health for the 2M+ people who depend on it.</li>
+              <li>Dug into peak visit patterns across the transaction data. The findings led to store timing changes that were projected to cut idle electricity use by around 15% across the locations we tracked.</li>
+              <li>Ran a bunch of SQL cohort analysis to surface regional supply-demand gaps. The team lead picked up my reallocation suggestions across shop clusters, and follow-up reviews mentioned fewer shortfall complaints, so something seemed to work.</li>
+            </ul>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -889,51 +1019,66 @@
       <div class="section-header reveal">
         <p class="section-label">Skills</p>
         <h2>Tools I actually ship real work with</h2>
-        <p class="section-sub">A quick snapshot of what I'm comfortable using in production environments.</p>
+        <p class="section-sub">A snapshot of what I'm comfortable using day to day. Pulled straight from stuff I've actually built and shipped, not a list of things I read about once.</p>
       </div>
       <div class="skills-rows">
         <div class="skill-row reveal reveal-delay-1">
           <div class="skill-row-num">01</div>
           <div class="skill-row-body">
-            <div class="skill-row-label">Data & Analytics</div>
-            <div class="skill-row-title">Data Science & Analytics</div>
+            <div class="skill-row-label">LLMs & RAG</div>
+            <div class="skill-row-title">LLM Systems & RAG</div>
             <ul class="skill-row-list">
-              <li>Python — pandas, NumPy, matplotlib, seaborn</li>
-              <li>SQL — complex queries, joins, window functions, pipelines</li>
-              <li>Statistical analysis, A/B testing, statistical significance</li>
-              <li>EDA, data validation, feature engineering (42+ features)</li>
-              <li>Dashboard & reporting — Power BI, Tableau, Streamlit, Excel</li>
-              <li>R — regression analysis, hypothesis testing, ggplot2</li>
+              <li>Anthropic Claude (Sonnet 4.6, Haiku 4.5), multi-agent setups</li>
+              <li>HuggingFace Transformers, fine-tuning RoBERTa and DistilBERT</li>
+              <li>LangChain and pgvector for RAG over real knowledge bases</li>
+              <li>Prompt engineering, eval harnesses, structured output schemas</li>
+              <li>Deterministic verification on top of LLM output (because LLMs grading themselves is a bad idea)</li>
+              <li>BM25, hybrid retrieval, fully client-side document Q&A</li>
             </ul>
           </div>
         </div>
         <div class="skill-row reveal reveal-delay-2">
           <div class="skill-row-num">02</div>
           <div class="skill-row-body">
-            <div class="skill-row-label">Machine Learning & AI</div>
-            <div class="skill-row-title">ML, NLP & Deployment</div>
+            <div class="skill-row-label">ML & Modeling</div>
+            <div class="skill-row-title">Machine Learning & Modeling</div>
             <ul class="skill-row-list">
-              <li>scikit-learn, XGBoost — classification, regression, model evaluation</li>
-              <li>HuggingFace Transformers — RoBERTa, BERT fine-tuning, NLP pipelines</li>
-              <li>SHAP — model explainability and fairness auditing</li>
-              <li>MLflow — experiment tracking, model registry</li>
-              <li>FastAPI — production API deployment with Swagger UI</li>
-              <li>PyTorch, DSPy, Docker, Flask, Git</li>
+              <li>PyTorch and scikit-learn for training, evaluation, and calibration</li>
+              <li>XGBoost and LightGBM, mostly for the gradient-boosted classifier kind of work</li>
+              <li>SHAP when I need to explain what a model is doing</li>
+              <li>Isotonic calibration, Brier score, ROC-AUC, cohort-style evals</li>
+              <li>Time-series forecasting, anomaly detection, finding recurring patterns in transactional data</li>
+              <li>Feature engineering on SIS, LMS, behavioural, and transactional data</li>
             </ul>
           </div>
         </div>
         <div class="skill-row reveal reveal-delay-3">
           <div class="skill-row-num">03</div>
           <div class="skill-row-body">
-            <div class="skill-row-label">Domain & Methods</div>
-            <div class="skill-row-title">Domains & Advanced Methods</div>
+            <div class="skill-row-label">Data & Pipelines</div>
+            <div class="skill-row-title">Data Engineering & Pipelines</div>
             <ul class="skill-row-list">
-              <li>Healthcare — MIMIC-III ICU data, ICD-9 codes, EHR, clinical ML</li>
-              <li>Customer analytics — RFM segmentation, K-Means, LTV modeling</li>
-              <li>Churn prediction & cohort retention analysis</li>
-              <li>Fairness auditing across demographic dimensions</li>
-              <li>Snowflake, Databricks — cloud data platforms</li>
-              <li>Power BI, Tableau — BI and stakeholder reporting</li>
+              <li>SQL, the kind with joins, window functions, and queries you actually have to tune</li>
+              <li>PostgreSQL and Snowflake</li>
+              <li>Airflow and dbt for orchestration and analytics engineering</li>
+              <li>Python with pandas, NumPy, SQLAlchemy, and Pydantic</li>
+              <li>FastAPI for production REST services with Swagger and OpenAPI</li>
+              <li>ServiceNow API and Microsoft Graph for hooking into enterprise stuff</li>
+            </ul>
+          </div>
+        </div>
+        <div class="skill-row reveal reveal-delay-4">
+          <div class="skill-row-num">04</div>
+          <div class="skill-row-body">
+            <div class="skill-row-label">MLOps & Reporting</div>
+            <div class="skill-row-title">MLOps, Monitoring & BI</div>
+            <ul class="skill-row-list">
+              <li>MLflow for tracking experiments, the model registry, and artifacts</li>
+              <li>Evidently for data drift and model quality checks</li>
+              <li>Grafana for alerting when something starts going sideways</li>
+              <li>Docker for shipping services and jobs without surprises</li>
+              <li>Streamlit for internal dashboards and quick demos</li>
+              <li>Power BI and Tableau when stakeholders want pretty BI dashboards</li>
             </ul>
           </div>
         </div>
@@ -947,110 +1092,134 @@
       <div class="section-header reveal">
         <p class="section-label">Projects</p>
         <h2>Selected work</h2>
-        <p class="section-sub">Production ML systems across healthcare, SaaS, NLP, and transit — built end to end.</p>
+        <p class="section-sub">Side projects I built start to finish. Some are LLM systems, some are ML pipelines, some are just stuff I wanted to exist. Each one solved a problem I actually cared about, and the README walks through how it works.</p>
       </div>
       <div class="projects-grid">
 
         <article class="card project-card reveal reveal-delay-1">
+          <div class="project-pill">Agentic LLM Pipeline</div>
+          <h3>Agentic Data Analyst</h3>
+          <p>A 6-layer LLM pipeline (planner, SQL generator, sanity, reconciler, confidence, presenter) running over a 9-table 100K-order Postgres database. The planner fans out and cross-validates metrics with sibling SQL queries, and the confidence label (HIGH, MEDIUM, LOW, or UNABLE) gets derived from actual structured signals instead of asking the LLM how sure it is. Hit 45/45 expected confidence labels across a 15-question N=3 eval, which costs about $1.60 a full run.</p>
+          <ul class="project-meta">
+            <li>Claude Sonnet 4.6 + Haiku 4.5</li>
+            <li>PostgreSQL</li>
+            <li>Eval harness</li>
+          </ul>
+          <div class="project-link-row">
+            <a class="project-github" href="https://github.com/pavankalmanoor/agentic-data-analyst" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-2">
+          <div class="project-pill">Browser-Native LLM</div>
+          <h3>VaultChat — Private PDF Q&A</h3>
+          <p>Chat with PDFs entirely in your browser. Nothing gets uploaded anywhere, nothing gets stored, nothing gets tracked. PDF parsing, chunking, BM25 indexing, and retrieval all run client-side. The only thing that actually leaves the page is your query plus the retrieved context going to whichever LLM you've plugged in. Built it for the kind of documents you wouldn't dream of uploading to a server (legal contracts, medical records, that kind of thing).</p>
+          <ul class="project-meta">
+            <li>React, Vite</li>
+            <li>pdf.js, BM25</li>
+            <li>BYOK · OpenAI / Claude / Gemini</li>
+          </ul>
+          <div class="project-link-row">
+            <a class="project-github" href="https://github.com/pavankalmanoor/vaultchat" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>
+            <a class="project-live" href="https://pavankalmanoor.github.io/vaultchat/" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M14 3h7v7m-7 7L21 3M9 21H5a2 2 0 0 1-2-2v-4"/></svg>
+              Live
+            </a>
+          </div>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-3">
+          <div class="project-pill">Personal Finance ML</div>
+          <h3>AI Spending Copilot</h3>
+          <p>A personal finance app for figuring out where your money actually goes. Tracks spending, finds recurring charges you forgot about, forecasts the next 14 days of cash flow, scores your financial health, and lets you ask questions in plain English. Has a rule-based fallback when there's no API key, so it works offline too.</p>
+          <ul class="project-meta">
+            <li>FastAPI, Streamlit</li>
+            <li>Pandas, scikit-learn</li>
+            <li>Postgres, dbt, Docker</li>
+          </ul>
+          <div class="project-link-row">
+            <a class="project-github" href="https://github.com/pavankalmanoor/ai-spending-copilot" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-4">
+          <div class="project-pill">Open Source · Verified Data</div>
+          <h3>APIShelf — Verified Free APIs</h3>
+          <p>A directory of 50 actually-free APIs across 8 categories. The annoying part of "free APIs" lists is that half of them want a credit card or stopped working two years ago. So I curl-tested every no-auth API before listing it, called out the gotchas (HTTP-only tiers, weird CORS behavior, hidden rate limits), and set up a weekly GitHub Action to re-run health checks on everything. The README is generated from the JSON, so it's never out of sync.</p>
+          <ul class="project-meta">
+            <li>Node.js</li>
+            <li>GitHub Actions</li>
+            <li>JSON Schema</li>
+          </ul>
+          <div class="project-link-row">
+            <a class="project-github" href="https://github.com/pavankalmanoor/apishelf" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>
+            <a class="project-live" href="https://pavankalmanoor.github.io/apishelf/" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M14 3h7v7m-7 7L21 3M9 21H5a2 2 0 0 1-2-2v-4"/></svg>
+              Live
+            </a>
+          </div>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-1">
+          <div class="project-pill">LLM · Automation</div>
+          <h3>AI Daily Digest</h3>
+          <p>A little AI news digest that lands in my inbox every morning. Pulls from Hacker News, a few subreddits (r/MachineLearning, r/LocalLLaMA, r/artificial), ArXiv, and Product Hunt, then Claude Haiku turns it into three sections: Tools, News, and What's Next. Runs on a Vercel cron (or GitHub Actions if you don't want to pay) for about 15 cents a month total.</p>
+          <ul class="project-meta">
+            <li>Node.js, Vercel</li>
+            <li>Claude Haiku</li>
+            <li>Resend, Cron</li>
+          </ul>
+          <div class="project-link-row">
+            <a class="project-github" href="https://github.com/pavankalmanoor/ai-daily-digest" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>
+          </div>
+        </article>
+
+        <article class="card project-card reveal reveal-delay-2">
           <div class="project-pill">NLP & ML Engineering</div>
-          <h3>Fan Sentiment Risk Analysis & API</h3>
-          <p>Built an NLP pipeline on 14,640 real airline tweets using RoBERTa for sentiment classification, engineered per-airline risk scores, and deployed a 6-endpoint FastAPI with Swagger UI and SHAP explainability.</p>
+          <h3>Fan Churn & Sentiment Risk Scoring</h3>
+          <p>Fine-tuned RoBERTa for tweet sentiment on 14,640 airline tweets across 6 carriers. Beat the lexicon-based baselines pretty handily, then aggregated the tweet-level signal into an airline-level XGBoost churn risk score with SHAP for feature importance. Shipped as a FastAPI service with /predict, /predict/batch, and /risk-scores endpoints, and tracked every experiment in MLflow.</p>
           <ul class="project-meta">
             <li>RoBERTa, XGBoost</li>
             <li>FastAPI, SHAP</li>
             <li>MLflow</li>
           </ul>
-          <a class="project-github" href="https://github.com/pavankalmanoor/fan-churn-prediction" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            View on GitHub
-          </a>
-        </article>
-
-        <article class="card project-card reveal reveal-delay-2">
-          <div class="project-pill">Healthcare ML</div>
-          <h3>Patient Readmission Risk & Clinical Dashboard</h3>
-          <p>Engineered 42 features from MIMIC-III ICU data (ICD-9 codes + 9 lab biomarkers), ran fairness audit across 4 demographic dimensions, and built an interactive Streamlit clinical dashboard for clinician use.</p>
-          <ul class="project-meta">
-            <li>XGBoost, SHAP</li>
-            <li>MIMIC-III, SQL</li>
-            <li>Streamlit, MLflow</li>
-          </ul>
-          <a class="project-github" href="https://github.com/pavankalmanoor/patient-readmission-risk" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            View on GitHub
-          </a>
-        </article>
-
-        <article class="card project-card reveal reveal-delay-3">
-          <div class="project-pill">SaaS Analytics</div>
-          <h3>SaaS Customer Intelligence Platform</h3>
-          <p>End-to-end platform on 10,000 user behavioural dataset — churn prediction, RFM segmentation, LTV modeling, cohort retention heatmap, A/B test framework, all in a 4-tab interactive Streamlit dashboard.</p>
-          <ul class="project-meta">
-            <li>XGBoost, K-Means</li>
-            <li>SHAP, SciPy</li>
-            <li>Streamlit, MLflow</li>
-          </ul>
-          <a class="project-github" href="https://github.com/pavankalmanoor/saas-churn-ltv" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            View on GitHub
-          </a>
-        </article>
-
-        <article class="card project-card reveal reveal-delay-4">
-          <div class="project-pill">ML Engineering</div>
-          <h3>LLM Ticket Automation — UMass Boston</h3>
-          <p>Designed DSPy-powered ticket classification workflows achieving 88% accuracy, reducing manual IT triage time by ~60% across the university's asset management system.</p>
-          <ul class="project-meta">
-            <li>Python, DSPy</li>
-            <li>LLM systems</li>
-            <li>Docker</li>
-          </ul>
-          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            View on GitHub
-          </a>
-        </article>
-
-        <article class="card project-card reveal reveal-delay-1">
-          <div class="project-pill">Machine Learning</div>
-          <h3>Traffic Accident Hotspot Detection</h3>
-          <p>Built an XGBoost severity classifier on 1M+ U.S. accident records with ROC-AUC of 0.824 and 81% recall on high-severity crashes. Engineered 14 spatiotemporal features with interactive Folium heatmaps.</p>
-          <ul class="project-meta">
-            <li>Python, XGBoost</li>
-            <li>scikit-learn, Folium</li>
-          </ul>
-          <a class="project-github" href="https://github.com/pavankalmanoor" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            View on GitHub
-          </a>
-        </article>
-
-        <article class="card project-card reveal reveal-delay-2">
-          <div class="project-pill">Data Science</div>
-          <h3>Student Mental Health Analysis</h3>
-          <p>Applied multivariate regression and hypothesis testing on 1,100+ student responses across 4 psychological factors, achieving R² of 0.71. Identified sleep quality and social support as key stress moderators (p &lt; 0.001).</p>
-          <ul class="project-meta">
-            <li>R, ggplot2</li>
-            <li>Regression & stats</li>
-          </ul>
-          <a class="project-github" href="https://github.com/pavankalmanoor/student-stress-analysis" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-            View on GitHub
-          </a>
+          <div class="project-link-row">
+            <a class="project-github" href="https://github.com/pavankalmanoor/fan-churn-prediction" target="_blank">
+              <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+              GitHub
+            </a>
+          </div>
         </article>
 
         <article class="card project-card reveal reveal-delay-3">
           <div class="project-pill">Creative</div>
           <h3>Photography-Driven Storytelling</h3>
-          <p>Used photography and light editing to document daily life and urban scenes — a visual practice that directly shapes how I design dashboards and data interfaces.</p>
+          <p>Photography and a bit of light editing, mostly daily life and city scenes. It's a hobby but it sneaks into the day job too, especially when I'm thinking about how a dashboard or a chart should actually look.</p>
           <ul class="project-meta">
             <li>Photography</li>
             <li>Lightroom / editing</li>
           </ul>
-          <a class="project-github" href="gallery.html">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            View Gallery
-          </a>
+          <div class="project-link-row">
+            <a class="project-github" href="gallery.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              View Gallery
+            </a>
+          </div>
         </article>
 
       </div>
@@ -1083,7 +1252,7 @@
       <div class="section-header reveal">
         <p class="section-label">Contact</p>
         <h2>Let's talk</h2>
-        <p class="section-sub">Open to roles in data science and analytics — or just interesting problems to think through together. The best way to reach me is by email.</p>
+        <p class="section-sub">Looking for Data Scientist, ML Engineer, or applied LLM roles, but honestly happy to chat about any interesting problem. Email is the fastest way to reach me.</p>
       </div>
       <div class="reveal">
         <a href="mailto:kalmanoorpavan@gmail.com" class="btn primary magnetic">Email Me</a>
@@ -1095,14 +1264,13 @@
 
   <footer class="footer">
     <span>© <span id="year"></span> Pavan Kalmanoor</span>
-    <span>Built with a bit of caffeine<span class="footer-dot">·</span>some care<span class="footer-dot">·</span>and a lot of data.</span>
+    <span>Built with a bit of caffeine, some care, and a lot of data.</span>
   </footer>
 
   <script>
     /* ── RECRUITER PANEL — lazy inject ── */
     const recruiterToggle = document.getElementById('recruiter-toggle');
     const recruiterPanel  = document.getElementById('recruiter-panel');
-    const rpClose         = document.getElementById('rp-close');
     let rpLoaded = false;
 
     function injectRP() {
@@ -1112,26 +1280,28 @@
         <button class="rp-close" id="rp-close-btn">✕</button>
         <div class="rp-tag">⚡ Recruiter View</div>
         <div class="rp-name">Pavan<br>Kalmanoor</div>
-        <div class="rp-role">ML Engineer & Data Analyst · Boston, USA</div>
+        <div class="rp-role">Data Scientist · ML & LLM Systems · Boston, MA</div>
         <div class="rp-divider"></div>
         <div class="rp-section-title">The 30-second pitch</div>
-        <div class="rp-fact">ML Engineer & Data Analyst at UMass Boston</div>
-        <div class="rp-fact">Built LLM pipelines with 88% accuracy, cutting triage time by ~60%</div>
-        <div class="rp-fact">Strong Python, SQL, scikit-learn, PyTorch, DSPy, Docker</div>
-        <div class="rp-fact">Photographer — brings a design eye to data visualisation</div>
-        <div class="rp-fact">Open to Data Scientist / ML Engineer / Senior Analyst roles</div>
+        <div class="rp-fact">Data Scientist at UMass Boston, started part-time and got brought on full-time</div>
+        <div class="rp-fact">Shipped a DistilBERT classifier (86% top-1) that replaced manual ServiceNow ticket routing</div>
+        <div class="rp-fact">Built a RAG suggestion layer over ~1,200 KB articles using LangChain and pgvector</div>
+        <div class="rp-fact">Own the Airflow + dbt pipelines moving ~1.5M records a day into Snowflake</div>
+        <div class="rp-fact">Looking for Data Scientist, ML Engineer, or applied LLM roles</div>
         <div class="rp-divider"></div>
         <div class="rp-section-title">Core skills</div>
         <div class="rp-skills">
           <span class="rp-skill">Python</span><span class="rp-skill">SQL</span><span class="rp-skill">PyTorch</span>
-          <span class="rp-skill">scikit-learn</span><span class="rp-skill">DSPy</span><span class="rp-skill">Docker</span>
-          <span class="rp-skill">Power BI</span><span class="rp-skill">XGBoost</span><span class="rp-skill">NLP</span>
+          <span class="rp-skill">Claude</span><span class="rp-skill">HuggingFace</span><span class="rp-skill">LangChain</span>
+          <span class="rp-skill">pgvector</span><span class="rp-skill">FastAPI</span><span class="rp-skill">Airflow</span>
+          <span class="rp-skill">dbt</span><span class="rp-skill">Snowflake</span><span class="rp-skill">MLflow</span>
         </div>
         <div class="rp-divider"></div>
         <div class="rp-section-title">Featured projects</div>
-        <div class="rp-fact">LLM Ticket Automation — 88% accuracy, ~60% time saved</div>
-        <div class="rp-fact">Traffic Accident Detection — 1M+ records, ROC-AUC 0.824</div>
-        <div class="rp-fact">Student Mental Health Analysis — R² 0.71</div>
+        <div class="rp-fact">Agentic Data Analyst, a 6-layer LLM pipeline that hit 45/45 on its eval at $1.60 a run</div>
+        <div class="rp-fact">VaultChat, fully client-side PDF Q&A with BM25 retrieval, bring your own key</div>
+        <div class="rp-fact">AI Spending Copilot, FastAPI plus Streamlit with forecasting and anomaly detection</div>
+        <div class="rp-fact">APIShelf, 50 actually-free APIs verified weekly by GitHub Actions</div>
         <div class="rp-cta">
           <a href="mailto:kalmanoorpavan@gmail.com" class="rp-btn primary">✉ Email Me</a>
           <a href="https://github.com/pavankalmanoor" target="_blank" class="rp-btn secondary">GitHub Profile</a>
@@ -1180,7 +1350,6 @@
     /* ── ALL SCROLL LOGIC IN ONE LISTENER ── */
     const secs  = document.querySelectorAll('section[id]');
     const navLs = document.querySelectorAll('.nav-link');
-    let lastScroll = 0;
 
     window.addEventListener('scroll', () => {
       const scrollY = window.scrollY;
@@ -1198,8 +1367,6 @@
         secs.forEach(s => { if (scrollY >= s.offsetTop - 140) cur = s.id; });
       }
       navLs.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + cur));
-
-      lastScroll = scrollY;
     }, { passive: true });
 
     /* ── NETWORK CANVAS ANIMATION ── */
@@ -1219,7 +1386,6 @@
       window.addEventListener('resize', resize, { passive: true });
       window.addEventListener('scroll', () => { scrollY = window.scrollY; }, { passive: true });
 
-      /* seed nodes spread across full viewport */
       for (let i = 0; i < NODE_COUNT; i++) {
         nodes.push({
           x:  Math.random() * window.innerWidth,
@@ -1233,10 +1399,8 @@
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        /* scroll offset shifts the whole network vertically — new nodes come into view */
         const scrollShift = (scrollY * 0.08) % canvas.height;
 
-        /* move nodes */
         nodes.forEach(n => {
           n.x += n.vx;
           n.y += n.vy;
@@ -1246,7 +1410,6 @@
           if (n.y > canvas.height + 20) n.y = -20;
         });
 
-        /* draw lines between nearby nodes */
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
             const a  = nodes[i];
@@ -1268,7 +1431,6 @@
           }
         }
 
-        /* draw nodes */
         nodes.forEach(n => {
           const ny = (n.y - scrollShift + canvas.height) % canvas.height;
           ctx.fillStyle = 'rgba(255,255,255,0.18)';
